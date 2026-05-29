@@ -1,0 +1,2870 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>VERSTAK — Управляйте производством без потерь</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #ffffff;
+            color: #0a2540;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 24px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: #0a66c2;
+            color: white;
+            box-shadow: 0 2px 8px rgba(10,102,194,0.2);
+        }
+
+        .btn-primary:hover {
+            background: #084a8f;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid #0a66c2;
+            color: #0a66c2;
+        }
+
+        .btn-outline:hover {
+            background: #eef4ff;
+            transform: translateY(-2px);
+        }
+
+        .header {
+            position: sticky;
+            top: 0;
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid #eef2f6;
+            z-index: 100;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #0a66c2, #3b82f6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #334155;
+            font-weight: 500;
+            transition: color 0.2s;
+            font-size: 14px;
+        }
+
+        .nav-links a:hover {
+            color: #0a66c2;
+        }
+
+        /* HERO — адаптированный */
+        .hero {
+            padding: 40px 0 40px;
+            background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
+            position: relative;
+            overflow: hidden;
+            min-height: calc(100vh - 70px);
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-grid {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .hero-content {
+            flex: 1;
+            background: white;
+            border-radius: 28px;
+            padding: 28px;
+            box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+            border: 1px solid #eef2ff;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: #e0e7ff;
+            color: #0a66c2;
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .hero-title {
+            font-size: 42px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 16px;
+            color: #0a2540;
+        }
+
+        .hero-title span {
+            background: linear-gradient(135deg, #0a66c2, #3b82f6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 16px;
+            color: #475569;
+            margin-bottom: 20px;
+            max-width: 500px;
+        }
+
+        .hero-features {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .hero-feature {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            color: #334155;
+        }
+
+        .hero-feature span:first-child {
+            font-size: 18px;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 24px;
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid #edf2f7;
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: 800;
+            color: #0a66c2;
+        }
+
+        /* Правая карточка */
+        .hero-visual {
+            flex: 1;
+            background: white;
+            border-radius: 28px;
+            padding: 0;
+            box-shadow: 0 20px 40px -12px rgba(0,0,0,0.15);
+            position: relative;
+            z-index: 2;
+            overflow: hidden;
+        }
+
+        .urgent-card {
+            padding: 20px;
+        }
+
+        .urgent-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .urgent-header span {
+            font-size: 24px;
+        }
+
+        .urgent-header h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #0a2540;
+        }
+
+        .alert-badge {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 4px 10px;
+            border-radius: 40px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-left: auto;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .urgent-order {
+            background: linear-gradient(135deg, #fef2f2, #fff5f5);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 20px;
+            border-left: 3px solid #dc2626;
+        }
+
+        .order-title {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .order-deadline {
+            font-size: 11px;
+            color: #dc2626;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .delay-badge {
+            background: #fee2e2;
+            padding: 3px 8px;
+            border-radius: 30px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #dc2626;
+        }
+
+        .operation-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #fecaca;
+        }
+
+        .operation-name {
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .executor {
+            font-size: 11px;
+            color: #6c7a91;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 4px;
+        }
+
+        .warning-list {
+            margin-top: 16px;
+        }
+
+        .warning-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid #edf2f7;
+        }
+
+        .warning-item:last-child {
+            border-bottom: none;
+        }
+
+        .warning-icon {
+            width: 28px;
+            height: 28px;
+            background: #fef3c7;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .warning-text {
+            flex: 1;
+        }
+
+        .warning-title {
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .warning-sub {
+            font-size: 11px;
+            color: #6c7a91;
+        }
+
+        .warning-priority {
+            font-size: 10px;
+            font-weight: 600;
+            color: #f59e0b;
+        }
+
+        .action-btn {
+            width: 100%;
+            background: #0a66c2;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 40px;
+            font-weight: 600;
+            margin-top: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 13px;
+        }
+
+        .action-btn:hover {
+            background: #084a8f;
+            transform: translateY(-1px);
+        }
+
+        /* Остальные секции */
+        .section {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            font-size: 32px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #5b6e8c;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            font-size: 16px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 28px;
+        }
+
+        .feature-card {
+            background: #f8fafc;
+            border-radius: 28px;
+            padding: 28px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 24px -12px rgba(0,0,0,0.15);
+        }
+
+        .feature-icon {
+            font-size: 42px;
+            margin-bottom: 20px;
+        }
+
+        /* Конструктор */
+        .constructor-preview {
+            background: #f0f4f9;
+            border-radius: 40px;
+            padding: 32px;
+            margin-top: 24px;
+        }
+
+        .constructor-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .constructor-title {
+            font-size: 18px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .add-op-btn {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+            font-size: 13px;
+        }
+
+        .add-op-btn:hover {
+            background: #2563eb;
+            transform: scale(1.02);
+        }
+
+        .flow-container {
+            position: relative;
+            background: #f8fafc;
+            border-radius: 24px;
+            min-height: 450px;
+            padding: 20px;
+            border: 1px solid #eef2ff;
+            overflow-x: auto;
+        }
+
+        .flow-nodes {
+            position: relative;
+            min-width: 800px;
+            min-height: 400px;
+        }
+
+        .flow-op-card {
+            position: absolute;
+            background: white;
+            border-radius: 16px;
+            width: 250px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border: 2px solid #e2e8f0;
+            transition: all 0.2s;
+            cursor: move;
+        }
+
+        .flow-op-card:hover {
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+            border-color: #cbd5e1;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: #f8fafc;
+            border-radius: 14px 14px 0 0;
+            border-bottom: 1px solid #eef2ff;
+            cursor: grab;
+        }
+
+        .card-header:active {
+            cursor: grabbing;
+        }
+
+        .card-title {
+            font-weight: 600;
+            font-size: 11px;
+            color: #64748b;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .delete-op-btn {
+            background: none;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
+            color: #94a3b8;
+            padding: 0 4px;
+            border-radius: 4px;
+        }
+
+        .delete-op-btn:hover {
+            color: #ef4444;
+            background: #fef2f2;
+        }
+
+        .card-content {
+            padding: 10px;
+        }
+
+        .op-name {
+            font-weight: 600;
+            font-size: 13px;
+            margin-bottom: 6px;
+            color: #0a2540;
+        }
+
+        .op-time {
+            font-size: 10px;
+            color: #6c7a91;
+            margin-bottom: 6px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .op-executor {
+            font-size: 10px;
+            color: #6c7a91;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding-top: 6px;
+            border-top: 1px solid #edf2f7;
+        }
+
+        .connection-dot-out {
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 12px;
+            background: #3b82f6;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid white;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .connection-dot-in {
+            position: absolute;
+            top: 50%;
+            left: -10px;
+            transform: translateY(-50%);
+            width: 12px;
+            height: 12px;
+            background: #94a3b8;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid white;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .connection-line {
+            position: absolute;
+            background: #94a3b8;
+            height: 2px;
+            transform-origin: 0 0;
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        .constructor-note {
+            margin-top: 16px;
+            background: #eef2ff;
+            border-radius: 16px;
+            padding: 10px 16px;
+            font-size: 11px;
+            color: #475569;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        /* Сравнение */
+        .comparison-section {
+            background: #f8fafc;
+            border-radius: 40px;
+            padding: 32px;
+            margin: 20px 0;
+        }
+
+        .comparison-table-wrapper {
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 10px 14px;
+            text-align: left;
+            border-bottom: 1px solid #edf2f7;
+            font-size: 12px;
+        }
+
+        .comparison-table th {
+            background: #f1f5f9;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .advantage-badge {
+            background: #d1fae5;
+            color: #065f46;
+            padding: 2px 8px;
+            border-radius: 30px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .advantages-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        .advantage-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: white;
+            border-radius: 20px;
+            transition: all 0.2s;
+        }
+
+        .advantage-item:hover {
+            transform: translateX(4px);
+            background: #f1f5f9;
+        }
+
+        .advantage-icon {
+            font-size: 24px;
+        }
+
+        .advantage-text strong {
+            display: block;
+            font-size: 13px;
+        }
+
+        .advantage-text p {
+            font-size: 11px;
+            color: #5b6e8c;
+            margin-top: 2px;
+        }
+
+        /* Экран рабочего */
+        .worker-preview {
+            background: #f0f4f9;
+            border-radius: 40px;
+            padding: 28px;
+            margin-top: 16px;
+        }
+
+        .worker-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .worker-stat-card {
+            background: white;
+            border-radius: 20px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .worker-stat-value {
+            font-size: 28px;
+            font-weight: 800;
+            color: #0a66c2;
+        }
+
+        .tasks-grid-worker {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .task-card {
+            background: white;
+            border-radius: 20px;
+            padding: 16px;
+            border: 1px solid #eef2ff;
+            transition: all 0.2s;
+        }
+
+        .task-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+
+        .task-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .task-order {
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .task-status {
+            font-size: 10px;
+            padding: 3px 8px;
+            border-radius: 30px;
+            background: #fef3c7;
+            color: #b45309;
+        }
+
+        .task-status.ready {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .task-operation {
+            font-size: 13px;
+            color: #475569;
+            margin-bottom: 10px;
+        }
+
+        .task-time {
+            font-size: 11px;
+            color: #6c7a91;
+            margin-bottom: 12px;
+        }
+
+        .worker-note {
+            margin-top: 20px;
+            background: #eef2ff;
+            border-radius: 20px;
+            padding: 14px;
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+        }
+
+        /* Дашборд */
+        .dashboard-preview {
+            background: #f0f4f9;
+            border-radius: 40px;
+            padding: 28px;
+            margin-top: 16px;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .dashboard-card {
+            background: white;
+            border-radius: 24px;
+            padding: 20px;
+            border: 1px solid #eef2ff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px -12px rgba(0,0,0,0.1);
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .product-item {
+            border-bottom: 1px solid #edf2f7;
+            padding-bottom: 12px;
+            margin-bottom: 12px;
+        }
+
+        .product-item:hover {
+            background: #f8fafc;
+            margin-left: 4px;
+            padding-left: 8px;
+            border-radius: 12px;
+        }
+
+        .product-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+
+        .progress-bar-bg {
+            background: #e2e8f0;
+            border-radius: 12px;
+            height: 6px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 12px;
+            background: #3b82f6;
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .employee-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .employee-avatar {
+            width: 32px;
+            height: 32px;
+            background: #eef2ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        .employee-info {
+            flex: 1;
+            font-size: 12px;
+        }
+
+        .employee-info strong {
+            font-size: 13px;
+        }
+
+        .load-bar {
+            background: #e2e8f0;
+            border-radius: 10px;
+            height: 4px;
+            margin-top: 4px;
+            overflow: hidden;
+        }
+
+        .load-fill {
+            height: 100%;
+            background: #3b82f6;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+        }
+
+        .filter-pill {
+            padding: 5px 12px;
+            border-radius: 40px;
+            background: #f1f5f9;
+            border: none;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-pill:hover {
+            background: #e2e8f0;
+            transform: translateY(-1px);
+        }
+
+        .filter-pill.active {
+            background: #0a66c2;
+            color: white;
+            transform: scale(1.02);
+        }
+
+        .operations-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 16px;
+            max-height: 350px;
+            overflow-y: auto;
+        }
+
+        .operation-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background: #f8fafc;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-left: 3px solid;
+            opacity: 0;
+            transform: translateX(-10px);
+            animation: slideIn 0.3s forwards;
+        }
+
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .operation-row:hover {
+            background: #eef2ff;
+            transform: translateX(4px) scale(1.01);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .row-progress {
+            border-left-color: #f59e0b;
+        }
+
+        .row-done {
+            border-left-color: #10b981;
+            opacity: 0.8;
+        }
+
+        .row-pending {
+            border-left-color: #94a3b8;
+        }
+
+        .op-info {
+            flex: 1;
+        }
+
+        .op-name {
+            font-weight: 600;
+            font-size: 13px;
+            margin-bottom: 3px;
+        }
+
+        .op-meta {
+            font-size: 10px;
+            color: #6c7a91;
+            display: flex;
+            gap: 10px;
+        }
+
+        .op-status {
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 30px;
+        }
+
+        .status-progress {
+            background: #fef3c7;
+            color: #b45309;
+        }
+
+        .status-done {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-pending {
+            background: #f1f5f9;
+            color: #475569;
+        }
+
+        .op-time {
+            font-size: 11px;
+            font-weight: 500;
+            font-family: monospace;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin-top: 12px;
+        }
+
+        .page-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            background: white;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.2s;
+        }
+
+        .page-btn:hover:not(:disabled) {
+            background: #eef2ff;
+            transform: translateY(-1px);
+        }
+
+        .page-btn.active {
+            background: #0a66c2;
+            color: white;
+        }
+
+        .page-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .urgent-item {
+            border-bottom: 1px solid #edf2f7;
+            padding: 10px 0;
+        }
+
+        .urgent-item:last-child {
+            border-bottom: none;
+        }
+
+        .urgent-title {
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 6px;
+            font-size: 13px;
+        }
+
+        .urgent-details {
+            font-size: 11px;
+            color: #475569;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .executor-name {
+            background: #f1f5f9;
+            padding: 3px 10px;
+            border-radius: 30px;
+            font-size: 11px;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .priority-high {
+            color: #dc2626;
+            background: #fee2e2;
+            padding: 2px 8px;
+            border-radius: 30px;
+            font-size: 10px;
+            animation: pulseWarning 2s infinite;
+        }
+
+        .priority-medium {
+            color: #f59e0b;
+            background: #fef3c7;
+            padding: 2px 8px;
+            border-radius: 30px;
+            font-size: 10px;
+        }
+
+        .delay-badge {
+            color: #dc2626;
+            font-size: 11px;
+        }
+
+        @keyframes pulseWarning {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.7;
+                transform: scale(0.98);
+            }
+        }
+
+        .full-width {
+            grid-column: span 2;
+        }
+
+        .kpi-mini-item {
+            transition: all 0.3s ease;
+        }
+
+        .kpi-mini-item:hover {
+            transform: translateY(-3px);
+            background: #eef2ff;
+        }
+
+        /* Адаптация под разные экраны */
+        @media (max-width: 1200px) {
+            .hero-title {
+                font-size: 36px;
+            }
+
+            .hero-content {
+                padding: 24px;
+            }
+
+            .hero-stats {
+                gap: 16px;
+            }
+
+            .stat-number {
+                font-size: 20px;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .hero {
+                min-height: auto;
+                padding: 50px 0 40px;
+            }
+
+            .hero-grid {
+                flex-direction: column;
+            }
+
+            .hero-title {
+                font-size: 32px;
+            }
+
+            .section-title {
+                font-size: 28px;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .full-width {
+                grid-column: span 1;
+            }
+        }
+
+        @media (max-height: 800px) {
+            .hero {
+                padding: 30px 0 30px;
+                min-height: auto;
+            }
+
+            .hero-content {
+                padding: 20px;
+            }
+
+            .hero-features {
+                gap: 6px;
+                margin-bottom: 16px;
+            }
+
+            .hero-stats {
+                margin-top: 16px;
+                padding-top: 16px;
+            }
+
+            .urgent-card {
+                padding: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 28px;
+            }
+
+            .hero-stats {
+                gap: 12px;
+            }
+
+            .stat-number {
+                font-size: 18px;
+            }
+
+            .btn {
+                padding: 8px 18px;
+                font-size: 13px;
+            }
+        }
+
+        /* Летающие инструменты */
+        .floating-tool {
+            position: absolute;
+            font-size: 28px;
+            opacity: 0.4;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        @keyframes float1 {
+
+            0%,
+            100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+
+            25% {
+                transform: translate(15px, -20px) rotate(15deg);
+            }
+
+            50% {
+                transform: translate(5px, -35px) rotate(25deg);
+            }
+
+            75% {
+                transform: translate(-10px, -15px) rotate(10deg);
+            }
+        }
+
+        @keyframes float2 {
+
+            0%,
+            100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+
+            25% {
+                transform: translate(-20px, -15px) rotate(-15deg);
+            }
+
+            50% {
+                transform: translate(-10px, -30px) rotate(-25deg);
+            }
+
+            75% {
+                transform: translate(10px, -10px) rotate(-10deg);
+            }
+        }
+
+        @keyframes float3 {
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            50% {
+                transform: translate(25px, -25px) scale(1.15);
+            }
+        }
+
+        @keyframes float4 {
+
+            0%,
+            100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+
+            33% {
+                transform: translate(-15px, -20px) rotate(-20deg);
+            }
+
+            66% {
+                transform: translate(10px, -30px) rotate(20deg);
+            }
+        }
+
+        @keyframes float5 {
+
+            0%,
+            100% {
+                transform: translate(0, 0) rotate(0deg);
+                opacity: 0.3;
+            }
+
+            50% {
+                transform: translate(30px, -40px) rotate(180deg);
+                opacity: 0.6;
+            }
+        }
+
+        @keyframes float6 {
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            50% {
+                transform: translate(-25px, -20px) scale(0.85);
+            }
+        }
+
+        @keyframes float7 {
+
+            0%,
+            100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+
+            50% {
+                transform: translate(-15px, -45px) rotate(35deg);
+            }
+        }
+
+        @keyframes float8 {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(35px, -15px);
+            }
+        }
+
+        .tool-1 {
+            top: 5%;
+            left: 2%;
+            animation: float1 8s ease-in-out infinite;
+            font-size: 32px;
+        }
+
+        .tool-2 {
+            top: 15%;
+            right: 3%;
+            animation: float2 7s ease-in-out infinite;
+            font-size: 28px;
+        }
+
+        .tool-3 {
+            bottom: 10%;
+            left: 5%;
+            animation: float3 9s ease-in-out infinite;
+            font-size: 34px;
+        }
+
+        .tool-4 {
+            bottom: 20%;
+            right: 8%;
+            animation: float4 6s ease-in-out infinite;
+            font-size: 30px;
+        }
+
+        .tool-5 {
+            top: 40%;
+            left: 12%;
+            animation: float5 10s ease-in-out infinite;
+            font-size: 26px;
+        }
+
+        .tool-6 {
+            top: 50%;
+            right: 15%;
+            animation: float6 8s ease-in-out infinite;
+            font-size: 32px;
+        }
+
+        .tool-7 {
+            bottom: 35%;
+            right: 5%;
+            animation: float1 7.5s ease-in-out infinite;
+            font-size: 28px;
+        }
+
+        .tool-8 {
+            top: 75%;
+            left: 8%;
+            animation: float4 9s ease-in-out infinite;
+            font-size: 30px;
+        }
+
+        .tool-9 {
+            top: 25%;
+            left: 20%;
+            animation: float7 11s ease-in-out infinite;
+            font-size: 24px;
+        }
+
+        .tool-10 {
+            bottom: 50%;
+            right: 20%;
+            animation: float8 6.5s ease-in-out infinite;
+            font-size: 26px;
+        }
+
+        .tool-11 {
+            top: 65%;
+            left: 18%;
+            animation: float2 8.5s ease-in-out infinite;
+            font-size: 28px;
+        }
+
+        .tool-12 {
+            bottom: 8%;
+            right: 25%;
+            animation: float3 7s ease-in-out infinite;
+            font-size: 32px;
+        }
+
+        .tool-13 {
+            top: 85%;
+            left: 15%;
+            animation: float5 9.5s ease-in-out infinite;
+            font-size: 22px;
+        }
+
+        .tool-14 {
+            top: 10%;
+            right: 20%;
+            animation: float1 6.8s ease-in-out infinite;
+            font-size: 26px;
+        }
+
+        .tool-15 {
+            top: 30%;
+            right: 28%;
+            animation: float6 8.2s ease-in-out infinite;
+            font-size: 30px;
+        }
+
+        .tool-16 {
+            bottom: 65%;
+            left: 3%;
+            animation: float7 7.8s ease-in-out infinite;
+            font-size: 28px;
+        }
+
+        .tool-17 {
+            top: 80%;
+            right: 12%;
+            animation: float4 9.3s ease-in-out infinite;
+            font-size: 24px;
+        }
+
+        .tool-18 {
+            bottom: 15%;
+            left: 25%;
+            animation: float8 6.2s ease-in-out infinite;
+            font-size: 30px;
+        }
+
+        .tool-19 {
+            top: 45%;
+            left: 30%;
+            animation: float1 7.2s ease-in-out infinite;
+            font-size: 26px;
+        }
+
+        .tool-20 {
+            bottom: 75%;
+            right: 18%;
+            animation: float2 10.5s ease-in-out infinite;
+            font-size: 28px;
+        }
+
+        .tool-21 {
+            top: 20%;
+            left: 40%;
+            animation: float3 8.3s ease-in-out infinite;
+            font-size: 22px;
+        }
+
+        .tool-22 {
+            bottom: 40%;
+            right: 35%;
+            animation: float4 7.1s ease-in-out infinite;
+            font-size: 24px;
+        }
+
+        .tool-23 {
+            top: 60%;
+            left: 45%;
+            animation: float5 9.8s ease-in-out infinite;
+            font-size: 26px;
+        }
+
+        .tool-24 {
+            bottom: 5%;
+            left: 35%;
+            animation: float6 6.5s ease-in-out infinite;
+            font-size: 28px;
+        }
+
+        .tool-25 {
+            top: 35%;
+            right: 42%;
+            animation: float7 8.7s ease-in-out infinite;
+            font-size: 22px;
+        }
+
+        /* ========== МОДАЛЬНОЕ ОКНО С ФОРМОЙ ========== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            max-width: 500px;
+            width: 90%;
+            background: white;
+            border-radius: 32px;
+            overflow: hidden;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #0a2540, #0a66c2);
+            padding: 20px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+
+        .modal-header h3 {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .btn-close {
+            background: transparent;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: white;
+            opacity: 0.8;
+        }
+
+        .btn-close:hover {
+            opacity: 1;
+        }
+
+        .modal-body {
+            padding: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #334155;
+        }
+
+        .form-label .required {
+            color: #ef4444;
+            margin-left: 4px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 14px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #0a66c2;
+            box-shadow: 0 0 0 3px rgba(10, 102, 194, 0.1);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin-top: 2px;
+            cursor: pointer;
+            accent-color: #0a66c2;
+        }
+
+        .checkbox-label {
+            font-size: 12px;
+            color: #475569;
+            line-height: 1.4;
+            cursor: pointer;
+        }
+
+        .checkbox-label a {
+            color: #0a66c2;
+            text-decoration: none;
+        }
+
+        .checkbox-label a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            background: #fee2e2;
+            border-radius: 14px;
+            padding: 10px 14px;
+            margin-bottom: 18px;
+            font-size: 13px;
+            color: #dc2626;
+            border-left: 4px solid #ef4444;
+        }
+
+        .success-message {
+            background: #d1fae5;
+            border-radius: 14px;
+            padding: 14px;
+            margin-top: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            color: #065f46;
+            border-left: 4px solid #10b981;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Стили для кнопки отправки */
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #0a66c2, #3b82f6);
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 48px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-family: inherit;
+            margin-top: 8px;
+            box-shadow: 0 2px 8px rgba(10,102,194,0.2);
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(135deg, #084a8f, #2563eb);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(10,102,194,0.3);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Анимация для пунктов в правой карточке */
+        .animated-warning {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border-radius: 12px;
+            padding: 8px 12px;
+            margin: 0 -12px;
+            width: calc(100% + 24px);
+        }
+
+        .animated-warning:hover {
+            background: linear-gradient(135deg, #fef3c7, #fffbeb);
+            transform: translateX(6px) scale(1.01);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .animated-warning:hover .warning-icon {
+            transform: scale(1.1);
+            background: #fde68a;
+            transition: transform 0.2s ease;
+        }
+
+        .animated-warning .warning-icon {
+            transition: transform 0.2s ease;
+        }
+
+        /* Стили для блока статистики в HERO */
+        .hero-stats {
+            display: flex;
+            gap: 32px;
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid #edf2f7;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            flex: 1;
+            text-align: center;
+            padding: 12px 16px;
+            background: #f8fafc;
+            border-radius: 24px;
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-4px);
+            background: #eef2ff;
+            box-shadow: 0 8px 20px rgba(10,102,194,0.1);
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: 800;
+            color: #0a66c2;
+            margin-bottom: 6px;
+            line-height: 1.2;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: #475569;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .hero-stats {
+                gap: 16px;
+            }
+            .stat-number {
+                font-size: 22px;
+            }
+            .stat-label {
+                font-size: 11px;
+            }
+            .stat-item {
+                padding: 8px 12px;
+            }
+        }
+
+        /* Анимация для строк загрузки сотрудников */
+        .employee-row {
+            transition: all 0.25s ease;
+            cursor: pointer;
+            border-radius: 16px;
+            padding: 8px 12px;
+            margin: 0 -12px;
+            width: calc(100% + 24px);
+        }
+
+        .employee-row:hover {
+            background: linear-gradient(135deg, #eef2ff, #e2e8f0);
+            transform: translateX(4px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .employee-row:hover .employee-avatar {
+            transform: scale(1.05);
+            background: #dbeafe;
+        }
+
+        .employee-avatar {
+            transition: transform 0.2s ease;
+        }
+
+        /* Стиль для процентов загрузки — как на основной платформе */
+        .employee-load {
+            font-size: 13px;
+            font-weight: 600;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: #0a2540;
+            min-width: 45px;
+            text-align: right;
+            letter-spacing: -0.01em;
+        }
+
+        /* Цвет для перегруженного сотрудника */
+        .employee-row .employee-load.text-danger {
+            color: #dc2626;
+        }
+
+        /* Фиксированная высота для блока сводки */
+        .dashboard-card.full-width {
+            display: flex;
+            flex-direction: column;
+            height: 520px;
+        }
+
+        /* Адаптив для мобильных устройств */
+        @media (max-width: 768px) {
+            .dashboard-card.full-width {
+                height: 480px;
+            }
+        }
+
+        /* Улучшенная прокрутка для списка операций */
+        .operations-list {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 8px;
+            margin-bottom: 0;
+        }
+
+        /* Кастомизация скроллбара */
+        .operations-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .operations-list::-webkit-scrollbar-track {
+            background: #e2e8f0;
+            border-radius: 10px;
+        }
+
+        .operations-list::-webkit-scrollbar-thumb {
+            background: #94a3b8;
+            border-radius: 10px;
+        }
+
+        .operations-list::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="container">
+        <div class="nav">
+            <div class="logo">VERSTAK</div>
+            <div class="nav-links">
+                <a href="#features">Возможности</a>
+                <a href="#constructor">Конструктор</a>
+                <a href="#comparison">Сравнение</a>
+                <a href="#dashboard">Дашборд</a>
+                <a href="#worker">Рабочий</a>
+                <button class="btn btn-outline" style="padding: 6px 18px;" onclick="openModal()">📋 В лист ожидания</button>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="floating-tool tool-1">🔨</div>
+    <div class="floating-tool tool-2">🔧</div>
+    <div class="floating-tool tool-3">🪚</div>
+    <div class="floating-tool tool-4">⛏️</div>
+    <div class="floating-tool tool-5">⚙️</div>
+    <div class="floating-tool tool-6">🪛</div>
+    <div class="floating-tool tool-7">📏</div>
+    <div class="floating-tool tool-8">🔩</div>
+    <div class="floating-tool tool-9">🔌</div>
+    <div class="floating-tool tool-10">🧰</div>
+    <div class="floating-tool tool-11">⚒️</div>
+    <div class="floating-tool tool-12">🗜️</div>
+    <div class="floating-tool tool-13">🔪</div>
+    <div class="floating-tool tool-14">🪓</div>
+    <div class="floating-tool tool-15">⛓️</div>
+    <div class="floating-tool tool-16">🧲</div>
+    <div class="floating-tool tool-17">🔬</div>
+    <div class="floating-tool tool-18">⚡</div>
+    <div class="floating-tool tool-19">🔄</div>
+    <div class="floating-tool tool-20">📐</div>
+    <div class="floating-tool tool-21">🛠️</div>
+    <div class="floating-tool tool-22">⏱️</div>
+    <div class="floating-tool tool-23">🔨</div>
+    <div class="floating-tool tool-24">⚙️</div>
+    <div class="floating-tool tool-25">🔧</div>
+
+    <div class="container">
+        <div class="hero-grid">
+            <div class="hero-content">
+                <span class="hero-badge">📋 Производственная платформа</span>
+                <h1 class="hero-title">Превратите хаос в <span>прозрачный конвейер</span> за 15 минут</h1>
+                <p class="hero-subtitle">VERSTAK — это цифровой верстак, который знает, где каждый заказ, не путает последовательность и считает время вместо вас.</p>
+
+                <div class="hero-features">
+                    <div class="hero-feature"><span>✅</span> Ни одного пропущенного этапа — автоблокировка операций</div>
+                    <div class="hero-feature"><span>✅</span> Мастер видит всё: загрузку сотрудников и отставания</div>
+                    <div class="hero-feature"><span>✅</span> Рабочий получает задачи в один клик с таймером</div>
+                </div>
+
+                <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+                    <a class="btn btn-primary" onclick="openModal()">🚀 Записаться в лист ожидания</a>
+                </div>
+
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">-30%</div>
+                        <div class="stat-label">простоев</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">видимость заказов</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">15 мин</div>
+                        <div class="stat-label">на внедрение</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Правая карточка -->
+            <div class="hero-visual">
+                <div class="urgent-card">
+                    <div class="urgent-header">
+                        <span>🎯</span>
+                        <h3>Что сейчас важно?</h3>
+                        <div class="alert-badge">⚠️ Требует внимания</div>
+                    </div>
+
+                    <div class="urgent-order">
+                        <div class="order-title">🚨 СРОЧНЫЙ ЗАКАЗ #102</div>
+                        <div class="order-deadline">
+                            <span>📅 Срок: сегодня 18:00</span>
+                            <span class="delay-badge">⏱ Отставание: +2ч 15мин</span>
+                        </div>
+                        <div class="operation-info">
+                            <div>
+                                <div class="operation-name">🔧 Установка фасадов</div>
+                                <div class="executor">
+                                    <span>👤</span> Олег Петрович Соколов
+                                    <span style="margin-left: 8px; background:#fef3c7; padding:2px 6px; border-radius:20px; font-size:10px;">ждёт фасады</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="warning-list">
+                        <!-- Анимированный пункт -->
+                        <div class="warning-item animated-warning">
+                            <div class="warning-icon">⚠️</div>
+                            <div class="warning-text">
+                                <div class="warning-title">Заказ #105 — Табурет классический</div>
+                                <div class="warning-sub">Операция: Покраска • Отставание: +1.5 часа</div>
+                            </div>
+                            <div class="warning-priority">Средний</div>
+                        </div>
+                        <div class="warning-item animated-warning">
+                            <div class="warning-icon">🔥</div>
+                            <div class="warning-text">
+                                <div class="warning-title">Заказ #104 — Обеденный стол 'Дуб'</div>
+                                <div class="warning-sub">Операция: Присадка • До дедлайна: 30 мин</div>
+                            </div>
+                            <div class="warning-priority">Риск срыва</div>
+                        </div>
+                        <div class="warning-item animated-warning">
+                            <div class="warning-icon">⚡</div>
+                            <div class="warning-text">
+                                <div class="warning-title">Узкое место цеха</div>
+                                <div class="warning-sub">Сборщик перегружен: 94% загрузки</div>
+                            </div>
+                            <div class="warning-priority">Требует решения</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ========== БЛОК ВОЗМОЖНОСТЕЙ ========== -->
+<section id="features" style="padding: 80px 0; background: #ffffff;">
+    <div class="container" style="max-width: 1280px; margin: 0 auto; padding: 0 24px;">
+        <div style="text-align: center; max-width: 750px; margin: 0 auto 56px;">
+            <div style="display: inline-block; background: #e0e7ff; color: #0a66c2; padding: 6px 16px; border-radius: 40px; font-size: 13px; font-weight: 600; margin-bottom: 20px;">
+                ⚙️ Всё, что нужно для эффективного цеха
+            </div>
+            <h2 style="font-size: 36px; font-weight: 800; color: #0a2540; margin-bottom: 16px; letter-spacing: -0.02em;">
+                Инструменты, которые реально работают
+            </h2>
+            <p style="font-size: 18px; color: #475569; line-height: 1.4;">
+                Никакой магии, только конкретные решения для реальных проблем производства
+            </p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 32px; margin-bottom: 48px;">
+
+            <!-- Карточка 1: Визуальный конструктор -->
+            <div style="background: #ffffff; border-radius: 32px; padding: 28px; transition: all 0.3s ease; border: 1px solid #eef2f6; box-shadow: 0 8px 20px rgba(0,0,0,0.02); position: relative; overflow: hidden;">
+                <div style="position: absolute; top: 24px; right: 24px; background: #10b98110; color: #10b981; padding: 4px 12px; border-radius: 40px; font-size: 11px; font-weight: 600;">Ключевое преимущество</div>
+                <div style="width: 56px; height: 56px; background: linear-gradient(135deg, #eef2ff, #e0e7ff); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 32px; margin-bottom: 24px;">🏗️</div>
+                <h3 style="font-size: 22px; font-weight: 700; margin-bottom: 12px; color: #0a2540;">Визуальный конструктор техпроцессов</h3>
+                <p style="color: #475569; font-size: 15px; line-height: 1.5; margin-bottom: 20px;">Создавайте маршрутные карты перетаскиванием. Операции, связи, время — всё наглядно, без таблиц и программистов.</p>
+                <div style="background: #f8fafc; border-radius: 20px; padding: 16px; margin: 20px 0 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+                    <div><div style="font-size: 20px; font-weight: 800; color: #0a66c2;">5 мин</div><div style="font-size: 11px; color: #5b6e8c;">на создание шаблона</div></div>
+                    <div><div style="font-size: 20px; font-weight: 800; color: #0a66c2;">100%</div><div style="font-size: 11px; color: #5b6e8c;">наглядность цепочки</div></div>
+                </div>
+                <ul style="list-style: none; margin: 16px 0 0; padding: 0;">
+                    <li style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: #334155; margin-bottom: 12px;"><span style="font-size: 18px;">✅</span> Автоматическая блокировка следующих этапов</li>
+                    <li style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: #334155; margin-bottom: 12px;"><span style="font-size: 18px;">✅</span> Параллельные ветки и условия переходов</li>
+                    <li style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: #334155;"><span style="font-size: 18px;">✅</span> Drag & drop, связи в один клик</li>
+                </ul>
+            </div>
+
+            <!-- Карточка 2: Дашборд мастера -->
+            <div style="background: #ffffff; border-radius: 32px; padding: 28px; transition: all 0.3s ease; border: 1px solid #eef2f6; box-shadow: 0 8px 20px rgba(0,0,0,0.02); position: relative; overflow: hidden;">
+                <div style="width: 56px; height: 56px; background: linear-gradient(135deg, #eef2ff, #e0e7ff); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 32px; margin-bottom: 24px;">📊</div>
+                <h3 style="font-size: 22px; font-weight: 700; margin-bottom: 12px; color: #0a2540;">Дашборд мастера смены</h3>
+                <p style="color: #475569; font-size: 15px; line-height: 1.5; margin-bottom: 20px;">В реальном времени: прогресс заказов, загрузка сотрудников, проблемные участки. Узкие места видны сразу.</p>
+                <div style="background: #f8fafc; border-radius: 20px; padding: 16px; margin: 20px 0 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+                    <div><div style="font-size: 20px; font-weight: 800; color: #0a66c2;">94%</div><div style="font-size: 11px; color: #5b6e8c;">макс. загрузка видна</div></div>
+                    <div><div style="font-size: 20px; font-weight: 800; color: #0a66c2;">+35%</div><div style="font-size: 11px; color: #5b6e8c;">скорость реакции</div></div>
+                </div>
+                <ul style="list-style: none; margin: 16px 0 0; padding: 0;">
+                    <li style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: #334155; margin-bottom: 12px;"><span style="font-size: 18px;">⚠️</span> Автоматическое выделение рисков по срокам</li>
+                    <li style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: #334155; margin-bottom: 12px;"><span style="font-size: 18px;">👥</span> Загрузка каждого сотрудника в процентах</li>
+                    <li style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: #334155;"><span style="font-size: 18px;">📈</span> Сводка за смену: завершено, просрочено, в работе</li>
+                </ul>
+            </div>
+
+            <!-- Карточка 3: Экран рабочего -->
+            <div style="background: #ffffff; border-radius: 32px; padding: 28px; transition: all 0.3s ease; border: 1px solid #eef2f6; box-shadow: 0 8px 20px rgba(0,0,0,0.02); position: relative; overflow: hidden;">
+                <div style="width: 56px; height: 56px; background: linear-gradient(135deg, #eef2ff, #e0e7ff); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 32px; margin-bottom: 24px;">👷</div>
+                <h3 style="font-size: 22px; font-weight: 700; margin-bottom: 12px; color: #0a2540;">Личное рабочее место</h3>
+                <p style="color: #475569; font-size: 15px; line-height: 1.5; margin-bottom: 20px;">Каждый сотрудник видит только свои задачи. Один клик — взял в работу, таймер запущен. Завершил — система двигает заказ дальше.</p>
+                <div style="background: #f8fafc; border-radius: 20px; padding: 16px; margin: 20px 0 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+                    <div><div style="font-size: 20px; font-weight: 800; color: #0a66c2;">-50%</div><div style="font-size: 11px; color: #5b6e8c;">времени на учёт</div></div>
+                    <div><div style="font-size: 20px; font-weight: 800; color: #0a66c2;">100%</div><div style="font-size: 11px; color: #5b6e8c;">план/факт в реальном времени</div></div>
+                </div>
+                <ul style="list-style: none; margin: 16px 0 0; padding: 0;">
+                    <li style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: #334155; margin-bottom: 12px;"><span style="font-size: 18px;">⏱️</span> Встроенный таймер с план/фактом</li>
+                    <li style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: #334155; margin-bottom: 12px;"><span style="font-size: 18px;">🔔</span> Уведомления о срочных задачах</li>
+                    <li style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: #334155;"><span style="font-size: 18px;">✅</span> Автоматическая смена статуса заказа</li>
+                </ul>
+            </div>
+
+            <!-- Карточка 4: Автоблокировка -->
+            <div style="background: #ffffff; border-radius: 32px; padding: 28px; transition: all 0.3s ease; border: 1px solid #eef2f6; box-shadow: 0 8px 20px rgba(0,0,0,0.02); position: relative; overflow: hidden;">
+                <div style="width: 56px; height: 56px; background: linear-gradient(135deg, #eef2ff, #e0e7ff); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 32px; margin-bottom: 24px;">🔒</div>
+                <h3 style="font-size: 22px; font-weight: 700; margin-bottom: 12px; color: #0a2540;">Полное следование техпроцессу</h3>
+                <p style="color: #475569; font-size: 15px; line-height: 1.5; margin-bottom: 20px;">Операция не начнётся, пока предыдущая не выполнена. Автоблокировка исключает пропуски и брак из-за неверного порядка.</p>
+                <ul style="list-style: none; margin: 16px 0 0; padding: 0;">
+                    <li style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: #334155; margin-bottom: 12px;"><span style="font-size: 18px;">🧩</span> Сложный техпроцесс остаётся понятным и последовательным</li>
+                    <li style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: #334155; margin-bottom: 12px;"><span style="font-size: 18px;">🔄</span> Поддержка параллельных и зависимых операций</li>
+                    <li style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: #334155;"><span style="font-size: 18px;">📋</span> Чёткая передача ответственности между сменами</li>
+                </ul>
+            </div>
+
+            <!-- Карточка 5: Внедрение (без цен) -->
+            <div style="background: #ffffff; border-radius: 32px; padding: 28px; transition: all 0.3s ease; border: 1px solid #eef2f6; box-shadow: 0 8px 20px rgba(0,0,0,0.02); position: relative; overflow: hidden;">
+                <div style="width: 56px; height: 56px; background: linear-gradient(135deg, #eef2ff, #e0e7ff); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 32px; margin-bottom: 24px;">⚡</div>
+                <h3 style="font-size: 22px; font-weight: 700; margin-bottom: 12px; color: #0a2540;">Внедрение за 15 минут без IT-отдела</h3>
+                <p style="color: #475569; font-size: 15px; line-height: 1.5; margin-bottom: 20px;">Работает в браузере, не требует установки. Интуитивно понятный интерфейс — без обучения и инструкций.</p>
+                <ul style="list-style: none; margin: 16px 0 0; padding: 0;">
+                    <li style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: #334155; margin-bottom: 12px;"><span style="font-size: 18px;">🌐</span> Работает прямо в браузере</li>
+                    <li style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: #334155; margin-bottom: 12px;"><span style="font-size: 18px;">🛠️</span> Не требует установки и настройки</li>
+                    <li style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: #334155;"><span style="font-size: 18px;">👥</span> Интуитивный интерфейс для всех</li>
+                </ul>
+            </div>
+
+            <!-- Карточка 6: Аналитика -->
+            <div style="background: #ffffff; border-radius: 32px; padding: 28px; transition: all 0.3s ease; border: 1px solid #eef2f6; box-shadow: 0 8px 20px rgba(0,0,0,0.02); position: relative; overflow: hidden;">
+                <div style="width: 56px; height: 56px; background: linear-gradient(135deg, #eef2ff, #e0e7ff); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 32px; margin-bottom: 24px;">📉</div>
+                <h3 style="font-size: 22px; font-weight: 700; margin-bottom: 12px; color: #0a2540;">Аналитика потерь и эффективности</h3>
+                <p style="color: #475569; font-size: 15px; line-height: 1.5; margin-bottom: 20px;">Сравнение планового и фактического времени, простои, загрузка ресурсов — будет видно, где теряете деньги.</p>
+                <ul style="list-style: none; margin: 16px 0 0; padding: 0;">
+                    <li style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: #334155; margin-bottom: 12px;"><span style="font-size: 18px;">📊</span> Отчёт по отклонениям (план/факт)</li>
+                    <li style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: #334155; margin-bottom: 12px;"><span style="font-size: 18px;">🎯</span> Рейтинг исполнителей по скорости</li>
+                    <li style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: #334155;"><span style="font-size: 18px;">💡</span> Прогноз загрузки на неделю вперёд</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Блок с цифрами/статистикой -->
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 24px; background: linear-gradient(135deg, #0a2540, #0a3a5c); border-radius: 48px; padding: 40px 48px; margin-top: 40px;">
+            <div style="flex: 1; text-align: center;"><div style="font-size: 42px; font-weight: 800; margin-bottom: 8px; background: linear-gradient(135deg, #fff, #b8d4ff); -webkit-background-clip: text; background-clip: text; color: transparent;">-30%</div><div style="font-size: 14px; opacity: 0.8; color: white;">снижение простоев</div></div>
+            <div style="flex: 1; text-align: center;"><div style="font-size: 42px; font-weight: 800; margin-bottom: 8px; background: linear-gradient(135deg, #fff, #b8d4ff); -webkit-background-clip: text; background-clip: text; color: transparent;">2x</div><div style="font-size: 14px; opacity: 0.8; color: white;">быстрее реакция</div></div>
+            <div style="flex: 1; text-align: center;"><div style="font-size: 42px; font-weight: 800; margin-bottom: 8px; background: linear-gradient(135deg, #fff, #b8d4ff); -webkit-background-clip: text; background-clip: text; color: transparent;">15 мин</div><div style="font-size: 14px; opacity: 0.8; color: white;">на запуск</div></div>
+            <div style="flex: 1; text-align: center;"><div style="font-size: 42px; font-weight: 800; margin-bottom: 8px; background: linear-gradient(135deg, #fff, #b8d4ff); -webkit-background-clip: text; background-clip: text; color: transparent;">100%</div><div style="font-size: 14px; opacity: 0.8; color: white;">прозрачность</div></div>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Добавьте hover-эффекты для карточек */
+    .features-grid-modern > div:hover {
+        transform: translateY(-6px);
+        border-color: #cbdffc;
+        box-shadow: 0 24px 48px -12px rgba(10,102,194,0.15);
+    }
+</style>
+
+<!-- ========== КОНСТРУКТОР ШАБЛОНА ИЗДЕЛИЯ ========== -->
+<section id="constructor" class="section">
+    <div class="container">
+        <h2 class="section-title">🏗️ Конструктор шаблона изделия</h2>
+        <p class="section-subtitle">Создавайте маршрутные карты визуально — добавляйте операции, связывайте их, задавайте время и исполнителей</p>
+
+        <div class="constructor-preview">
+            <div class="constructor-header">
+                <div class="constructor-title"><span>📝</span> Редактирование шаблона "Кухонный стол"</div>
+                <button class="add-op-btn" onclick="addDemoOperation()">+ Добавить операцию</button>
+            </div>
+            <div class="flow-container" id="flowContainer">
+                <div class="flow-nodes" id="flowNodes"></div>
+            </div>
+            <div class="constructor-note">
+                <span>💡 Перетаскивайте карточки — меняйте порядок</span>
+                <span>🔗 Нажмите на синий кружок → затем на серый кружок другой карточки, чтобы создать связь</span>
+                <span>🗑 Нажмите ✕, чтобы удалить операцию</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== ЭКРАН РАБОЧЕГО ========== -->
+<section id="worker" class="section">
+    <div class="container">
+        <h2 class="section-title">👷 Экран рабочего</h2>
+        <p class="section-subtitle">Каждый сотрудник видит только свои задачи, может запустить таймер и завершить операцию</p>
+
+        <div class="worker-preview">
+            <div class="worker-stats">
+                <div class="worker-stat-card">
+                    <div class="worker-stat-value">3</div>
+                    <div>📋 Доступно операций</div>
+                </div>
+                <div class="worker-stat-card">
+                    <div class="worker-stat-value">1</div>
+                    <div>⚙️ В работе</div>
+                </div>
+                <div class="worker-stat-card">
+                    <div class="worker-stat-value">4</div>
+                    <div>✅ Завершено сегодня</div>
+                </div>
+            </div>
+            <div style="margin-bottom: 20px;" id="currentTaskBlock">
+                <div style="background: linear-gradient(135deg, #eef2ff, #e0e7ff); border-radius: 20px; padding: 18px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+                        <div>
+                            <div style="font-size: 12px; color: #0a66c2; font-weight: 600;">ТЕКУЩАЯ ЗАДАЧА</div>
+                            <div style="font-size: 16px; font-weight: 700;">Сборка корпуса</div>
+                            <div style="font-size: 12px;">Кухонный стол 'Сканди' • Заказ №101</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div id="taskTimer" style="font-size: 22px; font-weight: 700; font-family: monospace;">01:15:00</div>
+                            <div style="font-size: 11px;">из 02:00:00 (план)</div>
+                        </div>
+                    </div>
+                    <div class="progress-bar-bg" style="margin-top: 12px;">
+                        <div id="taskProgress" class="progress-fill" style="width:62.5%; background:#f59e0b;"></div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-top: 8px; font-size: 11px; color: #6c7a91;">
+                        <span>⏱ Осталось: 00:45:00</span>
+                        <span>📊 Выполнено: 62.5%</span>
+                    </div>
+                    <button class="btn btn-success" id="completeTaskBtn" style="margin-top: 14px; width: 100%;">✅ Завершить операцию</button>
+                </div>
+            </div>
+            <div style="font-weight: 600; margin-bottom: 14px;">📋 Доступные для взятия операции</div>
+            <div class="tasks-grid-worker">
+                <div class="task-card">
+                    <div class="task-header"><span class="task-order">Шкаф-купе №102</span><span class="task-status ready">Готова к старту</span></div>
+                    <div class="task-operation">🔧 Установка фасадов</div>
+                    <div class="task-time">⏱ План: 01:00</div>
+                    <button class="btn btn-primary" style="width: 100%;">▶ Взять в работу</button>
+                </div>
+                <div class="task-card">
+                    <div class="task-header"><span class="task-order">Комод Эко №104</span><span class="task-status ready">Готова к старту</span></div>
+                    <div class="task-operation">🔧 Сборка каркаса</div>
+                    <div class="task-time">⏱ План: 00:45</div>
+                    <button class="btn btn-primary" style="width: 100%;">▶ Взять в работу</button>
+                </div>
+                <div class="task-card">
+                    <div class="task-header"><span class="task-order">Табурет №103</span><span class="task-status ready">Готова к старту</span></div>
+                    <div class="task-operation">🔧 Сборка</div>
+                    <div class="task-time">⏱ План: 00:25</div>
+                    <button class="btn btn-primary" style="width: 100%;">▶ Взять в работу</button>
+                </div>
+            </div>
+            <div class="worker-note">
+                <div><span style="font-size: 22px;">🎯</span> <strong>Что видит рабочий?</strong><br>Только свои операции, таймер, план/факт</div>
+                <div><span style="font-size: 22px;">⚡</span> <strong>Один клик</strong><br>Взял в работу → запустился таймер → завершил</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== ЭКРАН МАСТЕРА СМЕНЫ ========== -->
+<section id="dashboard" class="section">
+    <div class="container">
+        <h2 class="section-title">📊 Экран мастера смены</h2>
+        <p class="section-subtitle">В реальном времени видите прогресс по каждому заказу, загрузку сотрудников и узкие места</p>
+
+        <div class="dashboard-preview">
+            <div class="dashboard-grid">
+                <div class="dashboard-card">
+                    <div class="card-title">📋 Прогресс по активным заказам</div>
+                    <div class="product-item">
+                        <div class="product-header"><span><strong>Кухонный стол 'Сканди'</strong> <span style="background:#fef3c7; padding:2px 6px; border-radius:20px; font-size:10px;">В работе</span></span><span>45%</span></div>
+                        <div class="progress-bar-bg"><div class="progress-fill" style="width:45%; background:#3b82f6;"></div></div>
+                        <div style="font-size:11px; margin-top:6px;">📦 3/8 операций • Срок: 28.05</div>
+                    </div>
+                    <div class="product-item">
+                        <div class="product-header"><span><strong>Шкаф-купе 3-х дверный</strong> <span style="background:#fee2e2; padding:2px 6px; border-radius:20px; font-size:10px;">⚠️ Задержка</span></span><span>78%</span></div>
+                        <div class="progress-bar-bg"><div class="progress-fill" style="width:78%; background:#f59e0b;"></div></div>
+                        <div style="font-size:11px;">📦 9/12 операций • Срок: сегодня</div>
+                    </div>
+                    <div class="product-item">
+                        <div class="product-header"><span><strong>Обеденный стол 'Дуб'</strong> <span style="background:#fef3c7; padding:2px 6px; border-radius:20px; font-size:10px;">В работе</span></span><span>28%</span></div>
+                        <div class="progress-bar-bg"><div class="progress-fill" style="width:28%; background:#3b82f6;"></div></div>
+                        <div style="font-size:11px;">📦 2/10 операций • Срок: 29.05</div>
+                    </div>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="card-title">👥 Загрузка сотрудников</div>
+                    <div class="employee-row">
+                        <div class="employee-avatar">АИ</div>
+                        <div class="employee-info">
+                            <div><strong>Алексей Иванов</strong> — Раскройщик</div>
+                            <div class="load-bar"><div class="load-fill" style="width:85%"></div></div>
+                        </div>
+                        <div class="employee-load">85%</div>
+                    </div>
+                    <div class="employee-row">
+                        <div class="employee-avatar">ДС</div>
+                        <div class="employee-info">
+                            <div><strong>Дмитрий Смирнов</strong> — Кромочник</div>
+                            <div class="load-bar"><div class="load-fill" style="width:62%"></div></div>
+                        </div>
+                        <div class="employee-load">62%</div>
+                    </div>
+                    <div class="employee-row" style="background: #fef3c710; border-left: 3px solid #f59e0b;">
+                        <div class="employee-avatar">ОП</div>
+                        <div class="employee-info">
+                            <div><strong>Олег Петров</strong> — Сборщик </div>
+                            <div class="load-bar"><div class="load-fill" style="width:94%; background:#ef4444;"></div></div>
+                        </div>
+                        <div class="employee-load" style="color: #dc2626;">94%</div>
+                    </div>
+                    <div class="employee-row">
+                        <div class="employee-avatar">АК</div>
+                        <div class="employee-info">
+                            <div><strong>Андрей Козлов</strong> — Маляр</div>
+                            <div class="load-bar"><div class="load-fill" style="width:45%"></div></div>
+                        </div>
+                        <div class="employee-load">45%</div>
+                    </div>
+                    <div class="employee-row">
+                        <div class="employee-avatar">СН</div>
+                        <div class="employee-info">
+                            <div><strong>Сергей Новиков</strong> — ОТК</div>
+                            <div class="load-bar"><div class="load-fill" style="width:70%"></div></div>
+                        </div>
+                        <div class="employee-load">70%</div>
+                    </div>
+                </div>
+
+                <div class="dashboard-card full-width">
+                    <div class="card-title">🎯 Сводка за смену</div>
+                    <div style="display: flex; gap: 16px; margin-bottom: 20px;">
+                        <div class="kpi-mini-item" style="flex:1; text-align:center; padding:10px; background:#f8fafc; border-radius:16px;">
+                            <div style="font-size: 22px; font-weight: 800;">3</div>
+                            <div style="font-size: 11px;">✅ Завершено</div>
+                        </div>
+                        <div class="kpi-mini-item" style="flex:1; text-align:center; padding:10px; background:#f8fafc; border-radius:16px;">
+                            <div style="font-size: 22px; font-weight: 800;">5</div>
+                            <div style="font-size: 11px;">🔄 В работе</div>
+                        </div>
+                        <div class="kpi-mini-item" style="flex:1; text-align:center; padding:10px; background:#fef2f2; border-radius:16px;">
+                            <div style="font-size: 22px; font-weight: 800; color:#dc2626;">2</div>
+                            <div style="font-size: 11px;">⚠️ Просрочено</div>
+                        </div>
+                    </div>
+
+                    <div class="filter-tabs" id="filterTabs">
+                        <button class="filter-pill active" data-status="all">📊 Все (11)</button>
+                        <button class="filter-pill" data-status="progress">⚙️ В работе (5)</button>
+                        <button class="filter-pill" data-status="pending">⏸ Ожидают (0)</button>
+                        <button class="filter-pill" data-status="done">✅ Завершены (4)</button>
+                        <button class="filter-pill" data-status="overdue">⚠️ Просрочено (2)</button>
+                    </div>
+                    <div class="operations-list" id="operationsList"></div>
+                    <div class="pagination" id="paginationControls"></div>
+                </div>
+            </div>
+
+            <div style="margin-top: 20px; background: #eef2ff; border-radius: 20px; padding: 14px; display: flex; gap: 16px; align-items: center; flex-wrap: wrap; justify-content: space-between;">
+                <div><span style="font-size: 24px;">🎯</span> <strong>Что видит мастер смены?</strong><br>Прогресс каждого заказа, загрузку сотрудников, отставания</div>
+                <div><span style="font-size: 24px;">⚡</span> <strong>Принимайте решения быстрее</strong><br>Перебросьте ресурсы на проблемный участок за 1 минуту</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ПРИЗЫВ К ДЕЙСТВИЮ -->
+<section id="demo" style="padding: 50px 0 70px;">
+    <div class="container">
+        <div style="background: linear-gradient(135deg, #0a2540, #0a66c2); border-radius: 48px; padding: 48px 40px; text-align: center; color: white;">
+            <h2 style="font-size: 28px; margin-bottom: 16px;">Готовы перевести техпроцессы в цифру?</h2>
+            <p style="margin-bottom: 20px;">Оставьте заявку, и мы отправим Вам приглашение в первую очередь</p>
+            <button class="btn btn-primary" style="background: white; color: #0a66c2;" onclick="openModal()">🎁 Записаться в лист ожидания</button>
+        </div>
+    </div>
+</section>
+<!-- МОДАЛЬНОЕ ОКНО С ФОРМОЙ ОБРАТНОЙ СВЯЗИ -->
+<div id="feedbackModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>📋 Лист ожидания</h3>
+            <button class="btn-close" onclick="closeModal()">×</button>
+        </div>
+        <div class="modal-body">
+            <p style="margin-bottom: 20px; font-size: 14px; color: #475569; text-align: center;">
+                Оставьте контакты — мы пригласим вас первыми на тестирование<br>
+            </p>
+            <div id="modalErrorContainer" class="error-message hidden"></div>
+            <form id="feedbackForm">
+                <div class="form-group">
+                    <label class="form-label">Ваше имя <span class="required">*</span></label>
+                    <input type="text" id="modalName" class="form-input" placeholder="Например: Александр Петров">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Номер телефона <span class="required">*</span></label>
+                    <input type="tel" id="modalPhone" class="form-input" placeholder="+7 (900) 123-45-67">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email <span class="required">*</span></label>
+                    <input type="email" id="modalEmail" class="form-input" placeholder="ivan@example.com">
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="modalConsent">
+                    <label class="checkbox-label" for="modalConsent">Я даю согласие на обработку персональных данных в соответствии с <a href="#">политикой конфиденциальности</a></label>
+                </div>
+                <button type="submit" class="submit-btn">📩 Вступить в лист ожидания</button>
+            </form>
+            <div id="modalSuccessContainer" class="success-message hidden">
+                <span>✅</span>
+                <span>Спасибо! Вы в списке ожидания. Как запустимся — напишем первым.</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer style="border-top: 1px solid #eef2ff; padding: 32px 0; text-align: center;">
+    <div class="container">
+        <p style="color: #6c7a91; font-size: 13px;">© 2025 VERSTAK — Управление производственными операциями</p>
+    </div>
+</footer>
+
+<script>
+    (function() {
+        // Прошло 1.25 часа = 1 час 15 мин = 4500 секунд
+        let elapsedSeconds = 4500;  // 01:15:00
+        const totalSeconds = 7200;   // 02:00:00
+
+        let timerRunning = true;
+
+        const timerElement = document.getElementById('taskTimer');
+        const progressElement = document.getElementById('taskProgress');
+        const completeBtn = document.getElementById('completeTaskBtn');
+        const remainingElement = document.querySelector('#currentTaskBlock div[style*="justify-content: space-between"] span:first-child');
+        const percentElement = document.querySelector('#currentTaskBlock div[style*="justify-content: space-between"] span:last-child');
+
+        function formatTime(seconds) {
+            const hrs = Math.floor(seconds / 3600);
+            const mins = Math.floor((seconds % 3600) / 60);
+            const secs = seconds % 60;
+            return `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function updateDisplay() {
+            if (!timerElement) return;
+            timerElement.textContent = formatTime(elapsedSeconds);
+
+            if (progressElement) {
+                const percent = (elapsedSeconds / totalSeconds) * 100;
+                progressElement.style.width = `${Math.min(percent, 100)}%`;
+
+                if (elapsedSeconds >= totalSeconds) {
+                    progressElement.style.background = '#10b981';
+                } else if (percent > 80) {
+                    progressElement.style.background = '#f59e0b';
+                }
+            }
+
+            // Обновляем оставшееся время
+            const remaining = totalSeconds - elapsedSeconds;
+            if (remainingElement) {
+                remainingElement.innerHTML = `⏱ Осталось: ${formatTime(Math.max(0, remaining))}`;
+            }
+            if (percentElement) {
+                const percent = Math.min(100, Math.floor((elapsedSeconds / totalSeconds) * 100));
+                percentElement.innerHTML = `📊 Выполнено: ${percent}%`;
+            }
+        }
+
+        function tick() {
+            if (!timerRunning) return;
+            if (elapsedSeconds < totalSeconds) {
+                elapsedSeconds++;
+                updateDisplay();
+            } else {
+                timerRunning = false;
+                if (timerElement) timerElement.style.color = '#10b981';
+            }
+        }
+
+        // Запускаем таймер каждую секунду
+        const interval = setInterval(tick, 1000);
+
+        // Кнопка завершения операции
+        if (completeBtn) {
+            completeBtn.addEventListener('click', function() {
+                timerRunning = false;
+                clearInterval(interval);
+                alert('Операция завершена! Таймер остановлен.');
+            });
+        }
+
+        updateDisplay();
+    })();
+</script>
+
+<script>
+    // Данные для конструктора (без изменений)
+    let demoOperations = [{
+        id: 1,
+        name: "📦 Раскрой ЛДСП",
+        planned: "00:45",
+        executor: "Алексей Иванов",
+        role: "Раскройщик",
+        x: 50,
+        y: 50
+    },
+        {
+            id: 2,
+            name: "🔪 Кромкование",
+            planned: "00:30",
+            executor: "Дмитрий Смирнов",
+            role: "Кромочник",
+            x: 50,
+            y: 180
+        },
+        {
+            id: 3,
+            name: "🔧 Присадка",
+            planned: "00:25",
+            executor: "Сергей Новиков",
+            role: "Сверловщик",
+            x: 50,
+            y: 310
+        },
+        {
+            id: 4,
+            name: "🔨 Сборка корпуса",
+            planned: "01:30",
+            executor: "Олег Петров",
+            role: "Сборщик",
+            x: 50,
+            y: 440
+        }
+    ];
+    let demoConnections = [{
+        from: 1,
+        to: 2
+    }, {
+        from: 2,
+        to: 3
+    }, {
+        from: 3,
+        to: 4
+    }];
+    let nextOpId = 5;
+    let connectionMode = false;
+    let connectionFrom = null;
+    let tempLine = null;
+
+    function renderConstructor() {
+        const container = document.getElementById('flowNodes');
+        if (!container) return;
+        container.innerHTML = '';
+        container.style.position = 'relative';
+        container.style.minHeight = '500px';
+        demoOperations.forEach(op => {
+            const card = document.createElement('div');
+            card.className = 'flow-op-card';
+            card.style.left = `${op.x}px`;
+            card.style.top = `${op.y}px`;
+            card.style.position = 'absolute';
+            card.setAttribute('data-id', op.id);
+            card.innerHTML = `<div class="card-header" data-id="${op.id}"><div class="card-title"><span>📋</span><span>Операция #${op.id}</span></div><button class="delete-op-btn" onclick="event.stopPropagation(); deleteDemoOp(${op.id})">✕</button></div><div class="card-content"><div class="op-name">${op.name}</div><div class="op-time"><span>⏱ План: ${op.planned}</span></div><div class="op-executor"><span>👤</span><span>${op.executor} (${op.role})</span></div></div><div class="connection-dot-out" onclick="event.stopPropagation(); startDemoConnection(${op.id})"></div><div class="connection-dot-in" onclick="event.stopPropagation(); completeDemoConnection(${op.id})"></div>`;
+            card.addEventListener('mousedown', (e) => {
+                if (e.target.classList.contains('delete-op-btn') || e.target.classList.contains('connection-dot-out') || e.target.classList.contains('connection-dot-in')) return;
+                const startX = e.clientX,
+                    startY = e.clientY,
+                    startLeft = op.x,
+                    startTop = op.y;
+                const onMouseMove = (moveEvent) => {
+                    op.x = startLeft + (moveEvent.clientX - startX);
+                    op.y = startTop + (moveEvent.clientY - startY);
+                    renderConstructor();
+                };
+                const onMouseUp = () => {
+                    document.removeEventListener('mousemove', onMouseMove);
+                    document.removeEventListener('mouseup', onMouseUp);
+                };
+                document.addEventListener('mousemove', onMouseMove);
+                document.addEventListener('mouseup', onMouseUp);
+                e.preventDefault();
+            });
+            container.appendChild(card);
+        });
+        demoConnections.forEach(conn => {
+            const fromOp = demoOperations.find(o => o.id === conn.from),
+                toOp = demoOperations.find(o => o.id === conn.to);
+            if (!fromOp || !toOp) return;
+            const fromX = fromOp.x + 130,
+                fromY = fromOp.y + 70,
+                toX = toOp.x + 130,
+                toY = toOp.y + 40;
+            const deltaX = toX - fromX,
+                deltaY = toY - fromY,
+                length = Math.sqrt(deltaX * deltaX + deltaY * deltaY),
+                angle = Math.atan2(deltaY, deltaX) * 180 / Math.PI;
+            const line = document.createElement('div');
+            line.className = 'connection-line';
+            line.style.left = `${fromX}px`;
+            line.style.top = `${fromY}px`;
+            line.style.width = `${length}px`;
+            line.style.transform = `rotate(${angle}deg)`;
+            container.appendChild(line);
+        });
+    }
+
+    function addDemoOperation() {
+        const newId = nextOpId++;
+        const maxX = Math.max(...demoOperations.map(o => o.x), 100);
+        demoOperations.push({
+            id: newId,
+            name: `Новая операция ${newId}`,
+            planned: "00:30",
+            executor: "Назначить",
+            role: "Исполнитель",
+            x: maxX + 60,
+            y: 100
+        });
+        renderConstructor();
+    }
+
+    function deleteDemoOp(id) {
+        if (confirm('Удалить операцию и все связанные с ней связи?')) {
+            demoOperations = demoOperations.filter(o => o.id !== id);
+            demoConnections = demoConnections.filter(c => c.from !== id && c.to !== id);
+            renderConstructor();
+        }
+    }
+
+    function startDemoConnection(fromId) {
+        connectionMode = true;
+        connectionFrom = fromId;
+        document.body.style.cursor = 'crosshair';
+        tempLine = document.createElement('div');
+        tempLine.style.position = 'absolute';
+        tempLine.style.background = '#3b82f6';
+        tempLine.style.height = '2px';
+        tempLine.style.transformOrigin = '0 0';
+        tempLine.style.zIndex = '100';
+        tempLine.style.pointerEvents = 'none';
+        document.getElementById('flowNodes').appendChild(tempLine);
+        document.addEventListener('mousemove', updateTempLine);
+    }
+
+    function updateTempLine(e) {
+        if (!connectionMode || !tempLine) return;
+        const fromOp = demoOperations.find(o => o.id === connectionFrom);
+        if (!fromOp) return;
+        const fromX = fromOp.x + 130,
+            fromY = fromOp.y + 70,
+            rect = document.getElementById('flowNodes').getBoundingClientRect(),
+            toX = e.clientX - rect.left,
+            toY = e.clientY - rect.top,
+            deltaX = toX - fromX,
+            deltaY = toY - fromY,
+            length = Math.sqrt(deltaX * deltaX + deltaY * deltaY),
+            angle = Math.atan2(deltaY, deltaX) * 180 / Math.PI;
+        tempLine.style.left = `${fromX}px`;
+        tempLine.style.top = `${fromY}px`;
+        tempLine.style.width = `${length}px`;
+        tempLine.style.transform = `rotate(${angle}deg)`;
+    }
+
+    function completeDemoConnection(toId) {
+        if (!connectionMode) return;
+        if (tempLine) tempLine.remove();
+        document.removeEventListener('mousemove', updateTempLine);
+        if (connectionFrom === toId) {
+            cancelDemoConnection();
+            return;
+        }
+        const exists = demoConnections.some(c => c.from === connectionFrom && c.to === toId);
+        if (!exists) demoConnections.push({
+            from: connectionFrom,
+            to: toId
+        });
+        cancelDemoConnection();
+        renderConstructor();
+    }
+
+    function cancelDemoConnection() {
+        connectionMode = false;
+        connectionFrom = null;
+        document.body.style.cursor = 'default';
+        if (tempLine) {
+            tempLine.remove();
+            tempLine = null;
+        }
+        document.removeEventListener('mousemove', updateTempLine);
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && connectionMode) cancelDemoConnection();
+    });
+    renderConstructor();
+
+    // Данные для сводки (без изменений)
+    const allOperations = [
+        { id: 1, name: "Раскрой ЛДСП", order: "Стол Сканди", status: "progress", executor: "Алексей Иванов", time: "00:27", planned: "00:45" },
+        { id: 2, name: "Кромкование", order: "Стол Сканди", status: "progress", executor: "Дмитрий Смирнов", time: "00:18", planned: "00:30" },
+        { id: 3, name: "Присадка", order: "Стол Сканди", status: "progress", executor: "Сергей Новиков", time: "00:15", planned: "00:25" },
+        { id: 4, name: "Сборка корпуса", order: "Стол Сканди", status: "progress", executor: "Олег Петров", time: "00:45", planned: "01:30" },
+        { id: 5, name: "Установка фасадов", order: "Шкаф-купе", status: "progress", executor: "Олег Соколов", time: "01:15", planned: "01:00" },
+        { id: 6, name: "Покраска", order: "Шкаф-купе", status: "done", executor: "Андрей Козлов", time: "00:52", planned: "00:45" },
+        { id: 7, name: "Сборка ящиков", order: "Шкаф-купе", status: "done", executor: "Игорь Морозов", time: "00:35", planned: "00:35" },
+        { id: 8, name: "Шлифовка", order: "Табурет", status: "done", executor: "Петр Сидоров", time: "00:20", planned: "00:20" },
+        { id: 9, name: "Покраска", order: "Табурет", status: "overdue", executor: "Андрей Козлов", time: "00:45", planned: "00:30" },
+        { id: 10, name: "Сборка", order: "Табурет", status: "overdue", executor: "Олег Петров", time: "00:35", planned: "00:25" },
+        { id: 11, name: "Контроль качества", order: "Стол Сканди", status: "pending", executor: "Сергей Новиков", time: "00:00", planned: "00:15" },
+    ];
+
+    let currentStatusFilter = "all",
+        currentPage = 1,
+        itemsPerPage = 5;
+
+    function getFilteredOperations() {
+        if (currentStatusFilter === "all") return allOperations;
+        if (currentStatusFilter === "overdue") return allOperations.filter(op => op.status === "overdue");
+        return allOperations.filter(op => op.status === currentStatusFilter);
+    }
+
+    function getPaginatedOperations() {
+        const filtered = getFilteredOperations();
+        const start = (currentPage - 1) * itemsPerPage;
+        return filtered.slice(start, start + itemsPerPage);
+    }
+
+    function getTotalPages() {
+        return Math.ceil(getFilteredOperations().length / itemsPerPage);
+    }
+
+    function updateCounters() {
+        const total = allOperations.length,
+            progress = allOperations.filter(o => o.status === "progress").length,
+            pending = allOperations.filter(o => o.status === "pending").length,
+            done = allOperations.filter(o => o.status === "done").length;
+        const allBtn = document.querySelector('[data-status="all"]'),
+            progressBtn = document.querySelector('[data-status="progress"]'),
+            pendingBtn = document.querySelector('[data-status="pending"]'),
+            doneBtn = document.querySelector('[data-status="done"]');
+        if (allBtn) allBtn.innerHTML = `📊 Все (${total})`;
+        if (progressBtn) progressBtn.innerHTML = `⚙️ В работе (${progress})`;
+        if (pendingBtn) pendingBtn.innerHTML = `⏸ Ожидают (${pending})`;
+        if (doneBtn) doneBtn.innerHTML = `✅ Завершены (${done})`;
+    }
+
+    function renderOperations() {
+        const operations = getPaginatedOperations(),
+            container = document.getElementById('operationsList');
+        if (operations.length === 0) {
+            container.innerHTML = '<div style="text-align:center; padding:20px;">Нет операций с выбранным статусом</div>';
+            return;
+        }
+        container.innerHTML = operations.map((op, idx) => `<div class="operation-row row-${op.status}" style="animation-delay: ${idx * 0.05}s;" onclick="filterByStatus('${op.status}')"><div class="op-info"><div class="op-name">${op.name}</div><div class="op-meta"><span>📦 ${op.order}</span><span>👤 ${op.executor}</span></div></div><div style="text-align: right;"><div class="op-status status-${op.status}">${op.status === 'progress' ? '▶ В работе' : (op.status === 'done' ? '✓ Завершена' : '⏸ Ожидает')}</div><div class="op-time">${op.status !== 'pending' ? op.time + ' / ' + op.planned : '— / ' + op.planned}</div></div></div>`).join('');
+    }
+
+    function renderPagination() {
+        const totalPages = getTotalPages(),
+            container = document.getElementById('paginationControls');
+        if (totalPages <= 1) {
+            container.innerHTML = '';
+            return;
+        }
+        let html = '';
+        html += `<button class="page-btn" onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>←</button>`;
+        for (let i = 1; i <= totalPages; i++) html += `<button class="page-btn ${i === currentPage ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+        html += `<button class="page-btn" onclick="goToPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>→</button>`;
+        container.innerHTML = html;
+    }
+
+    function goToPage(page) {
+        const totalPages = getTotalPages();
+        if (page < 1 || page > totalPages) return;
+        currentPage = page;
+        renderOperations();
+        renderPagination();
+    }
+
+    function filterByStatus(status) {
+        currentStatusFilter = status;
+        currentPage = 1;
+        document.querySelectorAll('.filter-pill').forEach(pill => {
+            pill.classList.remove('active');
+            if (pill.getAttribute('data-status') === status) pill.classList.add('active');
+        });
+        renderOperations();
+        renderPagination();
+    }
+
+    // Функции для модального окна
+    function openModal() {
+        document.getElementById('feedbackModal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeModal() {
+        document.getElementById('feedbackModal').classList.remove('active');
+        document.body.style.overflow = '';
+        document.getElementById('modalErrorContainer').classList.add('hidden');
+        document.getElementById('modalSuccessContainer').classList.add('hidden');
+        document.getElementById('feedbackForm').reset();
+    }
+    // Обработчик формы
+    document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const name = document.getElementById('modalName').value.trim();
+        const phone = document.getElementById('modalPhone').value.trim();
+        const email = document.getElementById('modalEmail').value.trim();
+        const consent = document.getElementById('modalConsent').checked;
+        const errorContainer = document.getElementById('modalErrorContainer');
+        const successContainer = document.getElementById('modalSuccessContainer');
+        errorContainer.classList.add('hidden');
+        successContainer.classList.add('hidden');
+        const errors = [];
+        if (!name) errors.push('• Введите ваше имя');
+        else if (name.length < 2) errors.push('• Имя должно содержать не менее 2 символов');
+        if (!phone) errors.push('• Введите номер телефона');
+        else { const phoneDigits = phone.replace(/\D/g, ''); if (phoneDigits.length < 10) errors.push('• Введите корректный номер телефона (не менее 10 цифр)'); }
+        if (!email) errors.push('• Введите email');
+        else { const emailRegex = /^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$/; if (!emailRegex.test(email)) errors.push('• Введите корректный email'); }
+        if (!consent) errors.push('• Подтвердите согласие на обработку персональных данных');
+        if (errors.length > 0) { errorContainer.innerHTML = errors.join('<br>'); errorContainer.classList.remove('hidden'); return; }
+        console.log('Форма отправлена:', { name, phone, email, consent });
+        successContainer.classList.remove('hidden');
+        document.getElementById('feedbackForm').reset();
+        setTimeout(() => {
+            successContainer.classList.add('hidden');
+            closeModal();
+        }, 3000);
+    });
+    // Форматирование телефона
+    document.getElementById('modalPhone').addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, '');
+        if (value.length === 0) { e.target.value = ''; return; }
+        let formatted = '';
+        if (value.length <= 1) formatted = '+7' + value;
+        else if (value.length <= 4) formatted = '+7 (' + value.substring(1, 4);
+        else if (value.length <= 7) formatted = '+7 (' + value.substring(1, 4) + ') ' + value.substring(4, 7);
+        else if (value.length <= 9) formatted = '+7 (' + value.substring(1, 4) + ') ' + value.substring(4, 7) + '-' + value.substring(7, 9);
+        else formatted = '+7 (' + value.substring(1, 4) + ') ' + value.substring(4, 7) + '-' + value.substring(7, 9) + '-' + value.substring(9, 11);
+        e.target.value = formatted;
+    });
+    // Закрытие по клику вне окна
+    window.onclick = function(event) { const modal = document.getElementById('feedbackModal'); if (event.target === modal) closeModal(); }
+
+    document.querySelectorAll('.filter-pill').forEach(pill => pill.addEventListener('click', () => filterByStatus(pill.getAttribute('data-status'))));
+    document.addEventListener('DOMContentLoaded', () => {
+        const progressFills = document.querySelectorAll('.progress-fill, .load-fill');
+        progressFills.forEach(fill => {
+            const width = fill.style.width;
+            fill.style.width = '0%';
+            setTimeout(() => {
+                fill.style.width = width;
+            }, 100);
+        });
+    });
+    updateCounters();
+    renderOperations();
+    renderPagination();
+</script>
+</body>
+
+</html>

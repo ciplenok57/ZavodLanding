@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VERSTAK — Конструктор техпроцесса</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f8fafc; color: #0a2540; overflow: hidden; }
+
+        .app { display: flex; flex-direction: column; height: 100vh; }
+
+        /* Стили для плиток шаблонов */
+        .template-section {
+            display: flex;
+            gap: 16px;
+            padding: 12px 16px;
+            background: white;
+            border-bottom: 1px solid #eef2f6;
+            flex-wrap: wrap;
+            flex-shrink: 0;
+        }
+        .template-card {
+            background: #f8fafc;
+            border-radius: 20px;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid #e2e8f0;
+            flex: 1;
+            min-width: 200px;
+        }
+        .template-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            border-color: #0a66c2;
+            background: white;
+        }
+        .template-icon { font-size: 32px; }
+        .template-info h4 { font-size: 14px; font-weight: 700; color: #0a2540; }
+        .template-info p { font-size: 11px; color: #6c7a91; margin-top: 2px; }
+        .template-badge { background: #e0e7ff; color: #0a66c2; padding: 2px 8px; border-radius: 20px; font-size: 9px; font-weight: 600; margin-left: auto; }
+
+        .graph-container { flex: 1.5; min-height: 280px; position: relative; border-bottom: 1px solid #eef2f6; }
+        .gantt-container { flex: 1.2; background: white; overflow: auto; padding: 16px 20px; border-top: 1px solid #eef2f6; }
+        .gantt-table { width: 100%; border-collapse: collapse; font-size: 12px; position: relative; }
+        .gantt-table th { text-align: left; padding: 10px 12px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; position: sticky; top: 0; background: white; z-index: 2; }
+        .gantt-table td { padding: 8px 12px; border-bottom: 1px solid #edf2f7; vertical-align: middle; position: relative; }
+        .gantt-table tr { transition: all 0.2s ease; border-radius: 8px; cursor: pointer; }
+        .gantt-table tr:hover td:first-child { background: #fef3c7 !important; }
+        .info-bar { padding: 8px 16px; background: #f1f5f9; border-top: 1px solid #eef2f6; font-size: 11px; display: flex; justify-content: space-between; flex-shrink: 0; }
+        .badge { background: #e0e7ff; color: #0a66c2; padding: 2px 8px; border-radius: 40px; font-size: 10px; }
+        .react-flow { width: 100%; height: 100%; }
+        .react-flow__attribution { display: none !important; }
+
+        @keyframes pulse-glow-green {
+            0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
+            70% { box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+        }
+        @keyframes pulse-border-green {
+            0% { border-color: rgba(34, 197, 94, 0.3); }
+            50% { border-color: rgba(34, 197, 94, 1); }
+            100% { border-color: rgba(34, 197, 94, 0.3); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .active-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: #dcfce7;
+            color: #16a34a;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 9px;
+            font-weight: 600;
+            margin-left: 8px;
+            animation: pulse-border-green 1.5s ease-in-out infinite;
+        }
+        .gantt-table tr { animation: fadeInUp 0.3s ease forwards; opacity: 0; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/reactflow@11.11.4/dist/umd/index.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/reactflow@11.11.4/dist/style.css" />
+</head>
+<body>
+<div id="root"></div>
+
+<script>
+    (function() {
+        const { React, ReactDOM } = window;
+        const ReactFlowLib = window.ReactFlow;
+
+        const {
+            ReactFlow,
+            ReactFlowProvider,
+            addEdge,
+            applyNodeChanges,
+            applyEdgeChanges,
+            Background,
+            Controls,
+            Handle,
+            Position,
+            MarkerType
+        } = ReactFlowLib;
+
+        const statusConfig = {
+            waiting: { icon: '⏸', label: 'Ожидает', color: '#64748b', bg: '#f1f5f9' },
+            in_progress: { icon: '▶', label: 'В работе', color: '#22c55e', bg: '#dcfce7' },
+            done: { icon: '✅', label: 'Готово', color: '#10b981', bg: '#d1fae5' },
+            overdue: { icon: '⚠️', label: 'Просрочено', color: '#dc2626', bg: '#fee2e2' }
+        };
+
+        const formatTime = function(seconds) {
+            var mins = Math.floor(seconds / 60);
+            var secs = seconds % 60;
+            return (mins < 10 ? '0' + mins : mins) + ':' + (secs < 10 ? '0' + secs : secs);
+        };
+
+        const formatTimeShort = function(seconds) {
+            if (seconds >= 60) return Math.floor(seconds / 60) + 'ч ' + (seconds % 60) + 'мин';
+            return seconds + 'мин';
+        };
+
+        const canStartOperation = function(opId, nodes, edges) {
+            var predecessors = edges.filter(function(e) { return e.target === opId; }).map(function(e) { return e.source; });
+            if (predecessors.length === 0) return true;
+            for (var i = 0; i < predecessors.length; i++) {
+                var predId = predecessors[i];
+                var predNode = null;
+                for (var j = 0; j < nodes.length; j++) {
+                    if (nodes[j].id === predId) { predNode = nodes[j]; break; }
+                }
+                if (!predNode || predNode.data.status !== 'done') return false;
+            }
+            return true;
+        };
+
+        const toggleOperationStatus = function(nodes, setNodes, edges, opId) {
+            var targetNode = null;
+            for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].id === opId) { targetNode = nodes[i]; break; }
+            }
+            if (!targetNode) return;
+
+            if (targetNode.data.status === 'in_progress') {
+                setNodes(function(prev) {
+                    return prev.map(function(node) {
+                        if (node.id === opId) {
+                            var newData = Object.assign({}, node.data, { status: 'waiting' });
+                            return Object.assign({}, node, { data: newData });
+                        }
+                        return node;
+                    });
+                });
+            } else if (targetNode.data.status === 'waiting') {
+                if (canStartOperation(opId, nodes, edges)) {
+                    setNodes(function(prev) {
+                        return prev.map(function(node) {
+                            if (node.id === opId) {
+                                var newData = Object.assign({}, node.data, { status: 'in_progress' });
+                                return Object.assign({}, node, { data: newData });
+                            }
+                            return node;
+                        });
+                    });
+                } else {
+                    alert('⚠️ Нельзя запустить операцию: сначала завершите все предыдущие операции!');
+                }
+            } else if (targetNode.data.status === 'in_progress') {
+                setNodes(function(prev) {
+                    return prev.map(function(node) {
+                        if (node.id === opId) {
+                            var newData = Object.assign({}, node.data, { status: 'done' });
+                            return Object.assign({}, node, { data: newData });
+                        }
+                        return node;
+                    });
+                });
+            }
+        };
+
+        // ========== ШАБЛОН 1: СТОЛ (10 операций) ==========
+        const getTableNodes = function() {
+            return [
+                { id: 'a1', type: 'custom', position: { x: 30, y: 30 }, data: { label: '📦 Раскрой ЛДСП', time: 45, role: 'Раскройщик', responsible: 'Алексей Иванов', color: '#3b82f6', status: 'in_progress', priority: '🔴 Высокий', equipment: 'CNC-3000' } },
+                { id: 'a2', type: 'custom', position: { x: 320, y: 30 }, data: { label: '🔪 Кромкование', time: 30, role: 'Кромочник', responsible: 'Дмитрий Смирнов', color: '#10b981', status: 'waiting', priority: '🟠 Средний', equipment: 'Кромкооблицовочный' } },
+                { id: 'a3', type: 'custom', position: { x: 610, y: 30 }, data: { label: '🔧 Сверловка', time: 25, role: 'Сверловщик', responsible: 'Сергей Новиков', color: '#f59e0b', status: 'waiting', priority: '🟠 Средний', equipment: 'Сверлильный' } },
+                { id: 'a4', type: 'custom', position: { x: 900, y: 30 }, data: { label: '🔨 Сборка каркаса', time: 90, role: 'Сборщик', responsible: 'Олег Петров', color: '#ef4444', status: 'waiting', priority: '🔴 Высокий', equipment: 'Сборочный стол' } },
+                { id: 'b1', type: 'custom', position: { x: 320, y: 180 }, data: { label: '🪵 Шлифовка', time: 40, role: 'Шлифовщик', responsible: 'Петр Сидоров', color: '#f97316', status: 'waiting', priority: '🟠 Средний', equipment: 'Шлифовальный' } },
+                { id: 'b2', type: 'custom', position: { x: 610, y: 180 }, data: { label: '🎨 Покраска', time: 75, role: 'Маляр', responsible: 'Андрей Козлов', color: '#8b5cf6', status: 'waiting', priority: '🟠 Средний', equipment: 'Покрасочная камера' } },
+                { id: 'c1', type: 'custom', position: { x: 320, y: 330 }, data: { label: '🔧 Сверловка под фурнитуру', time: 25, role: 'Сверловщик', responsible: 'Сергей Новиков', color: '#f59e0b', status: 'waiting', priority: '🟠 Средний', equipment: 'Сверлильный' } },
+                { id: 'c2', type: 'custom', position: { x: 610, y: 330 }, data: { label: '🔩 Установка фурнитуры', time: 35, role: 'Сборщик', responsible: 'Олег Петров', color: '#14b8a6', status: 'waiting', priority: '🟠 Средний', equipment: 'Сборочный стол' } },
+                { id: 'quality', type: 'custom', position: { x: 1190, y: 180 }, data: { label: '✅ Контроль качества', time: 20, role: 'ОТК', responsible: 'Сергей Новиков', color: '#6366f1', status: 'waiting', priority: '🔴 Высокий', equipment: 'Контрольный стол' } },
+                { id: 'packing', type: 'custom', position: { x: 1480, y: 180 }, data: { label: '📦 Упаковка', time: 25, role: 'Упаковщик', responsible: 'Анна Смирнова', color: '#a855f7', status: 'waiting', priority: '⚪ Низкий', equipment: 'Упаковочный стол' } }
+            ];
+        };
+
+        const getTableEdges = function() {
+            var opt = { type: 'smoothstep', markerEnd: { type: MarkerType.ArrowClosed, width: 15, height: 15, color: '#94a3b8' }, style: { stroke: '#94a3b8', strokeWidth: 1.5 } };
+            return [
+                { id: 'e1', source: 'a1', target: 'a2', type: opt.type, markerEnd: opt.markerEnd, style: opt.style },
+                { id: 'e2', source: 'a2', target: 'a3', type: opt.type, markerEnd: opt.markerEnd, style: opt.style },
+                { id: 'e3', source: 'a3', target: 'a4', type: opt.type, markerEnd: opt.markerEnd, style: opt.style },
+                { id: 'e4', source: 'a4', target: 'quality', type: opt.type, markerEnd: opt.markerEnd, style: opt.style },
+                { id: 'e5', source: 'b1', target: 'b2', type: opt.type, markerEnd: opt.markerEnd, style: opt.style },
+                { id: 'e6', source: 'b2', target: 'quality', type: opt.type, markerEnd: opt.markerEnd, style: opt.style },
+                { id: 'e7', source: 'c1', target: 'c2', type: opt.type, markerEnd: opt.markerEnd, style: opt.style },
+                { id: 'e8', source: 'c2', target: 'quality', type: opt.type, markerEnd: opt.markerEnd, style: opt.style },
+                { id: 'e9', source: 'quality', target: 'packing', type: opt.type, markerEnd: opt.markerEnd, style: opt.style }
+            ];
+        };
+
+        // ========== ШАБЛОН 2: ШКАФ-КУПЕ (10 операций) ==========
+        const getCabinetNodes = function() {
+            return [
+                { id: 'c1', type: 'custom', position: { x: 30, y: 80 }, data: { label: '📐 Проектирование шкафа', time: 60, role: 'Конструктор', responsible: 'Анна Дизайнер', color: '#8b5cf6', status: 'in_progress', priority: '🔴 Высокий', equipment: 'CAD-система' } },
+                { id: 'c2', type: 'custom', position: { x: 320, y: 30 }, data: { label: '📦 Раскрой ЛДСП', time: 45, role: 'Раскройщик', responsible: 'Иван Петров', color: '#3b82f6', status: 'waiting', priority: '🔴 Высокий', equipment: 'CNC-4000' } },
+                { id: 'c3', type: 'custom', position: { x: 320, y: 180 }, data: { label: '🖨️ Порезка зеркала', time: 35, role: 'Стекольщик', responsible: 'Максим Соколов', color: '#ec489a', status: 'waiting', priority: '🟠 Средний', equipment: 'Станок для стекла' } },
+                { id: 'c4', type: 'custom', position: { x: 610, y: 30 }, data: { label: '🔪 Кромкование ЛДСП', time: 40, role: 'Кромочник', responsible: 'Сергей Козлов', color: '#10b981', status: 'waiting', priority: '🟠 Средний', equipment: 'Кромкооблицовочный' } },
+                { id: 'c5', type: 'custom', position: { x: 610, y: 180 }, data: { label: '🪵 Шлифовка торцов', time: 25, role: 'Шлифовщик', responsible: 'Петр Сидоров', color: '#f97316', status: 'waiting', priority: '🟠 Средний', equipment: 'Шлифовальный станок' } },
+                { id: 'c6', type: 'custom', position: { x: 900, y: 30 }, data: { label: '🔧 Сверловка под фурнитуру', time: 30, role: 'Сверловщик', responsible: 'Андрей Соколов', color: '#f59e0b', status: 'waiting', priority: '🟠 Средний', equipment: 'Сверлильный станок' } },
+                { id: 'c7', type: 'custom', position: { x: 900, y: 180 }, data: { label: '🔩 Сборка корпуса', time: 90, role: 'Сборщик', responsible: 'Олег Петров', color: '#ef4444', status: 'waiting', priority: '🔴 Высокий', equipment: 'Сборочный стол' } },
+                { id: 'c8', type: 'custom', position: { x: 1190, y: 30 }, data: { label: '✨ Монтаж зеркала и фасадов', time: 50, role: 'Сборщик', responsible: 'Олег Петров', color: '#14b8a6', status: 'waiting', priority: '🟠 Средний', equipment: 'Монтажный стол' } },
+                { id: 'c9', type: 'custom', position: { x: 1190, y: 180 }, data: { label: '✅ Контроль качества', time: 25, role: 'ОТК', responsible: 'Сергей Новиков', color: '#6366f1', status: 'waiting', priority: '🔴 Высокий', equipment: 'Контрольный стол' } },
+                { id: 'c10', type: 'custom', position: { x: 1480, y: 110 }, data: { label: '📦 Упаковка и отгрузка', time: 30, role: 'Упаковщик', responsible: 'Анна Смирнова', color: '#a855f7', status: 'waiting', priority: '⚪ Низкий', equipment: 'Упаковочная линия' } }
+            ];
+        };
+
+        const getCabinetEdges = function() {
+            var opt = { type: 'smoothstep', markerEnd: { type: MarkerType.ArrowClosed, width: 15, height: 15, color: '#94a3b8' }, style: { stroke: '#94a3b8', strokeWidth: 1.5 } };
+            return [
+                { id: 'e1', source: 'c1', target: 'c2', type: opt.type, markerEnd: opt.markerEnd, style: opt.style },
+                { id: 'e2', source: 'c1', target: 'c3', type: opt.type, markerEnd: opt.markerEnd, style: opt.style },
+                { id: 'e3', source: 'c2', target: 'c4', type: opt.type, markerEnd: opt.markerEnd, style: opt.style },
+                { id: 'e4', source: 'c3', target: 'c5', type: opt.type, markerEnd: opt.markerEnd, style: opt.style },
+                { id: 'e5', source: 'c4', target: 'c6', type: opt.type, markerEnd: opt.markerEnd, style: opt.style },
+                { id: 'e6', source: 'c5', target: 'c7', type: opt.type, markerEnd: opt.markerEnd, style: opt.style },
+                { id: 'e7', source: 'c6', target: 'c7', type: opt.type, markerEnd: opt.markerEnd, style: opt.style },
+                { id: 'e8', source: 'c7', target: 'c8', type: opt.type, markerEnd: opt.markerEnd, style: opt.style },
+                { id: 'e9', source: 'c8', target: 'c9', type: opt.type, markerEnd: opt.markerEnd, style: opt.style },
+                { id: 'e10', source: 'c9', target: 'c10', type: opt.type, markerEnd: opt.markerEnd, style: opt.style }
+            ];
+        };
+
+        // ========== ШАБЛОН 3: КВАНТОВЫЙ ТЕЛЕПОРТ (10 операций) ==========
+        const getTeleportNodes = function() {
+            return [
+                { id: 't1', type: 'custom', position: { x: 30, y: 80 }, data: { label: '🔬 Калибровка квантового чипа', time: 60, role: 'Квантовый инженер', responsible: 'Доктор Эми Смит', color: '#8b5cf6', status: 'in_progress', priority: '🔴 Высокий', equipment: 'Квантовый компьютер' } },
+                { id: 't2', type: 'custom', position: { x: 320, y: 30 }, data: { label: '🌀 Создание ЭПР-пары', time: 45, role: 'Физик', responsible: 'Профессор Джонс', color: '#ec489a', status: 'waiting', priority: '🔴 Высокий', equipment: 'Лазерный интерферометр' } },
+                { id: 't3', type: 'custom', position: { x: 320, y: 180 }, data: { label: '⚡ Запуск генератора частиц', time: 35, role: 'Оператор', responsible: 'Елена Волкова', color: '#f59e0b', status: 'waiting', priority: '🟠 Средний', equipment: 'Генератор' } },
+                { id: 't4', type: 'custom', position: { x: 610, y: 30 }, data: { label: '📡 Настройка телепортационной матрицы', time: 70, role: 'Инженер', responsible: 'Виктор Ли', color: '#14b8a6', status: 'waiting', priority: '🔴 Высокий', equipment: 'Матричный процессор' } },
+                { id: 't5', type: 'custom', position: { x: 610, y: 180 }, data: { label: '🔭 Сканирование объекта', time: 40, role: 'Наблюдатель', responsible: 'Алексей Соколов', color: '#3b82f6', status: 'waiting', priority: '🟠 Средний', equipment: '3D-сканер' } },
+                { id: 't6', type: 'custom', position: { x: 900, y: 30 }, data: { label: '💾 Оцифровка квантового состояния', time: 55, role: 'Программист', responsible: 'Майкл Чен', color: '#10b981', status: 'waiting', priority: '🟠 Средний', equipment: 'Квантовый сервер' } },
+                { id: 't7', type: 'custom', position: { x: 900, y: 180 }, data: { label: '📡 Передача данных на приёмник', time: 30, role: 'Связист', responsible: 'Ольга Новикова', color: '#a855f7', status: 'waiting', priority: '🟠 Средний', equipment: 'Оптоволокно' } },
+                { id: 't8', type: 'custom', position: { x: 1190, y: 110 }, data: { label: '🌀 Реконструкция материи', time: 80, role: 'Физик', responsible: 'Профессор Джонс', color: '#f97316', status: 'waiting', priority: '🔴 Высокий', equipment: 'Реконструктор' } },
+                { id: 't9', type: 'custom', position: { x: 1480, y: 50 }, data: { label: '✅ Верификация телепортации', time: 35, role: 'Контролёр', responsible: 'Доктор Эми Смит', color: '#6366f1', status: 'waiting', priority: '🔴 Высокий', equipment: 'Контрольный стол' } },
+                { id: 't10', type: 'custom', position: { x: 1480, y: 180 }, data: { label: '🎉 Объект успешно телепортирован', time: 15, role: 'Весь отдел', responsible: 'Команда', color: '#10b981', status: 'waiting', priority: '🟢 Финал', equipment: '-' } }
+            ];
+        };
+
+        const getTeleportEdges = function() {
+            var opt = { type: 'smoothstep', markerEnd: { type: MarkerType.ArrowClosed, width: 15, height: 15, color: '#94a3b8' }, style: { stroke: '#94a3b8', strokeWidth: 1.5 } };
+            return [
+                { id: 'e1', source: 't1', target: 't2', type: opt.type, markerEnd: opt.markerEnd, style: opt.style },
+                { id: 'e2', source: 't1', target: 't3', type: opt.type, markerEnd: opt.markerEnd, style: opt.style },
+                { id: 'e3', source: 't2', target: 't4', type: opt.type, markerEnd: opt.markerEnd, style: opt.style },
+                { id: 'e4', source: 't3', target: 't5', type: opt.type, markerEnd: opt.markerEnd, style: opt.style },
+                { id: 'e5', source: 't4', target: 't6', type: opt.type, markerEnd: opt.markerEnd, style: opt.style },
+                { id: 'e6', source: 't5', target: 't7', type: opt.type, markerEnd: opt.markerEnd, style: opt.style },
+                { id: 'e7', source: 't6', target: 't8', type: opt.type, markerEnd: opt.markerEnd, style: opt.style },
+                { id: 'e8', source: 't7', target: 't8', type: opt.type, markerEnd: opt.markerEnd, style: opt.style },
+                { id: 'e9', source: 't8', target: 't9', type: opt.type, markerEnd: opt.markerEnd, style: opt.style },
+                { id: 'e10', source: 't9', target: 't10', type: opt.type, markerEnd: opt.markerEnd, style: opt.style }
+            ];
+        };
+
+        const CustomNode = function(props) {
+            var id = props.id;
+            var data = props.data;
+            var selected = props.selected;
+            var nodes = props.nodes;
+            var edges = props.edges;
+            var setNodes = props.setNodes;
+            var handleToggleStatus = props.handleToggleStatus;
+
+            var status = statusConfig[data.status] || statusConfig.waiting;
+            var canStart = (data.status === 'waiting') ? canStartOperation(id, nodes, edges) : false;
+
+            var onDelete = function(e) {
+                e.stopPropagation();
+                if (data.onDelete) data.onDelete(id);
+            };
+
+            var onToggle = function(e) {
+                e.stopPropagation();
+                if (handleToggleStatus) handleToggleStatus(id);
+            };
+
+            var actionButton = null;
+            if (data.status === 'waiting') {
+                actionButton = React.createElement('button', {
+                    onClick: onToggle,
+                    style: { background: canStart ? '#22c55e' : '#94a3b8', border: 'none', borderRadius: '12px', padding: '2px 6px', fontSize: '8px', cursor: canStart ? 'pointer' : 'not-allowed', color: 'white' }
+                }, canStart ? '▶ Запустить' : '🔒 Ждёт');
+            } else if (data.status === 'in_progress') {
+                actionButton = React.createElement('button', {
+                    onClick: onToggle,
+                    style: { background: '#ef4444', border: 'none', borderRadius: '12px', padding: '2px 6px', fontSize: '8px', cursor: 'pointer', color: 'white' }
+                }, '✅ Завершить');
+            } else if (data.status === 'done') {
+                actionButton = React.createElement('span', { style: { fontSize: '9px', color: '#10b981' } }, '✓ Завершено');
+            }
+
+            return React.createElement('div', {
+                    style: {
+                        padding: '8px 12px',
+                        borderRadius: '12px',
+                        background: data.status === 'in_progress' ? '#f0fdf4' : 'white',
+                        border: '2px solid ' + (selected ? '#0a66c2' : (data.status === 'in_progress' ? '#22c55e' : '#e2e8f0')),
+                        boxShadow: data.status === 'in_progress' ? '0 0 0 2px rgba(34,197,94,0.2)' : '0 2px 8px rgba(0,0,0,0.06)',
+                        width: '250px',
+                        position: 'relative'
+                    }
+                },
+                React.createElement(Handle, { type: 'target', position: Position.Left, style: { background: '#94a3b8', width: 8, height: 8, left: -5 } }),
+                React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' } },
+                    React.createElement('div', { style: { display: 'flex', gap: '4px', flexWrap: 'wrap' } },
+                        React.createElement('span', { style: { background: status.bg, color: status.color, padding: '2px 6px', borderRadius: '20px', fontSize: '8px', fontWeight: 500 } }, status.icon + ' ' + status.label),
+                        React.createElement('span', { style: { background: '#e0e7ff', color: '#0a66c2', padding: '2px 6px', borderRadius: '20px', fontSize: '8px', fontWeight: 500 } }, data.priority || 'Средний'),
+                        data.status === 'in_progress' && React.createElement('span', { className: 'active-badge' }, '⚡ АКТИВНА')
+                    ),
+                    React.createElement('button', { onClick: onDelete, style: { background: 'none', border: 'none', cursor: 'pointer', color: '#94a3b8', fontSize: '11px', padding: '2px 4px' }, onMouseEnter: function(e) { e.currentTarget.style.color = '#ef4444'; }, onMouseLeave: function(e) { e.currentTarget.style.color = '#94a3b8'; } }, '✕')
+                ),
+                React.createElement('div', { style: { fontWeight: 600, fontSize: '11px', marginBottom: '6px', color: '#0a2540' } }, data.label),
+                React.createElement('div', { style: { marginBottom: '3px', fontSize: '9px' } },
+                    React.createElement('span', { style: { color: '#475569' } }, 'Отв: '),
+                    React.createElement('span', { style: { fontWeight: 500, color: '#0a66c2' } }, data.responsible)
+                ),
+                React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '9px', color: '#6c7a91' } },
+                    React.createElement('span', null, '⏱ ' + formatTime(data.time)),
+                    React.createElement('span', null, data.equipment || '—'),
+                    actionButton
+                ),
+                React.createElement(Handle, { type: 'source', position: Position.Right, style: { background: data.color || '#3b82f6', width: 8, height: 8, right: -5 } })
+            );
+        };
+
+        const calculateGanttTimeline = function(nodes, edges) {
+            var opMap = {};
+            for (var i = 0; i < nodes.length; i++) {
+                var node = nodes[i];
+                opMap[node.id] = {
+                    id: node.id,
+                    duration: node.data.time,
+                    label: node.data.label,
+                    responsible: node.data.responsible,
+                    color: node.data.color,
+                    status: node.data.status,
+                    start: 0,
+                    end: 0,
+                    predecessors: [],
+                    successors: []
+                };
+            }
+            for (var j = 0; j < edges.length; j++) {
+                var edge = edges[j];
+                if (opMap[edge.source] && opMap[edge.target]) {
+                    opMap[edge.source].successors.push(edge.target);
+                    opMap[edge.target].predecessors.push(edge.source);
+                }
+            }
+            var startTimes = {};
+            var getStartTime = function(nodeId, visited) {
+                if (visited === undefined) visited = new Set();
+                if (startTimes[nodeId] !== undefined) return startTimes[nodeId];
+                if (visited.has(nodeId)) return 0;
+                visited.add(nodeId);
+                var node = opMap[nodeId];
+                if (!node) return 0;
+                if (node.predecessors.length === 0) {
+                    startTimes[nodeId] = 0;
+                    return 0;
+                }
+                var maxPredEnd = 0;
+                for (var k = 0; k < node.predecessors.length; k++) {
+                    var predId = node.predecessors[k];
+                    var predStart = getStartTime(predId, visited);
+                    var predDuration = opMap[predId] ? opMap[predId].duration : 0;
+                    var predEnd = predStart + predDuration;
+                    if (predEnd > maxPredEnd) maxPredEnd = predEnd;
+                }
+                startTimes[nodeId] = maxPredEnd;
+                return startTimes[nodeId];
+            };
+            for (var i2 = 0; i2 < nodes.length; i2++) {
+                getStartTime(nodes[i2].id);
+            }
+            var totalDuration = 0;
+            for (var i3 = 0; i3 < nodes.length; i3++) {
+                var n = nodes[i3];
+                var start = startTimes[n.id] || 0;
+                opMap[n.id].start = start;
+                opMap[n.id].end = start + n.data.time;
+                if (opMap[n.id].end > totalDuration) totalDuration = opMap[n.id].end;
+            }
+            var timeline = [];
+            for (var key in opMap) { timeline.push(opMap[key]); }
+            return { timeline: timeline, totalDuration: totalDuration };
+        };
+
+        const GanttChart = function(props) {
+            var nodes = props.nodes;
+            var edges = props.edges;
+
+            var _calc = calculateGanttTimeline(nodes, edges);
+            var timeline = _calc.timeline;
+            var totalDuration = _calc.totalDuration;
+            var maxTime = 1;
+            for (var i = 0; i < timeline.length; i++) {
+                if (timeline[i].end > maxTime) maxTime = timeline[i].end;
+            }
+
+            var opDataMap = {};
+            for (var j = 0; j < timeline.length; j++) { opDataMap[timeline[j].id] = timeline[j]; }
+
+            var rows = [];
+            for (var r = 0; r < timeline.length; r++) {
+                var op = timeline[r];
+                var status = statusConfig[op.status] || statusConfig.waiting;
+                var startPercent = (op.start / maxTime) * 100;
+                var widthPercent = (op.duration / maxTime) * 100;
+                var isActive = (op.status === 'in_progress');
+                var rowStyle = isActive ? { background: '#f0fdf4', borderLeft: '3px solid #22c55e' } : {};
+                var outgoingEdges = edges.filter(function(e) { return e.source === op.id; });
+
+                var cell = React.createElement('td', { className: 'gantt-cell', style: { position: 'relative', padding: '4px 0' } },
+                    React.createElement('div', { style: { position: 'relative', height: '44px', background: '#f1f5f9', borderRadius: '6px' } },
+                        React.createElement('div', {
+                            style: {
+                                position: 'absolute',
+                                left: startPercent + '%',
+                                top: '6px',
+                                width: widthPercent + '%',
+                                height: '32px',
+                                background: isActive ? '#22c55e' : status.color,
+                                borderRadius: '6px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                paddingLeft: '6px',
+                                color: 'white',
+                                fontSize: '9px',
+                                fontWeight: 500,
+                                whiteSpace: 'nowrap',
+                                zIndex: 1,
+                                border: isActive ? '2px solid #16a34a' : 'none',
+                                boxShadow: isActive ? '0 0 0 2px rgba(34,197,94,0.3)' : 'none',
+                                animation: isActive ? 'pulse-glow-green 1.5s ease-in-out infinite' : 'none'
+                            }
+                        }, (isActive ? '🟢 ' : '') + (op.duration >= 30 ? Math.floor(op.duration / 60) + 'ч ' + (op.duration % 60) + 'мин' : op.duration + 'мин')
+                        ),
+                        outgoingEdges.map(function(edge, idx) {
+                            var targetOp = opDataMap[edge.target];
+                            if (!targetOp) return null;
+                            var fromX = startPercent + widthPercent;
+                            var toX = (targetOp.start / maxTime) * 100;
+                            var targetRowIndex = -1;
+                            for (var i2 = 0; i2 < timeline.length; i2++) { if (timeline[i2].id === targetOp.id) { targetRowIndex = i2; break; } }
+                            var toY = targetRowIndex * 52 + 30;
+                            var fromY = r * 52 + 30;
+                            if (toY > fromY) {
+                                return React.createElement('div', {
+                                    key: edge.id + '_line_' + idx,
+                                    style: {
+                                        position: 'absolute',
+                                        left: fromX + '%',
+                                        top: '28px',
+                                        width: (toX - fromX) + '%',
+                                        height: (toY - fromY) + 'px',
+                                        borderLeft: '2px dashed #f59e0b',
+                                        borderBottom: '2px solid #f59e0b',
+                                        zIndex: 5,
+                                        pointerEvents: 'none',
+                                        transition: 'all 0.2s ease'
+                                    },
+                                    title: '→ ' + targetOp.label
+                                });
+                            } else if (toY < fromY) {
+                                return React.createElement('div', {
+                                    key: edge.id + '_line_' + idx,
+                                    style: {
+                                        position: 'absolute',
+                                        left: fromX + '%',
+                                        top: (toY - fromY) + 'px',
+                                        width: (toX - fromX) + '%',
+                                        height: (fromY - toY) + 'px',
+                                        borderLeft: '2px dashed #f59e0b',
+                                        borderTop: '2px solid #f59e0b',
+                                        zIndex: 5,
+                                        pointerEvents: 'none',
+                                        transition: 'all 0.2s ease'
+                                    },
+                                    title: '→ ' + targetOp.label
+                                });
+                            } else {
+                                return React.createElement('div', {
+                                    key: edge.id + '_line_' + idx,
+                                    style: {
+                                        position: 'absolute',
+                                        left: fromX + '%',
+                                        top: '50%',
+                                        width: (toX - fromX) + '%',
+                                        height: '2px',
+                                        background: '#f59e0b',
+                                        transform: 'translateY(-50%)',
+                                        zIndex: 5,
+                                        pointerEvents: 'none',
+                                        transition: 'all 0.2s ease'
+                                    },
+                                    title: '→ ' + targetOp.label
+                                });
+                            }
+                        })
+                    )
+                );
+
+                rows.push(React.createElement('tr', {
+                        key: op.id,
+                        style: Object.assign({}, rowStyle, {
+                            cursor: 'pointer',
+                            transition: 'all 0.2s ease',
+                            borderRadius: '8px'
+                        }),
+                        onMouseEnter: function(e) {
+                            var row = e.currentTarget;
+                            row.style.background = isActive ? '#e6f7e6' : '#fef3c7';
+                            row.style.transform = 'translateX(4px)';
+                            row.style.boxShadow = '0 4px 12px rgba(0,0,0,0.08)';
+                        },
+                        onMouseLeave: function(e) {
+                            var row = e.currentTarget;
+                            row.style.background = isActive ? '#f0fdf4' : '';
+                            row.style.transform = 'translateX(0)';
+                            row.style.boxShadow = 'none';
+                        }
+                    },
+                    React.createElement('td', { style: { position: 'sticky', left: 0, background: isActive ? '#f0fdf4' : 'white', zIndex: 1, transition: 'background 0.2s ease' } },
+                        React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '6px' } },
+                            React.createElement('div', { style: { width: 8, height: 8, borderRadius: 4, background: op.color, transition: 'transform 0.2s ease' } }),
+                            React.createElement('span', { style: { fontSize: '12px', fontWeight: isActive ? '600' : 'normal' } }, op.label),
+                            isActive && React.createElement('span', { className: 'active-badge' }, '🟢 В РАБОТЕ')
+                        )
+                    ),
+                    React.createElement('td', null, op.responsible),
+                    React.createElement('td', null, formatTimeShort(op.duration)),
+                    cell
+                ));
+            }
+
+            return React.createElement('div', { className: 'gantt-container' },
+                React.createElement('div', { style: { overflowX: 'auto' } },
+                    React.createElement('table', { className: 'gantt-table', style: { minWidth: '800px' } },
+                        React.createElement('thead', null,
+                            React.createElement('tr', null,
+                                React.createElement('th', { style: { width: '220px', position: 'sticky', left: 0, background: 'white', zIndex: 2 } }, 'Операция'),
+                                React.createElement('th', { style: { width: '120px' } }, 'Ответственный'),
+                                React.createElement('th', { style: { width: '80px' } }, 'Длит.'),
+                                React.createElement('th', { style: { minWidth: '600px' } }, 'Временная шкала (мин) →')
+                            )
+                        ),
+                        React.createElement('tbody', null, rows)
+                    )
+                )
+            );
+        };
+
+        const GraphEditor = function() {
+            var _useState = React.useState(getTableNodes());
+            var nodes = _useState[0];
+            var setNodes = _useState[1];
+            var _useState2 = React.useState(getTableEdges());
+            var edges = _useState2[0];
+            var setEdges = _useState2[1];
+
+            var handleToggleStatus = React.useCallback(function(opId) {
+                toggleOperationStatus(nodes, setNodes, edges, opId);
+            }, [nodes, edges]);
+
+            var loadTemplate = function(templateName) {
+                if (templateName === 'table') {
+                    setNodes(getTableNodes());
+                    setEdges(getTableEdges());
+                } else if (templateName === 'cabinet') {
+                    setNodes(getCabinetNodes());
+                    setEdges(getCabinetEdges());
+                } else if (templateName === 'teleport') {
+                    setNodes(getTeleportNodes());
+                    setEdges(getTeleportEdges());
+                }
+            };
+
+            React.useEffect(function() {
+                var updatedNodes = nodes.map(function(node) {
+                    var newData = Object.assign({}, node.data, {
+                        onDelete: function(id) {
+                            setNodes(function(prev) { return prev.filter(function(n) { return n.id !== id; }); });
+                            setEdges(function(prev) { return prev.filter(function(e) { return e.source !== id && e.target !== id; }); });
+                        }
+                    });
+                    return Object.assign({}, node, { data: newData });
+                });
+                setNodes(updatedNodes);
+            }, []);
+
+            var onNodesChange = React.useCallback(function(changes) {
+                setNodes(function(nds) { return applyNodeChanges(changes, nds); });
+            }, []);
+
+            var onEdgesChange = React.useCallback(function(changes) {
+                setEdges(function(eds) { return applyEdgeChanges(changes, eds); });
+            }, []);
+
+            var onConnect = React.useCallback(function(params) {
+                var opt = { type: 'smoothstep', markerEnd: { type: MarkerType.ArrowClosed, width: 15, height: 15, color: '#94a3b8' }, style: { stroke: '#94a3b8', strokeWidth: 1.5 } };
+                setEdges(function(eds) { return addEdge(Object.assign({}, params, opt), eds); });
+            }, []);
+
+            var totalTime = 0;
+            for (var i = 0; i < nodes.length; i++) { totalTime += (nodes[i].data.time || 0); }
+            var hours = Math.floor(totalTime / 60);
+            var minutes = totalTime % 60;
+            var inProgress = 0;
+            for (var j = 0; j < nodes.length; j++) { if (nodes[j].data.status === 'in_progress') inProgress++; }
+
+            var nodeTypesObj = { custom: function(props) {
+                    return React.createElement(CustomNode, Object.assign({}, props, { nodes: nodes, edges: edges, setNodes: setNodes, handleToggleStatus: handleToggleStatus }));
+                } };
+
+            var edgeOptionsObj = { type: 'smoothstep', markerEnd: { type: MarkerType.ArrowClosed, width: 15, height: 15, color: '#94a3b8' }, style: { stroke: '#94a3b8', strokeWidth: 1.5 } };
+
+            return React.createElement(ReactFlowProvider, null,
+                React.createElement('div', { className: 'app' },
+                    React.createElement('div', { className: 'template-section' },
+                        React.createElement('div', { className: 'template-card', onClick: function() { loadTemplate('table'); } },
+                            React.createElement('div', { className: 'template-icon' }, '🍽️'),
+                            React.createElement('div', { className: 'template-info' },
+                                React.createElement('h4', null, 'Обеденный стол'),
+                                React.createElement('p', null, '10 операций')
+                            ),
+                            React.createElement('div', { className: 'template-badge' }, 'сборка')
+                        ),
+                        React.createElement('div', { className: 'template-card', onClick: function() { loadTemplate('cabinet'); } },
+                            React.createElement('div', { className: 'template-icon' }, '🚪'),
+                            React.createElement('div', { className: 'template-info' },
+                                React.createElement('h4', null, 'Шкаф-купе'),
+                                React.createElement('p', null, '10 операций')
+                            ),
+                            React.createElement('div', { className: 'template-badge' }, 'премиум')
+                        ),
+                        React.createElement('div', { className: 'template-card', onClick: function() { loadTemplate('teleport'); } },
+                            React.createElement('div', { className: 'template-icon' }, '🌀'),
+                            React.createElement('div', { className: 'template-info' },
+                                React.createElement('h4', null, 'Квантовый телепорт'),
+                                React.createElement('p', null, '10 операций')
+                            ),
+                            React.createElement('div', { className: 'template-badge' }, 'эксперимент')
+                        )
+                    ),
+                    React.createElement('div', { className: 'graph-container' },
+                        React.createElement(ReactFlow, {
+                                nodes: nodes,
+                                edges: edges,
+                                onNodesChange: onNodesChange,
+                                onEdgesChange: onEdgesChange,
+                                onConnect: onConnect,
+                                nodeTypes: nodeTypesObj,
+                                fitView: true,
+                                fitViewOptions: { padding: 0.25 },
+                                defaultZoom: 0.7,
+                                minZoom: 0.3,
+                                maxZoom: 1.5,
+                                attributionPosition: 'bottom-right',
+                                defaultEdgeOptions: edgeOptionsObj
+                            },
+                            React.createElement(Background, { gap: 20, color: '#e2e8f0' }),
+                            React.createElement(Controls, null)
+                        )
+                    ),
+                    React.createElement(GanttChart, { nodes: nodes, edges: edges }),
+                    React.createElement('div', { className: 'info-bar' },
+                        React.createElement('span', null, '📊 ' + nodes.length + ' операций | 🔗 ' + edges.length + ' связей | ⏱ Общее время: ' + hours + 'ч ' + minutes + 'мин | ▶ В работе: ' + inProgress),
+                        React.createElement('span', { className: 'badge' }, '🟢 Активные операции — зелёные, пульсируют')
+                    )
+                )
+            );
+        };
+
+        ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(GraphEditor, null));
+    })();
+</script>
+</body>
+</html>

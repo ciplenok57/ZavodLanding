@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>VERSTAK — Управляйте производством без потерь</title>
+    <title>VERSTAK — Управление производственными операциями</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <style>
         * {
             margin: 0;
@@ -2168,24 +2169,33 @@
     }
 </style>
 
-<!-- ========== КОНСТРУКТОР ШАБЛОНА ИЗДЕЛИЯ ========== -->
-<section id="constructor" class="section">
+<!-- ========== КОНСТРУКТОР ТЕХПРОЦЕССА ========== -->
+<section class="section" style="padding: 60px 0; background: #f8fafc;">
     <div class="container">
-        <h2 class="section-title">🏗️ Конструктор шаблона изделия</h2>
-        <p class="section-subtitle">Создавайте маршрутные карты визуально — добавляйте операции, связывайте их, задавайте время и исполнителей</p>
+        <h2 class="section-title" style="text-align: center; margin-bottom: 16px;">🏗️ Конструктор техпроцесса</h2>
+        <p class="section-subtitle" style="text-align: center; margin-bottom: 40px;">Проектируйте маршрутные карты визуально. Добавляйте операции, создавайте связи, запускайте выполнение.</p>
 
-        <div class="constructor-preview">
-            <div class="constructor-header">
-                <div class="constructor-title"><span>📝</span> Редактирование шаблона "Кухонный стол"</div>
-                <button class="add-op-btn" onclick="addDemoOperation()">+ Добавить операцию</button>
+        <div style="background: white; border-radius: 32px; overflow: hidden; box-shadow: 0 20px 40px -12px rgba(0,0,0,0.15); border: 1px solid #eef2f6;">
+            <iframe
+                    src="builder.html"
+                    style="width: 100%; height: 750px; border: none; display: block;"
+                    title="VERSTAK Конструктор техпроцесса"
+                    loading="lazy">
+            </iframe>
+        </div>
+
+        <div style="display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; margin-top: 24px;">
+            <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: #475569;">
+                <span style="display: inline-block; width: 8px; height: 8px; background: #22c55e; border-radius: 50%;"></span>
+                Зелёные — активные операции (пульсируют)
             </div>
-            <div class="flow-container" id="flowContainer">
-                <div class="flow-nodes" id="flowNodes"></div>
+            <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: #475569;">
+                <span style="display: inline-block; width: 8px; height: 8px; background: #64748b; border-radius: 50%;"></span>
+                Серые — ожидают
             </div>
-            <div class="constructor-note">
-                <span>💡 Перетаскивайте карточки — меняйте порядок</span>
-                <span>🔗 Нажмите на синий кружок → затем на серый кружок другой карточки, чтобы создать связь</span>
-                <span>🗑 Нажмите ✕, чтобы удалить операцию</span>
+            <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: #475569;">
+                <span style="display: inline-block; width: 8px; height: 8px; background: #f59e0b; border-radius: 50%;"></span>
+                Оранжевые линии — связи между операциями
             </div>
         </div>
     </div>
@@ -2339,7 +2349,7 @@
                     <div class="card-title">🎯 Сводка за смену</div>
                     <div style="display: flex; gap: 16px; margin-bottom: 20px;">
                         <div class="kpi-mini-item" style="flex:1; text-align:center; padding:10px; background:#f8fafc; border-radius:16px;">
-                            <div style="font-size: 22px; font-weight: 800;">3</div>
+                            <div style="font-size: 22px; font-weight: 800;">4</div>
                             <div style="font-size: 11px;">✅ Завершено</div>
                         </div>
                         <div class="kpi-mini-item" style="flex:1; text-align:center; padding:10px; background:#f8fafc; border-radius:16px;">

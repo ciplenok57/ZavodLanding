@@ -204,7 +204,7 @@
             color: #0a66c2;
         }
 
-        /* Правая карточка */
+        /* Правая карточка — фикс шрифта */
         .hero-visual {
             flex: 1;
             background: white;
@@ -218,6 +218,7 @@
 
         .urgent-card {
             padding: 20px;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
 
         .urgent-header {
@@ -235,6 +236,7 @@
             font-size: 16px;
             font-weight: 700;
             color: #0a2540;
+            margin: 0;
         }
 
         .alert-badge {
@@ -617,87 +619,6 @@
             justify-content: center;
         }
 
-        /* Сравнение */
-        .comparison-section {
-            background: #f8fafc;
-            border-radius: 40px;
-            padding: 32px;
-            margin: 20px 0;
-        }
-
-        .comparison-table-wrapper {
-            overflow-x: auto;
-            margin-top: 20px;
-        }
-
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-        }
-
-        .comparison-table th,
-        .comparison-table td {
-            padding: 10px 14px;
-            text-align: left;
-            border-bottom: 1px solid #edf2f7;
-            font-size: 12px;
-        }
-
-        .comparison-table th {
-            background: #f1f5f9;
-            font-weight: 600;
-            color: #1e293b;
-        }
-
-        .advantage-badge {
-            background: #d1fae5;
-            color: #065f46;
-            padding: 2px 8px;
-            border-radius: 30px;
-            font-size: 10px;
-            font-weight: 600;
-        }
-
-        .advantages-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 16px;
-            margin-top: 24px;
-        }
-
-        .advantage-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px;
-            background: white;
-            border-radius: 20px;
-            transition: all 0.2s;
-        }
-
-        .advantage-item:hover {
-            transform: translateX(4px);
-            background: #f1f5f9;
-        }
-
-        .advantage-icon {
-            font-size: 24px;
-        }
-
-        .advantage-text strong {
-            display: block;
-            font-size: 13px;
-        }
-
-        .advantage-text p {
-            font-size: 11px;
-            color: #5b6e8c;
-            margin-top: 2px;
-        }
-
         /* Экран рабочего */
         .worker-preview {
             background: #f0f4f9;
@@ -832,7 +753,7 @@
             box-shadow: 0 12px 24px -12px rgba(0,0,0,0.1);
         }
 
-        .card-title {
+        .dashboard-card .card-title {
             font-size: 16px;
             font-weight: 700;
             margin-bottom: 16px;
@@ -1071,81 +992,6 @@
             cursor: not-allowed;
         }
 
-        .urgent-item {
-            border-bottom: 1px solid #edf2f7;
-            padding: 10px 0;
-        }
-
-        .urgent-item:last-child {
-            border-bottom: none;
-        }
-
-        .urgent-title {
-            font-weight: 600;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 6px;
-            font-size: 13px;
-        }
-
-        .urgent-details {
-            font-size: 11px;
-            color: #475569;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            align-items: center;
-        }
-
-        .executor-name {
-            background: #f1f5f9;
-            padding: 3px 10px;
-            border-radius: 30px;
-            font-size: 11px;
-            font-weight: 500;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .priority-high {
-            color: #dc2626;
-            background: #fee2e2;
-            padding: 2px 8px;
-            border-radius: 30px;
-            font-size: 10px;
-            animation: pulseWarning 2s infinite;
-        }
-
-        .priority-medium {
-            color: #f59e0b;
-            background: #fef3c7;
-            padding: 2px 8px;
-            border-radius: 30px;
-            font-size: 10px;
-        }
-
-        .delay-badge {
-            color: #dc2626;
-            font-size: 11px;
-        }
-
-        @keyframes pulseWarning {
-
-            0%,
-            100% {
-                opacity: 1;
-            }
-
-            50% {
-                opacity: 0.7;
-                transform: scale(0.98);
-            }
-        }
-
         .full-width {
             grid-column: span 2;
         }
@@ -1259,297 +1105,75 @@
         }
 
         @keyframes float1 {
-
-            0%,
-            100% {
-                transform: translate(0, 0) rotate(0deg);
-            }
-
-            25% {
-                transform: translate(15px, -20px) rotate(15deg);
-            }
-
-            50% {
-                transform: translate(5px, -35px) rotate(25deg);
-            }
-
-            75% {
-                transform: translate(-10px, -15px) rotate(10deg);
-            }
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(15px, -20px) rotate(15deg); }
+            50% { transform: translate(5px, -35px) rotate(25deg); }
+            75% { transform: translate(-10px, -15px) rotate(10deg); }
         }
 
         @keyframes float2 {
-
-            0%,
-            100% {
-                transform: translate(0, 0) rotate(0deg);
-            }
-
-            25% {
-                transform: translate(-20px, -15px) rotate(-15deg);
-            }
-
-            50% {
-                transform: translate(-10px, -30px) rotate(-25deg);
-            }
-
-            75% {
-                transform: translate(10px, -10px) rotate(-10deg);
-            }
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(-20px, -15px) rotate(-15deg); }
+            50% { transform: translate(-10px, -30px) rotate(-25deg); }
+            75% { transform: translate(10px, -10px) rotate(-10deg); }
         }
 
         @keyframes float3 {
-
-            0%,
-            100% {
-                transform: translate(0, 0) scale(1);
-            }
-
-            50% {
-                transform: translate(25px, -25px) scale(1.15);
-            }
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(25px, -25px) scale(1.15); }
         }
 
         @keyframes float4 {
-
-            0%,
-            100% {
-                transform: translate(0, 0) rotate(0deg);
-            }
-
-            33% {
-                transform: translate(-15px, -20px) rotate(-20deg);
-            }
-
-            66% {
-                transform: translate(10px, -30px) rotate(20deg);
-            }
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(-15px, -20px) rotate(-20deg); }
+            66% { transform: translate(10px, -30px) rotate(20deg); }
         }
 
         @keyframes float5 {
-
-            0%,
-            100% {
-                transform: translate(0, 0) rotate(0deg);
-                opacity: 0.3;
-            }
-
-            50% {
-                transform: translate(30px, -40px) rotate(180deg);
-                opacity: 0.6;
-            }
+            0%, 100% { transform: translate(0, 0) rotate(0deg); opacity: 0.3; }
+            50% { transform: translate(30px, -40px) rotate(180deg); opacity: 0.6; }
         }
 
         @keyframes float6 {
-
-            0%,
-            100% {
-                transform: translate(0, 0) scale(1);
-            }
-
-            50% {
-                transform: translate(-25px, -20px) scale(0.85);
-            }
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-25px, -20px) scale(0.85); }
         }
 
         @keyframes float7 {
-
-            0%,
-            100% {
-                transform: translate(0, 0) rotate(0deg);
-            }
-
-            50% {
-                transform: translate(-15px, -45px) rotate(35deg);
-            }
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(-15px, -45px) rotate(35deg); }
         }
 
         @keyframes float8 {
-
-            0%,
-            100% {
-                transform: translate(0, 0);
-            }
-
-            50% {
-                transform: translate(35px, -15px);
-            }
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(35px, -15px); }
         }
 
-        .tool-1 {
-            top: 5%;
-            left: 2%;
-            animation: float1 8s ease-in-out infinite;
-            font-size: 32px;
-        }
-
-        .tool-2 {
-            top: 15%;
-            right: 3%;
-            animation: float2 7s ease-in-out infinite;
-            font-size: 28px;
-        }
-
-        .tool-3 {
-            bottom: 10%;
-            left: 5%;
-            animation: float3 9s ease-in-out infinite;
-            font-size: 34px;
-        }
-
-        .tool-4 {
-            bottom: 20%;
-            right: 8%;
-            animation: float4 6s ease-in-out infinite;
-            font-size: 30px;
-        }
-
-        .tool-5 {
-            top: 40%;
-            left: 12%;
-            animation: float5 10s ease-in-out infinite;
-            font-size: 26px;
-        }
-
-        .tool-6 {
-            top: 50%;
-            right: 15%;
-            animation: float6 8s ease-in-out infinite;
-            font-size: 32px;
-        }
-
-        .tool-7 {
-            bottom: 35%;
-            right: 5%;
-            animation: float1 7.5s ease-in-out infinite;
-            font-size: 28px;
-        }
-
-        .tool-8 {
-            top: 75%;
-            left: 8%;
-            animation: float4 9s ease-in-out infinite;
-            font-size: 30px;
-        }
-
-        .tool-9 {
-            top: 25%;
-            left: 20%;
-            animation: float7 11s ease-in-out infinite;
-            font-size: 24px;
-        }
-
-        .tool-10 {
-            bottom: 50%;
-            right: 20%;
-            animation: float8 6.5s ease-in-out infinite;
-            font-size: 26px;
-        }
-
-        .tool-11 {
-            top: 65%;
-            left: 18%;
-            animation: float2 8.5s ease-in-out infinite;
-            font-size: 28px;
-        }
-
-        .tool-12 {
-            bottom: 8%;
-            right: 25%;
-            animation: float3 7s ease-in-out infinite;
-            font-size: 32px;
-        }
-
-        .tool-13 {
-            top: 85%;
-            left: 15%;
-            animation: float5 9.5s ease-in-out infinite;
-            font-size: 22px;
-        }
-
-        .tool-14 {
-            top: 10%;
-            right: 20%;
-            animation: float1 6.8s ease-in-out infinite;
-            font-size: 26px;
-        }
-
-        .tool-15 {
-            top: 30%;
-            right: 28%;
-            animation: float6 8.2s ease-in-out infinite;
-            font-size: 30px;
-        }
-
-        .tool-16 {
-            bottom: 65%;
-            left: 3%;
-            animation: float7 7.8s ease-in-out infinite;
-            font-size: 28px;
-        }
-
-        .tool-17 {
-            top: 80%;
-            right: 12%;
-            animation: float4 9.3s ease-in-out infinite;
-            font-size: 24px;
-        }
-
-        .tool-18 {
-            bottom: 15%;
-            left: 25%;
-            animation: float8 6.2s ease-in-out infinite;
-            font-size: 30px;
-        }
-
-        .tool-19 {
-            top: 45%;
-            left: 30%;
-            animation: float1 7.2s ease-in-out infinite;
-            font-size: 26px;
-        }
-
-        .tool-20 {
-            bottom: 75%;
-            right: 18%;
-            animation: float2 10.5s ease-in-out infinite;
-            font-size: 28px;
-        }
-
-        .tool-21 {
-            top: 20%;
-            left: 40%;
-            animation: float3 8.3s ease-in-out infinite;
-            font-size: 22px;
-        }
-
-        .tool-22 {
-            bottom: 40%;
-            right: 35%;
-            animation: float4 7.1s ease-in-out infinite;
-            font-size: 24px;
-        }
-
-        .tool-23 {
-            top: 60%;
-            left: 45%;
-            animation: float5 9.8s ease-in-out infinite;
-            font-size: 26px;
-        }
-
-        .tool-24 {
-            bottom: 5%;
-            left: 35%;
-            animation: float6 6.5s ease-in-out infinite;
-            font-size: 28px;
-        }
-
-        .tool-25 {
-            top: 35%;
-            right: 42%;
-            animation: float7 8.7s ease-in-out infinite;
-            font-size: 22px;
-        }
+        .tool-1 { top: 5%; left: 2%; animation: float1 8s ease-in-out infinite; font-size: 32px; }
+        .tool-2 { top: 15%; right: 3%; animation: float2 7s ease-in-out infinite; font-size: 28px; }
+        .tool-3 { bottom: 10%; left: 5%; animation: float3 9s ease-in-out infinite; font-size: 34px; }
+        .tool-4 { bottom: 20%; right: 8%; animation: float4 6s ease-in-out infinite; font-size: 30px; }
+        .tool-5 { top: 40%; left: 12%; animation: float5 10s ease-in-out infinite; font-size: 26px; }
+        .tool-6 { top: 50%; right: 15%; animation: float6 8s ease-in-out infinite; font-size: 32px; }
+        .tool-7 { bottom: 35%; right: 5%; animation: float1 7.5s ease-in-out infinite; font-size: 28px; }
+        .tool-8 { top: 75%; left: 8%; animation: float4 9s ease-in-out infinite; font-size: 30px; }
+        .tool-9 { top: 25%; left: 20%; animation: float7 11s ease-in-out infinite; font-size: 24px; }
+        .tool-10 { bottom: 50%; right: 20%; animation: float8 6.5s ease-in-out infinite; font-size: 26px; }
+        .tool-11 { top: 65%; left: 18%; animation: float2 8.5s ease-in-out infinite; font-size: 28px; }
+        .tool-12 { bottom: 8%; right: 25%; animation: float3 7s ease-in-out infinite; font-size: 32px; }
+        .tool-13 { top: 85%; left: 15%; animation: float5 9.5s ease-in-out infinite; font-size: 22px; }
+        .tool-14 { top: 10%; right: 20%; animation: float1 6.8s ease-in-out infinite; font-size: 26px; }
+        .tool-15 { top: 30%; right: 28%; animation: float6 8.2s ease-in-out infinite; font-size: 30px; }
+        .tool-16 { bottom: 65%; left: 3%; animation: float7 7.8s ease-in-out infinite; font-size: 28px; }
+        .tool-17 { top: 80%; right: 12%; animation: float4 9.3s ease-in-out infinite; font-size: 24px; }
+        .tool-18 { bottom: 15%; left: 25%; animation: float8 6.2s ease-in-out infinite; font-size: 30px; }
+        .tool-19 { top: 45%; left: 30%; animation: float1 7.2s ease-in-out infinite; font-size: 26px; }
+        .tool-20 { bottom: 75%; right: 18%; animation: float2 10.5s ease-in-out infinite; font-size: 28px; }
+        .tool-21 { top: 20%; left: 40%; animation: float3 8.3s ease-in-out infinite; font-size: 22px; }
+        .tool-22 { bottom: 40%; right: 35%; animation: float4 7.1s ease-in-out infinite; font-size: 24px; }
+        .tool-23 { top: 60%; left: 45%; animation: float5 9.8s ease-in-out infinite; font-size: 26px; }
+        .tool-24 { bottom: 5%; left: 35%; animation: float6 6.5s ease-in-out infinite; font-size: 28px; }
+        .tool-25 { top: 35%; right: 42%; animation: float7 8.7s ease-in-out infinite; font-size: 22px; }
 
         /* ========== МОДАЛЬНОЕ ОКНО С ФОРМОЙ ========== */
         .modal {
@@ -1580,14 +1204,8 @@
         }
 
         @keyframes modalFadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.95);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
         }
 
         .modal-header {
@@ -1712,7 +1330,6 @@
             display: none;
         }
 
-        /* Стили для кнопки отправки */
         .submit-btn {
             width: 100%;
             background: linear-gradient(135deg, #0a66c2, #3b82f6);
@@ -1739,11 +1356,6 @@
             box-shadow: 0 8px 20px rgba(10,102,194,0.3);
         }
 
-        .submit-btn:active {
-            transform: translateY(0);
-        }
-
-        /* Анимация для пунктов в правой карточке */
         .animated-warning {
             transition: all 0.3s ease;
             cursor: pointer;
@@ -1759,27 +1371,7 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.08);
         }
 
-        .animated-warning:hover .warning-icon {
-            transform: scale(1.1);
-            background: #fde68a;
-            transition: transform 0.2s ease;
-        }
-
-        .animated-warning .warning-icon {
-            transition: transform 0.2s ease;
-        }
-
-        /* Стили для блока статистики в HERO */
-        .hero-stats {
-            display: flex;
-            gap: 32px;
-            margin-top: 32px;
-            padding-top: 24px;
-            border-top: 1px solid #edf2f7;
-            flex-wrap: wrap;
-        }
-
-        .stat-item {
+        .hero-stats .stat-item {
             flex: 1;
             text-align: center;
             padding: 12px 16px;
@@ -1789,13 +1381,13 @@
             cursor: default;
         }
 
-        .stat-item:hover {
+        .hero-stats .stat-item:hover {
             transform: translateY(-4px);
             background: #eef2ff;
             box-shadow: 0 8px 20px rgba(10,102,194,0.1);
         }
 
-        .stat-number {
+        .hero-stats .stat-number {
             font-size: 28px;
             font-weight: 800;
             color: #0a66c2;
@@ -1803,28 +1395,19 @@
             line-height: 1.2;
         }
 
-        .stat-label {
+        .hero-stats .stat-label {
             font-size: 13px;
             color: #475569;
             font-weight: 500;
         }
 
         @media (max-width: 768px) {
-            .hero-stats {
-                gap: 16px;
-            }
-            .stat-number {
-                font-size: 22px;
-            }
-            .stat-label {
-                font-size: 11px;
-            }
-            .stat-item {
-                padding: 8px 12px;
-            }
+            .hero-stats { gap: 16px; }
+            .hero-stats .stat-number { font-size: 22px; }
+            .hero-stats .stat-label { font-size: 11px; }
+            .hero-stats .stat-item { padding: 8px 12px; }
         }
 
-        /* Анимация для строк загрузки сотрудников */
         .employee-row {
             transition: all 0.25s ease;
             cursor: pointer;
@@ -1840,83 +1423,143 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
 
-        .employee-row:hover .employee-avatar {
-            transform: scale(1.05);
-            background: #dbeafe;
-        }
-
-        .employee-avatar {
-            transition: transform 0.2s ease;
-        }
-
-        /* Стиль для процентов загрузки — как на основной платформе */
         .employee-load {
             font-size: 13px;
             font-weight: 600;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             color: #0a2540;
             min-width: 45px;
             text-align: right;
-            letter-spacing: -0.01em;
         }
 
-        /* Цвет для перегруженного сотрудника */
-        .employee-row .employee-load.text-danger {
-            color: #dc2626;
-        }
-
-        /* Фиксированная высота для блока сводки */
-        .dashboard-card.full-width {
-            display: flex;
-            flex-direction: column;
-            height: 520px;
-        }
-
-        /* Адаптив для мобильных устройств */
-        @media (max-width: 768px) {
-            .dashboard-card.full-width {
-                height: 480px;
-            }
-        }
-
-        /* Улучшенная прокрутка для списка операций */
-        .operations-list {
-            flex: 1;
-            overflow-y: auto;
-            padding-right: 8px;
-            margin-bottom: 0;
-        }
-
-        /* Кастомизация скроллбара */
         .operations-list::-webkit-scrollbar {
             width: 6px;
         }
-
         .operations-list::-webkit-scrollbar-track {
             background: #e2e8f0;
             border-radius: 10px;
         }
-
         .operations-list::-webkit-scrollbar-thumb {
             background: #94a3b8;
             border-radius: 10px;
         }
 
-        .operations-list::-webkit-scrollbar-thumb:hover {
-            background: #64748b;
+        /* Мобильное меню */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #0a66c2;
+            padding: 8px;
+            line-height: 1;
+            z-index: 1001;
+        }
+
+        @media (min-width: 769px) {
+            .nav-links {
+                display: flex !important;
+                position: static !important;
+                width: auto !important;
+                height: auto !important;
+                background: transparent !important;
+                flex-direction: row !important;
+                padding: 0 !important;
+                gap: 24px !important;
+                box-shadow: none !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+                transform: none !important;
+            }
+            .mobile-menu-toggle { display: none !important; }
+            .mobile-overlay { display: none !important; }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-toggle { display: block; }
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -280px;
+                width: 280px;
+                height: 100vh;
+                background: white;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 80px 24px 24px;
+                gap: 20px;
+                transition: right 0.3s ease;
+                z-index: 1000;
+                box-shadow: -4px 0 20px rgba(0,0,0,0.1);
+                border-left: 1px solid #eef2f6;
+            }
+            .nav-links.active { right: 0; }
+            .nav-links a { font-size: 16px; width: 100%; text-align: left; padding: 8px 0; }
+            .nav-links .btn-outline { justify-content: center; width: 100%; margin-top: 8px; }
+            .mobile-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.5);
+                z-index: 999;
+            }
+            .mobile-overlay.active { display: block; }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @keyframes bounce {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-15px); }
+        }
+        @keyframes loadingBar {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(400%); }
         }
     </style>
 </head>
 <body>
 
+<!-- Лоадер -->
+<div id="loader" style="position: fixed; top:0; left:0; width:100%; height:100%; background: linear-gradient(135deg, #0a2540, #0a3a5c); display: flex; align-items: center; justify-content: center; z-index: 9999; transition: opacity 0.6s ease;">
+    <div class="loader-content" style="text-align: center; padding: 20px;">
+        <div style="width: min(80px, 20vw); height: min(80px, 20vw); margin: 0 auto 20px; border: 4px solid rgba(255,255,255,0.15); border-top: 4px solid #3b82f6; border-right: 4px solid #10b981; border-left: 4px solid #f59e0b; border-radius: 50%; animation: spin 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;"></div>
+        <div style="font-size: clamp(28px, 10vw, 48px); font-weight: 800; background: linear-gradient(135deg, #fff, #93c5fd, #6ee7b7); -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom: 16px;">VERSTAK</div>
+        <div style="color: rgba(255,255,255,0.8); font-size: clamp(12px, 4vw, 14px); letter-spacing: 3px; font-weight: 500;">ЗАГРУЗКА</div>
+        <div style="display: flex; justify-content: center; gap: 12px; margin-top: 20px;">
+            <span style="width: min(10px, 3vw); height: min(10px, 3vw); background: #3b82f6; border-radius: 50%; display: inline-block; animation: bounce 1.4s ease-in-out infinite;"></span>
+            <span style="width: min(10px, 3vw); height: min(10px, 3vw); background: #10b981; border-radius: 50%; display: inline-block; animation: bounce 1.4s ease-in-out 0.2s infinite;"></span>
+            <span style="width: min(10px, 3vw); height: min(10px, 3vw); background: #f59e0b; border-radius: 50%; display: inline-block; animation: bounce 1.4s ease-in-out 0.4s infinite;"></span>
+        </div>
+        <div style="width: min(200px, 60vw); height: 2px; background: rgba(255,255,255,0.1); border-radius: 2px; margin: 24px auto 0; overflow: hidden;">
+            <div style="width: 30%; height: 100%; background: linear-gradient(90deg, #3b82f6, #10b981, #f59e0b); border-radius: 2px; animation: loadingBar 1.5s ease-in-out infinite;"></div>
+        </div>
+    </div>
+</div>
+<script>
+    window.addEventListener('load', function() {
+        const loader = document.getElementById('loader');
+        if (loader) {
+            loader.style.opacity = '0';
+            setTimeout(() => { if(loader && loader.parentNode) loader.parentNode.removeChild(loader); }, 600);
+        }
+    });
+</script>
+
 <header class="header">
     <div class="container">
         <div class="nav">
             <div class="logo">VERSTAK</div>
-            <div class="nav-links">
+            <button class="mobile-menu-toggle" id="menuToggle">☰</button>
+            <div class="nav-links" id="navLinks">
                 <a href="#features">Возможности</a>
                 <a href="#constructor">Конструктор</a>
-                <a href="#comparison">Сравнение</a>
                 <a href="#dashboard">Дашборд</a>
                 <a href="#worker">Рабочий</a>
                 <button class="btn btn-outline" style="padding: 6px 18px;" onclick="openModal()">📋 В лист ожидания</button>
@@ -1924,957 +1567,197 @@
         </div>
     </div>
 </header>
+<div class="mobile-overlay" id="mobileOverlay"></div>
 
 <!-- HERO -->
 <section class="hero">
-    <div class="floating-tool tool-1">🔨</div>
-    <div class="floating-tool tool-2">🔧</div>
-    <div class="floating-tool tool-3">🪚</div>
-    <div class="floating-tool tool-4">⛏️</div>
-    <div class="floating-tool tool-5">⚙️</div>
-    <div class="floating-tool tool-6">🪛</div>
-    <div class="floating-tool tool-7">📏</div>
-    <div class="floating-tool tool-8">🔩</div>
-    <div class="floating-tool tool-9">🔌</div>
-    <div class="floating-tool tool-10">🧰</div>
-    <div class="floating-tool tool-11">⚒️</div>
-    <div class="floating-tool tool-12">🗜️</div>
-    <div class="floating-tool tool-13">🔪</div>
-    <div class="floating-tool tool-14">🪓</div>
-    <div class="floating-tool tool-15">⛓️</div>
-    <div class="floating-tool tool-16">🧲</div>
-    <div class="floating-tool tool-17">🔬</div>
-    <div class="floating-tool tool-18">⚡</div>
-    <div class="floating-tool tool-19">🔄</div>
-    <div class="floating-tool tool-20">📐</div>
-    <div class="floating-tool tool-21">🛠️</div>
-    <div class="floating-tool tool-22">⏱️</div>
-    <div class="floating-tool tool-23">🔨</div>
-    <div class="floating-tool tool-24">⚙️</div>
-    <div class="floating-tool tool-25">🔧</div>
-
+    <div class="floating-tool tool-1">🔨</div><div class="floating-tool tool-2">🔧</div><div class="floating-tool tool-3">🪚</div><div class="floating-tool tool-4">⛏️</div><div class="floating-tool tool-5">⚙️</div><div class="floating-tool tool-6">🪛</div><div class="floating-tool tool-7">📏</div><div class="floating-tool tool-8">🔩</div><div class="floating-tool tool-9">🔌</div><div class="floating-tool tool-10">🧰</div><div class="floating-tool tool-11">⚒️</div><div class="floating-tool tool-12">🗜️</div><div class="floating-tool tool-13">🔪</div><div class="floating-tool tool-14">🪓</div><div class="floating-tool tool-15">⛓️</div><div class="floating-tool tool-16">🧲</div><div class="floating-tool tool-17">🔬</div><div class="floating-tool tool-18">⚡</div><div class="floating-tool tool-19">🔄</div><div class="floating-tool tool-20">📐</div><div class="floating-tool tool-21">🛠️</div><div class="floating-tool tool-22">⏱️</div>
     <div class="container">
         <div class="hero-grid">
             <div class="hero-content">
                 <span class="hero-badge">📋 Производственная платформа</span>
                 <h1 class="hero-title">Превратите хаос в <span>прозрачный конвейер</span> за 15 минут</h1>
                 <p class="hero-subtitle">VERSTAK — это цифровой верстак, который знает, где каждый заказ, не путает последовательность и считает время вместо вас.</p>
-
                 <div class="hero-features">
                     <div class="hero-feature"><span>✅</span> Ни одного пропущенного этапа — автоблокировка операций</div>
                     <div class="hero-feature"><span>✅</span> Мастер видит всё: загрузку сотрудников и отставания</div>
                     <div class="hero-feature"><span>✅</span> Рабочий получает задачи в один клик с таймером</div>
                 </div>
-
-                <div style="display: flex; gap: 16px; flex-wrap: wrap;">
-                    <a class="btn btn-primary" onclick="openModal()">🚀 Записаться в лист ожидания</a>
-                </div>
-
+                <div style="display: flex; gap: 16px; flex-wrap: wrap;"><a class="btn btn-primary" onclick="openModal()">🚀 Записаться в лист ожидания</a></div>
                 <div class="hero-stats">
-                    <div class="stat-item">
-                        <div class="stat-number">-30%</div>
-                        <div class="stat-label">простоев</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">100%</div>
-                        <div class="stat-label">видимость заказов</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">15 мин</div>
-                        <div class="stat-label">на внедрение</div>
-                    </div>
+                    <div class="stat-item"><div class="stat-number">-30%</div><div class="stat-label">простоев</div></div>
+                    <div class="stat-item"><div class="stat-number">100%</div><div class="stat-label">видимость заказов</div></div>
+                    <div class="stat-item"><div class="stat-number">15 мин</div><div class="stat-label">на внедрение</div></div>
                 </div>
             </div>
 
-            <!-- Правая карточка -->
             <div class="hero-visual">
                 <div class="urgent-card">
-                    <div class="urgent-header">
-                        <span>🎯</span>
-                        <h3>Что сейчас важно?</h3>
-                        <div class="alert-badge">⚠️ Требует внимания</div>
-                    </div>
-
+                    <div class="urgent-header"><span>🎯</span><h3>Что сейчас важно?</h3><div class="alert-badge">⚠️ Требует внимания</div></div>
                     <div class="urgent-order">
                         <div class="order-title">🚨 СРОЧНЫЙ ЗАКАЗ #102</div>
-                        <div class="order-deadline">
-                            <span>📅 Срок: сегодня 18:00</span>
-                            <span class="delay-badge">⏱ Отставание: +2ч 15мин</span>
-                        </div>
-                        <div class="operation-info">
-                            <div>
-                                <div class="operation-name">🔧 Установка фасадов</div>
-                                <div class="executor">
-                                    <span>👤</span> Олег Петрович Соколов
-                                    <span style="margin-left: 8px; background:#fef3c7; padding:2px 6px; border-radius:20px; font-size:10px;">ждёт фасады</span>
-                                </div>
-                            </div>
-                        </div>
+                        <div class="order-deadline"><span>📅 Срок: сегодня 18:00</span><span class="delay-badge">⏱ Отставание: +2ч 15мин</span></div>
+                        <div class="operation-info"><div><div class="operation-name">🔧 Установка фасадов</div><div class="executor"><span>👤</span> Олег Петрович Соколов <span style="margin-left:8px; background:#fef3c7; padding:2px 6px; border-radius:20px; font-size:10px;">ждёт фасады</span></div></div></div>
                     </div>
-
                     <div class="warning-list">
-                        <!-- Анимированный пункт -->
-                        <div class="warning-item animated-warning">
-                            <div class="warning-icon">⚠️</div>
-                            <div class="warning-text">
-                                <div class="warning-title">Заказ #105 — Табурет классический</div>
-                                <div class="warning-sub">Операция: Покраска • Отставание: +1.5 часа</div>
-                            </div>
-                            <div class="warning-priority">Средний</div>
-                        </div>
-                        <div class="warning-item animated-warning">
-                            <div class="warning-icon">🔥</div>
-                            <div class="warning-text">
-                                <div class="warning-title">Заказ #104 — Обеденный стол 'Дуб'</div>
-                                <div class="warning-sub">Операция: Присадка • До дедлайна: 30 мин</div>
-                            </div>
-                            <div class="warning-priority">Риск срыва</div>
-                        </div>
-                        <div class="warning-item animated-warning">
-                            <div class="warning-icon">⚡</div>
-                            <div class="warning-text">
-                                <div class="warning-title">Узкое место цеха</div>
-                                <div class="warning-sub">Сборщик перегружен: 94% загрузки</div>
-                            </div>
-                            <div class="warning-priority">Требует решения</div>
-                        </div>
+                        <div class="warning-item animated-warning"><div class="warning-icon">⚠️</div><div class="warning-text"><div class="warning-title">Заказ #105 — Табурет классический</div><div class="warning-sub">Операция: Покраска • Отставание: +1.5 часа</div></div><div class="warning-priority">Средний</div></div>
+                        <div class="warning-item animated-warning"><div class="warning-icon">🔥</div><div class="warning-text"><div class="warning-title">Заказ #104 — Обеденный стол 'Дуб'</div><div class="warning-sub">Операция: Присадка • До дедлайна: 30 мин</div></div><div class="warning-priority">Риск срыва</div></div>
+                        <div class="warning-item animated-warning"><div class="warning-icon">⚡</div><div class="warning-text"><div class="warning-title">Узкое место цеха</div><div class="warning-sub">Сборщик перегружен: 94% загрузки</div></div><div class="warning-priority">Требует решения</div></div>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-
-<!-- ========== БЛОК ВОЗМОЖНОСТЕЙ ========== -->
+<!-- Блок возможностей (без блока сравнения) -->
 <section id="features" style="padding: 80px 0; background: #ffffff;">
-    <div class="container" style="max-width: 1280px; margin: 0 auto; padding: 0 24px;">
-        <div style="text-align: center; max-width: 750px; margin: 0 auto 56px;">
-            <div style="display: inline-block; background: #e0e7ff; color: #0a66c2; padding: 6px 16px; border-radius: 40px; font-size: 13px; font-weight: 600; margin-bottom: 20px;">
-                ⚙️ Всё, что нужно для эффективного цеха
-            </div>
-            <h2 style="font-size: 36px; font-weight: 800; color: #0a2540; margin-bottom: 16px; letter-spacing: -0.02em;">
-                Инструменты, которые реально работают
-            </h2>
-            <p style="font-size: 18px; color: #475569; line-height: 1.4;">
-                Никакой магии, только конкретные решения для реальных проблем производства
-            </p>
+    <div class="container" style="max-width:1280px; margin:0 auto; padding:0 24px;">
+        <div style="text-align:center; max-width:750px; margin:0 auto 56px;">
+            <div style="display:inline-block; background:#e0e7ff; color:#0a66c2; padding:6px 16px; border-radius:40px; font-size:13px; font-weight:600; margin-bottom:20px;">⚙️ Всё, что нужно для эффективного цеха</div>
+            <h2 style="font-size:36px; font-weight:800; color:#0a2540; margin-bottom:16px;">Инструменты, которые реально работают</h2>
+            <p style="font-size:18px; color:#475569;">Никакой магии, только конкретные решения для реальных проблем производства</p>
         </div>
-
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 32px; margin-bottom: 48px;">
-
-            <!-- Карточка 1: Визуальный конструктор -->
-            <div style="background: #ffffff; border-radius: 32px; padding: 28px; transition: all 0.3s ease; border: 1px solid #eef2f6; box-shadow: 0 8px 20px rgba(0,0,0,0.02); position: relative; overflow: hidden;">
-                <div style="position: absolute; top: 24px; right: 24px; background: #10b98110; color: #10b981; padding: 4px 12px; border-radius: 40px; font-size: 11px; font-weight: 600;">Ключевое преимущество</div>
-                <div style="width: 56px; height: 56px; background: linear-gradient(135deg, #eef2ff, #e0e7ff); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 32px; margin-bottom: 24px;">🏗️</div>
-                <h3 style="font-size: 22px; font-weight: 700; margin-bottom: 12px; color: #0a2540;">Визуальный конструктор техпроцессов</h3>
-                <p style="color: #475569; font-size: 15px; line-height: 1.5; margin-bottom: 20px;">Создавайте маршрутные карты перетаскиванием. Операции, связи, время — всё наглядно, без таблиц и программистов.</p>
-                <div style="background: #f8fafc; border-radius: 20px; padding: 16px; margin: 20px 0 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
-                    <div><div style="font-size: 20px; font-weight: 800; color: #0a66c2;">5 мин</div><div style="font-size: 11px; color: #5b6e8c;">на создание шаблона</div></div>
-                    <div><div style="font-size: 20px; font-weight: 800; color: #0a66c2;">100%</div><div style="font-size: 11px; color: #5b6e8c;">наглядность цепочки</div></div>
-                </div>
-                <ul style="list-style: none; margin: 16px 0 0; padding: 0;">
-                    <li style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: #334155; margin-bottom: 12px;"><span style="font-size: 18px;">✅</span> Автоматическая блокировка следующих этапов</li>
-                    <li style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: #334155; margin-bottom: 12px;"><span style="font-size: 18px;">✅</span> Параллельные ветки и условия переходов</li>
-                    <li style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: #334155;"><span style="font-size: 18px;">✅</span> Drag & drop, связи в один клик</li>
-                </ul>
-            </div>
-
-            <!-- Карточка 2: Дашборд мастера -->
-            <div style="background: #ffffff; border-radius: 32px; padding: 28px; transition: all 0.3s ease; border: 1px solid #eef2f6; box-shadow: 0 8px 20px rgba(0,0,0,0.02); position: relative; overflow: hidden;">
-                <div style="width: 56px; height: 56px; background: linear-gradient(135deg, #eef2ff, #e0e7ff); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 32px; margin-bottom: 24px;">📊</div>
-                <h3 style="font-size: 22px; font-weight: 700; margin-bottom: 12px; color: #0a2540;">Дашборд мастера смены</h3>
-                <p style="color: #475569; font-size: 15px; line-height: 1.5; margin-bottom: 20px;">В реальном времени: прогресс заказов, загрузка сотрудников, проблемные участки. Узкие места видны сразу.</p>
-                <div style="background: #f8fafc; border-radius: 20px; padding: 16px; margin: 20px 0 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
-                    <div><div style="font-size: 20px; font-weight: 800; color: #0a66c2;">94%</div><div style="font-size: 11px; color: #5b6e8c;">макс. загрузка видна</div></div>
-                    <div><div style="font-size: 20px; font-weight: 800; color: #0a66c2;">+35%</div><div style="font-size: 11px; color: #5b6e8c;">скорость реакции</div></div>
-                </div>
-                <ul style="list-style: none; margin: 16px 0 0; padding: 0;">
-                    <li style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: #334155; margin-bottom: 12px;"><span style="font-size: 18px;">⚠️</span> Автоматическое выделение рисков по срокам</li>
-                    <li style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: #334155; margin-bottom: 12px;"><span style="font-size: 18px;">👥</span> Загрузка каждого сотрудника в процентах</li>
-                    <li style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: #334155;"><span style="font-size: 18px;">📈</span> Сводка за смену: завершено, просрочено, в работе</li>
-                </ul>
-            </div>
-
-            <!-- Карточка 3: Экран рабочего -->
-            <div style="background: #ffffff; border-radius: 32px; padding: 28px; transition: all 0.3s ease; border: 1px solid #eef2f6; box-shadow: 0 8px 20px rgba(0,0,0,0.02); position: relative; overflow: hidden;">
-                <div style="width: 56px; height: 56px; background: linear-gradient(135deg, #eef2ff, #e0e7ff); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 32px; margin-bottom: 24px;">👷</div>
-                <h3 style="font-size: 22px; font-weight: 700; margin-bottom: 12px; color: #0a2540;">Личное рабочее место</h3>
-                <p style="color: #475569; font-size: 15px; line-height: 1.5; margin-bottom: 20px;">Каждый сотрудник видит только свои задачи. Один клик — взял в работу, таймер запущен. Завершил — система двигает заказ дальше.</p>
-                <div style="background: #f8fafc; border-radius: 20px; padding: 16px; margin: 20px 0 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
-                    <div><div style="font-size: 20px; font-weight: 800; color: #0a66c2;">-50%</div><div style="font-size: 11px; color: #5b6e8c;">времени на учёт</div></div>
-                    <div><div style="font-size: 20px; font-weight: 800; color: #0a66c2;">100%</div><div style="font-size: 11px; color: #5b6e8c;">план/факт в реальном времени</div></div>
-                </div>
-                <ul style="list-style: none; margin: 16px 0 0; padding: 0;">
-                    <li style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: #334155; margin-bottom: 12px;"><span style="font-size: 18px;">⏱️</span> Встроенный таймер с план/фактом</li>
-                    <li style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: #334155; margin-bottom: 12px;"><span style="font-size: 18px;">🔔</span> Уведомления о срочных задачах</li>
-                    <li style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: #334155;"><span style="font-size: 18px;">✅</span> Автоматическая смена статуса заказа</li>
-                </ul>
-            </div>
-
-            <!-- Карточка 4: Автоблокировка -->
-            <div style="background: #ffffff; border-radius: 32px; padding: 28px; transition: all 0.3s ease; border: 1px solid #eef2f6; box-shadow: 0 8px 20px rgba(0,0,0,0.02); position: relative; overflow: hidden;">
-                <div style="width: 56px; height: 56px; background: linear-gradient(135deg, #eef2ff, #e0e7ff); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 32px; margin-bottom: 24px;">🔒</div>
-                <h3 style="font-size: 22px; font-weight: 700; margin-bottom: 12px; color: #0a2540;">Полное следование техпроцессу</h3>
-                <p style="color: #475569; font-size: 15px; line-height: 1.5; margin-bottom: 20px;">Операция не начнётся, пока предыдущая не выполнена. Автоблокировка исключает пропуски и брак из-за неверного порядка.</p>
-                <ul style="list-style: none; margin: 16px 0 0; padding: 0;">
-                    <li style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: #334155; margin-bottom: 12px;"><span style="font-size: 18px;">🧩</span> Сложный техпроцесс остаётся понятным и последовательным</li>
-                    <li style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: #334155; margin-bottom: 12px;"><span style="font-size: 18px;">🔄</span> Поддержка параллельных и зависимых операций</li>
-                    <li style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: #334155;"><span style="font-size: 18px;">📋</span> Чёткая передача ответственности между сменами</li>
-                </ul>
-            </div>
-
-            <!-- Карточка 5: Внедрение (без цен) -->
-            <div style="background: #ffffff; border-radius: 32px; padding: 28px; transition: all 0.3s ease; border: 1px solid #eef2f6; box-shadow: 0 8px 20px rgba(0,0,0,0.02); position: relative; overflow: hidden;">
-                <div style="width: 56px; height: 56px; background: linear-gradient(135deg, #eef2ff, #e0e7ff); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 32px; margin-bottom: 24px;">⚡</div>
-                <h3 style="font-size: 22px; font-weight: 700; margin-bottom: 12px; color: #0a2540;">Внедрение за 15 минут без IT-отдела</h3>
-                <p style="color: #475569; font-size: 15px; line-height: 1.5; margin-bottom: 20px;">Работает в браузере, не требует установки. Интуитивно понятный интерфейс — без обучения и инструкций.</p>
-                <ul style="list-style: none; margin: 16px 0 0; padding: 0;">
-                    <li style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: #334155; margin-bottom: 12px;"><span style="font-size: 18px;">🌐</span> Работает прямо в браузере</li>
-                    <li style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: #334155; margin-bottom: 12px;"><span style="font-size: 18px;">🛠️</span> Не требует установки и настройки</li>
-                    <li style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: #334155;"><span style="font-size: 18px;">👥</span> Интуитивный интерфейс для всех</li>
-                </ul>
-            </div>
-
-            <!-- Карточка 6: Аналитика -->
-            <div style="background: #ffffff; border-radius: 32px; padding: 28px; transition: all 0.3s ease; border: 1px solid #eef2f6; box-shadow: 0 8px 20px rgba(0,0,0,0.02); position: relative; overflow: hidden;">
-                <div style="width: 56px; height: 56px; background: linear-gradient(135deg, #eef2ff, #e0e7ff); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 32px; margin-bottom: 24px;">📉</div>
-                <h3 style="font-size: 22px; font-weight: 700; margin-bottom: 12px; color: #0a2540;">Аналитика потерь и эффективности</h3>
-                <p style="color: #475569; font-size: 15px; line-height: 1.5; margin-bottom: 20px;">Сравнение планового и фактического времени, простои, загрузка ресурсов — будет видно, где теряете деньги.</p>
-                <ul style="list-style: none; margin: 16px 0 0; padding: 0;">
-                    <li style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: #334155; margin-bottom: 12px;"><span style="font-size: 18px;">📊</span> Отчёт по отклонениям (план/факт)</li>
-                    <li style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: #334155; margin-bottom: 12px;"><span style="font-size: 18px;">🎯</span> Рейтинг исполнителей по скорости</li>
-                    <li style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: #334155;"><span style="font-size: 18px;">💡</span> Прогноз загрузки на неделю вперёд</li>
-                </ul>
-            </div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(340px,1fr)); gap:32px; margin-bottom:48px;">
+            <div style="background:#fff; border-radius:32px; padding:28px; border:1px solid #eef2f6;"><div style="width:56px; height:56px; background:linear-gradient(135deg,#eef2ff,#e0e7ff); border-radius:20px; display:flex; align-items:center; justify-content:center; font-size:32px; margin-bottom:24px;">🏗️</div><h3 style="font-size:22px; font-weight:700; margin-bottom:12px;">Визуальный конструктор техпроцессов</h3><p style="color:#475569; font-size:15px;">Создавайте маршрутные карты перетаскиванием. Операции, связи, время — всё наглядно.</p></div>
+            <div style="background:#fff; border-radius:32px; padding:28px; border:1px solid #eef2f6;"><div style="width:56px; height:56px; background:linear-gradient(135deg,#eef2ff,#e0e7ff); border-radius:20px; display:flex; align-items:center; justify-content:center; font-size:32px; margin-bottom:24px;">📊</div><h3 style="font-size:22px; font-weight:700; margin-bottom:12px;">Дашборд мастера смены</h3><p style="color:#475569; font-size:15px;">В реальном времени: прогресс заказов, загрузка сотрудников, проблемные участки.</p></div>
+            <div style="background:#fff; border-radius:32px; padding:28px; border:1px solid #eef2f6;"><div style="width:56px; height:56px; background:linear-gradient(135deg,#eef2ff,#e0e7ff); border-radius:20px; display:flex; align-items:center; justify-content:center; font-size:32px; margin-bottom:24px;">👷</div><h3 style="font-size:22px; font-weight:700; margin-bottom:12px;">Личное рабочее место</h3><p style="color:#475569; font-size:15px;">Каждый сотрудник видит только свои задачи. Один клик — взял в работу, таймер запущен.</p></div>
+            <div style="background:#fff; border-radius:32px; padding:28px; border:1px solid #eef2f6;"><div style="width:56px; height:56px; background:linear-gradient(135deg,#eef2ff,#e0e7ff); border-radius:20px; display:flex; align-items:center; justify-content:center; font-size:32px; margin-bottom:24px;">🔒</div><h3 style="font-size:22px; font-weight:700; margin-bottom:12px;">Полное следование техпроцессу</h3><p style="color:#475569; font-size:15px;">Операция не начнётся, пока предыдущая не выполнена. Автоблокировка исключает пропуски.</p></div>
+            <div style="background:#fff; border-radius:32px; padding:28px; border:1px solid #eef2f6;"><div style="width:56px; height:56px; background:linear-gradient(135deg,#eef2ff,#e0e7ff); border-radius:20px; display:flex; align-items:center; justify-content:center; font-size:32px; margin-bottom:24px;">⚡</div><h3 style="font-size:22px; font-weight:700; margin-bottom:12px;">Внедрение за 15 минут без IT-отдела</h3><p style="color:#475569; font-size:15px;">Работает в браузере, не требует установки. Интуитивно понятный интерфейс.</p></div>
+            <div style="background:#fff; border-radius:32px; padding:28px; border:1px solid #eef2f6;"><div style="width:56px; height:56px; background:linear-gradient(135deg,#eef2ff,#e0e7ff); border-radius:20px; display:flex; align-items:center; justify-content:center; font-size:32px; margin-bottom:24px;">📉</div><h3 style="font-size:22px; font-weight:700; margin-bottom:12px;">Аналитика потерь и эффективности</h3><p style="color:#475569; font-size:15px;">Сравнение планового и фактического времени, простои, загрузка ресурсов.</p></div>
         </div>
-
-        <!-- Блок с цифрами/статистикой -->
-        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 24px; background: linear-gradient(135deg, #0a2540, #0a3a5c); border-radius: 48px; padding: 40px 48px; margin-top: 40px;">
-            <div style="flex: 1; text-align: center;"><div style="font-size: 42px; font-weight: 800; margin-bottom: 8px; background: linear-gradient(135deg, #fff, #b8d4ff); -webkit-background-clip: text; background-clip: text; color: transparent;">-30%</div><div style="font-size: 14px; opacity: 0.8; color: white;">снижение простоев</div></div>
-            <div style="flex: 1; text-align: center;"><div style="font-size: 42px; font-weight: 800; margin-bottom: 8px; background: linear-gradient(135deg, #fff, #b8d4ff); -webkit-background-clip: text; background-clip: text; color: transparent;">2x</div><div style="font-size: 14px; opacity: 0.8; color: white;">быстрее реакция</div></div>
-            <div style="flex: 1; text-align: center;"><div style="font-size: 42px; font-weight: 800; margin-bottom: 8px; background: linear-gradient(135deg, #fff, #b8d4ff); -webkit-background-clip: text; background-clip: text; color: transparent;">15 мин</div><div style="font-size: 14px; opacity: 0.8; color: white;">на запуск</div></div>
-            <div style="flex: 1; text-align: center;"><div style="font-size: 42px; font-weight: 800; margin-bottom: 8px; background: linear-gradient(135deg, #fff, #b8d4ff); -webkit-background-clip: text; background-clip: text; color: transparent;">100%</div><div style="font-size: 14px; opacity: 0.8; color: white;">прозрачность</div></div>
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 24px; background: linear-gradient(135deg, #0a2540, #0a3a5c); border-radius: 48px; padding: 40px 48px;">
+            <div style="flex:1; text-align:center;"><div style="font-size:42px; font-weight:800; background:linear-gradient(135deg,#fff,#b8d4ff); -webkit-background-clip:text; background-clip:text; color:transparent;">-30%</div><div style="font-size:14px; color:white;">снижение простоев</div></div>
+            <div style="flex:1; text-align:center;"><div style="font-size:42px; font-weight:800; background:linear-gradient(135deg,#fff,#b8d4ff); -webkit-background-clip:text; background-clip:text; color:transparent;">2x</div><div style="font-size:14px; color:white;">быстрее реакция</div></div>
+            <div style="flex:1; text-align:center;"><div style="font-size:42px; font-weight:800; background:linear-gradient(135deg,#fff,#b8d4ff); -webkit-background-clip:text; background-clip:text; color:transparent;">15 мин</div><div style="font-size:14px; color:white;">на запуск</div></div>
+            <div style="flex:1; text-align:center;"><div style="font-size:42px; font-weight:800; background:linear-gradient(135deg,#fff,#b8d4ff); -webkit-background-clip:text; background-clip:text; color:transparent;">100%</div><div style="font-size:14px; color:white;">прозрачность</div></div>
         </div>
     </div>
 </section>
 
-<style>
-    /* Добавьте hover-эффекты для карточек */
-    .features-grid-modern > div:hover {
-        transform: translateY(-6px);
-        border-color: #cbdffc;
-        box-shadow: 0 24px 48px -12px rgba(10,102,194,0.15);
-    }
-</style>
-
-<!-- ========== КОНСТРУКТОР ТЕХПРОЦЕССА ========== -->
-<section class="section" style="padding: 60px 0; background: #f8fafc;">
+<!-- Конструктор -->
+<section id="constructor" class="section" style="padding: 60px 0; background: #f8fafc;">
     <div class="container">
-        <h2 class="section-title" style="text-align: center; margin-bottom: 16px;">🏗️ Конструктор техпроцесса</h2>
-        <p class="section-subtitle" style="text-align: center; margin-bottom: 40px;">Проектируйте маршрутные карты визуально. Добавляйте операции, создавайте связи, запускайте выполнение.</p>
-
-        <div style="background: white; border-radius: 32px; overflow: hidden; box-shadow: 0 20px 40px -12px rgba(0,0,0,0.15); border: 1px solid #eef2f6;">
-            <iframe
-                    src="builder.html"
-                    style="width: 100%; height: 750px; border: none; display: block;"
-                    title="VERSTAK Конструктор техпроцесса"
-                    loading="lazy">
-            </iframe>
-        </div>
-
-        <div style="display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; margin-top: 24px;">
-            <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: #475569;">
-                <span style="display: inline-block; width: 8px; height: 8px; background: #22c55e; border-radius: 50%;"></span>
-                Зелёные — активные операции (пульсируют)
-            </div>
-            <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: #475569;">
-                <span style="display: inline-block; width: 8px; height: 8px; background: #64748b; border-radius: 50%;"></span>
-                Серые — ожидают
-            </div>
-            <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: #475569;">
-                <span style="display: inline-block; width: 8px; height: 8px; background: #f59e0b; border-radius: 50%;"></span>
-                Оранжевые линии — связи между операциями
-            </div>
+        <h2 class="section-title">🏗️ Конструктор техпроцесса</h2>
+        <p class="section-subtitle">Проектируйте маршрутные карты визуально. Добавляйте операции, создавайте связи, запускайте выполнение.</p>
+        <div style="background: white; border-radius: 32px; overflow: hidden; box-shadow: 0 20px 40px -12px rgba(0,0,0,0.15); border: 1px solid #eef2f6; position: relative; min-height: 750px;">
+            <div id="constructorLoader" style="position:absolute; top:0; left:0; width:100%; height:100%; background:#fff; display:flex; align-items:center; justify-content:center; z-index:10; border-radius:32px;"><div style="text-align:center;"><div style="width:48px; height:48px; margin:0 auto 16px; border:3px solid #eef2f6; border-top-color:#0a66c2; border-radius:50%; animation: spin 0.6s linear infinite;"></div><div style="color:#6c7a91;">Загрузка конструктора...</div></div></div>
+            <iframe id="constructorFrame" src="about:blank" style="width:100%; height:750px; border:none; display:block; opacity:0; transition:opacity 0.3s;" data-src="builder.html" loading="lazy"></iframe>
         </div>
     </div>
 </section>
 
-<!-- ========== ЭКРАН РАБОЧЕГО ========== -->
+<!-- Экран рабочего -->
 <section id="worker" class="section">
     <div class="container">
         <h2 class="section-title">👷 Экран рабочего</h2>
         <p class="section-subtitle">Каждый сотрудник видит только свои задачи, может запустить таймер и завершить операцию</p>
-
         <div class="worker-preview">
-            <div class="worker-stats">
-                <div class="worker-stat-card">
-                    <div class="worker-stat-value">3</div>
-                    <div>📋 Доступно операций</div>
-                </div>
-                <div class="worker-stat-card">
-                    <div class="worker-stat-value">1</div>
-                    <div>⚙️ В работе</div>
-                </div>
-                <div class="worker-stat-card">
-                    <div class="worker-stat-value">4</div>
-                    <div>✅ Завершено сегодня</div>
-                </div>
-            </div>
-            <div style="margin-bottom: 20px;" id="currentTaskBlock">
-                <div style="background: linear-gradient(135deg, #eef2ff, #e0e7ff); border-radius: 20px; padding: 18px;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
-                        <div>
-                            <div style="font-size: 12px; color: #0a66c2; font-weight: 600;">ТЕКУЩАЯ ЗАДАЧА</div>
-                            <div style="font-size: 16px; font-weight: 700;">Сборка корпуса</div>
-                            <div style="font-size: 12px;">Кухонный стол 'Сканди' • Заказ №101</div>
-                        </div>
-                        <div style="text-align: right;">
-                            <div id="taskTimer" style="font-size: 22px; font-weight: 700; font-family: monospace;">01:15:00</div>
-                            <div style="font-size: 11px;">из 02:00:00 (план)</div>
-                        </div>
-                    </div>
-                    <div class="progress-bar-bg" style="margin-top: 12px;">
-                        <div id="taskProgress" class="progress-fill" style="width:62.5%; background:#f59e0b;"></div>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; margin-top: 8px; font-size: 11px; color: #6c7a91;">
-                        <span>⏱ Осталось: 00:45:00</span>
-                        <span>📊 Выполнено: 62.5%</span>
-                    </div>
-                    <button class="btn btn-success" id="completeTaskBtn" style="margin-top: 14px; width: 100%;">✅ Завершить операцию</button>
-                </div>
-            </div>
-            <div style="font-weight: 600; margin-bottom: 14px;">📋 Доступные для взятия операции</div>
-            <div class="tasks-grid-worker">
-                <div class="task-card">
-                    <div class="task-header"><span class="task-order">Шкаф-купе №102</span><span class="task-status ready">Готова к старту</span></div>
-                    <div class="task-operation">🔧 Установка фасадов</div>
-                    <div class="task-time">⏱ План: 01:00</div>
-                    <button class="btn btn-primary" style="width: 100%;">▶ Взять в работу</button>
-                </div>
-                <div class="task-card">
-                    <div class="task-header"><span class="task-order">Комод Эко №104</span><span class="task-status ready">Готова к старту</span></div>
-                    <div class="task-operation">🔧 Сборка каркаса</div>
-                    <div class="task-time">⏱ План: 00:45</div>
-                    <button class="btn btn-primary" style="width: 100%;">▶ Взять в работу</button>
-                </div>
-                <div class="task-card">
-                    <div class="task-header"><span class="task-order">Табурет №103</span><span class="task-status ready">Готова к старту</span></div>
-                    <div class="task-operation">🔧 Сборка</div>
-                    <div class="task-time">⏱ План: 00:25</div>
-                    <button class="btn btn-primary" style="width: 100%;">▶ Взять в работу</button>
-                </div>
-            </div>
-            <div class="worker-note">
-                <div><span style="font-size: 22px;">🎯</span> <strong>Что видит рабочий?</strong><br>Только свои операции, таймер, план/факт</div>
-                <div><span style="font-size: 22px;">⚡</span> <strong>Один клик</strong><br>Взял в работу → запустился таймер → завершил</div>
-            </div>
+            <div class="worker-stats"><div class="worker-stat-card"><div class="worker-stat-value">3</div><div>📋 Доступно операций</div></div><div class="worker-stat-card"><div class="worker-stat-value">1</div><div>⚙️ В работе</div></div><div class="worker-stat-card"><div class="worker-stat-value">4</div><div>✅ Завершено сегодня</div></div></div>
+            <div id="currentTaskBlock" style="margin-bottom:20px;"><div style="background:linear-gradient(135deg,#eef2ff,#e0e7ff); border-radius:20px; padding:18px;"><div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;"><div><div style="font-size:12px; color:#0a66c2; font-weight:600;">ТЕКУЩАЯ ЗАДАЧА</div><div style="font-size:16px; font-weight:700;">Сборка корпуса</div><div style="font-size:12px;">Кухонный стол 'Сканди' • Заказ №101</div></div><div style="text-align:right;"><div id="taskTimer" style="font-size:22px; font-weight:700; font-family:monospace;">01:15:00</div><div style="font-size:11px;">из 02:00:00 (план)</div></div></div><div class="progress-bar-bg" style="margin-top:12px;"><div id="taskProgress" class="progress-fill" style="width:62.5%; background:#f59e0b;"></div></div><div style="display:flex; justify-content:space-between; margin-top:8px; font-size:11px;"><span id="remainingTimeSpan">⏱ Осталось: 00:45:00</span><span id="percentSpan">📊 Выполнено: 62.5%</span></div><button class="btn btn-success" id="completeTaskBtn" style="margin-top:14px; width:100%;">✅ Завершить операцию</button></div></div>
+            <div style="font-weight:600; margin-bottom:14px;">📋 Доступные для взятия операции</div>
+            <div class="tasks-grid-worker"><div class="task-card"><div class="task-header"><span class="task-order">Шкаф-купе №102</span><span class="task-status ready">Готова к старту</span></div><div class="task-operation">🔧 Установка фасадов</div><div class="task-time">⏱ План: 01:00</div><button class="btn btn-primary" style="width:100%;">▶ Взять в работу</button></div><div class="task-card"><div class="task-header"><span class="task-order">Комод Эко №104</span><span class="task-status ready">Готова к старту</span></div><div class="task-operation">🔧 Сборка каркаса</div><div class="task-time">⏱ План: 00:45</div><button class="btn btn-primary" style="width:100%;">▶ Взять в работу</button></div><div class="task-card"><div class="task-header"><span class="task-order">Табурет №103</span><span class="task-status ready">Готова к старту</span></div><div class="task-operation">🔧 Сборка</div><div class="task-time">⏱ План: 00:25</div><button class="btn btn-primary" style="width:100%;">▶ Взять в работу</button></div></div>
+            <div class="worker-note"><div><span style="font-size:22px;">🎯</span> <strong>Что видит рабочий?</strong><br>Только свои операции, таймер, план/факт</div><div><span style="font-size:22px;">⚡</span> <strong>Один клик</strong><br>Взял в работу → запустился таймер → завершил</div></div>
         </div>
     </div>
 </section>
 
-<!-- ========== ЭКРАН МАСТЕРА СМЕНЫ ========== -->
+<!-- Дашборд мастера -->
 <section id="dashboard" class="section">
     <div class="container">
         <h2 class="section-title">📊 Экран мастера смены</h2>
         <p class="section-subtitle">В реальном времени видите прогресс по каждому заказу, загрузку сотрудников и узкие места</p>
-
-        <div class="dashboard-preview">
-            <div class="dashboard-grid">
-                <div class="dashboard-card">
-                    <div class="card-title">📋 Прогресс по активным заказам</div>
-                    <div class="product-item">
-                        <div class="product-header"><span><strong>Кухонный стол 'Сканди'</strong> <span style="background:#fef3c7; padding:2px 6px; border-radius:20px; font-size:10px;">В работе</span></span><span>45%</span></div>
-                        <div class="progress-bar-bg"><div class="progress-fill" style="width:45%; background:#3b82f6;"></div></div>
-                        <div style="font-size:11px; margin-top:6px;">📦 3/8 операций • Срок: 28.05</div>
-                    </div>
-                    <div class="product-item">
-                        <div class="product-header"><span><strong>Шкаф-купе 3-х дверный</strong> <span style="background:#fee2e2; padding:2px 6px; border-radius:20px; font-size:10px;">⚠️ Задержка</span></span><span>78%</span></div>
-                        <div class="progress-bar-bg"><div class="progress-fill" style="width:78%; background:#f59e0b;"></div></div>
-                        <div style="font-size:11px;">📦 9/12 операций • Срок: сегодня</div>
-                    </div>
-                    <div class="product-item">
-                        <div class="product-header"><span><strong>Обеденный стол 'Дуб'</strong> <span style="background:#fef3c7; padding:2px 6px; border-radius:20px; font-size:10px;">В работе</span></span><span>28%</span></div>
-                        <div class="progress-bar-bg"><div class="progress-fill" style="width:28%; background:#3b82f6;"></div></div>
-                        <div style="font-size:11px;">📦 2/10 операций • Срок: 29.05</div>
-                    </div>
-                </div>
-
-                <div class="dashboard-card">
-                    <div class="card-title">👥 Загрузка сотрудников</div>
-                    <div class="employee-row">
-                        <div class="employee-avatar">АИ</div>
-                        <div class="employee-info">
-                            <div><strong>Алексей Иванов</strong> — Раскройщик</div>
-                            <div class="load-bar"><div class="load-fill" style="width:85%"></div></div>
-                        </div>
-                        <div class="employee-load">85%</div>
-                    </div>
-                    <div class="employee-row">
-                        <div class="employee-avatar">ДС</div>
-                        <div class="employee-info">
-                            <div><strong>Дмитрий Смирнов</strong> — Кромочник</div>
-                            <div class="load-bar"><div class="load-fill" style="width:62%"></div></div>
-                        </div>
-                        <div class="employee-load">62%</div>
-                    </div>
-                    <div class="employee-row" style="background: #fef3c710; border-left: 3px solid #f59e0b;">
-                        <div class="employee-avatar">ОП</div>
-                        <div class="employee-info">
-                            <div><strong>Олег Петров</strong> — Сборщик </div>
-                            <div class="load-bar"><div class="load-fill" style="width:94%; background:#ef4444;"></div></div>
-                        </div>
-                        <div class="employee-load" style="color: #dc2626;">94%</div>
-                    </div>
-                    <div class="employee-row">
-                        <div class="employee-avatar">АК</div>
-                        <div class="employee-info">
-                            <div><strong>Андрей Козлов</strong> — Маляр</div>
-                            <div class="load-bar"><div class="load-fill" style="width:45%"></div></div>
-                        </div>
-                        <div class="employee-load">45%</div>
-                    </div>
-                    <div class="employee-row">
-                        <div class="employee-avatar">СН</div>
-                        <div class="employee-info">
-                            <div><strong>Сергей Новиков</strong> — ОТК</div>
-                            <div class="load-bar"><div class="load-fill" style="width:70%"></div></div>
-                        </div>
-                        <div class="employee-load">70%</div>
-                    </div>
-                </div>
-
-                <div class="dashboard-card full-width">
-                    <div class="card-title">🎯 Сводка за смену</div>
-                    <div style="display: flex; gap: 16px; margin-bottom: 20px;">
-                        <div class="kpi-mini-item" style="flex:1; text-align:center; padding:10px; background:#f8fafc; border-radius:16px;">
-                            <div style="font-size: 22px; font-weight: 800;">4</div>
-                            <div style="font-size: 11px;">✅ Завершено</div>
-                        </div>
-                        <div class="kpi-mini-item" style="flex:1; text-align:center; padding:10px; background:#f8fafc; border-radius:16px;">
-                            <div style="font-size: 22px; font-weight: 800;">5</div>
-                            <div style="font-size: 11px;">🔄 В работе</div>
-                        </div>
-                        <div class="kpi-mini-item" style="flex:1; text-align:center; padding:10px; background:#fef2f2; border-radius:16px;">
-                            <div style="font-size: 22px; font-weight: 800; color:#dc2626;">2</div>
-                            <div style="font-size: 11px;">⚠️ Просрочено</div>
-                        </div>
-                    </div>
-
-                    <div class="filter-tabs" id="filterTabs">
-                        <button class="filter-pill active" data-status="all">📊 Все (11)</button>
-                        <button class="filter-pill" data-status="progress">⚙️ В работе (5)</button>
-                        <button class="filter-pill" data-status="pending">⏸ Ожидают (0)</button>
-                        <button class="filter-pill" data-status="done">✅ Завершены (4)</button>
-                        <button class="filter-pill" data-status="overdue">⚠️ Просрочено (2)</button>
-                    </div>
-                    <div class="operations-list" id="operationsList"></div>
-                    <div class="pagination" id="paginationControls"></div>
-                </div>
-            </div>
-
-            <div style="margin-top: 20px; background: #eef2ff; border-radius: 20px; padding: 14px; display: flex; gap: 16px; align-items: center; flex-wrap: wrap; justify-content: space-between;">
-                <div><span style="font-size: 24px;">🎯</span> <strong>Что видит мастер смены?</strong><br>Прогресс каждого заказа, загрузку сотрудников, отставания</div>
-                <div><span style="font-size: 24px;">⚡</span> <strong>Принимайте решения быстрее</strong><br>Перебросьте ресурсы на проблемный участок за 1 минуту</div>
-            </div>
-        </div>
+        <div class="dashboard-preview"><div class="dashboard-grid"><div class="dashboard-card"><div class="card-title">📋 Прогресс по активным заказам</div><div class="product-item"><div class="product-header"><span><strong>Кухонный стол 'Сканди'</strong> <span style="background:#fef3c7; padding:2px 6px; border-radius:20px; font-size:10px;">В работе</span></span><span>45%</span></div><div class="progress-bar-bg"><div class="progress-fill" style="width:45%;"></div></div><div style="font-size:11px; margin-top:6px;">📦 3/8 операций • Срок: 28.05</div></div><div class="product-item"><div class="product-header"><span><strong>Шкаф-купе 3-х дверный</strong> <span style="background:#fee2e2; padding:2px 6px; border-radius:20px; font-size:10px;">⚠️ Задержка</span></span><span>78%</span></div><div class="progress-bar-bg"><div class="progress-fill" style="width:78%; background:#f59e0b;"></div></div><div style="font-size:11px;">📦 9/12 операций • Срок: сегодня</div></div><div class="product-item"><div class="product-header"><span><strong>Обеденный стол 'Дуб'</strong> <span style="background:#fef3c7; padding:2px 6px; border-radius:20px; font-size:10px;">В работе</span></span><span>28%</span></div><div class="progress-bar-bg"><div class="progress-fill" style="width:28%;"></div></div><div style="font-size:11px;">📦 2/10 операций • Срок: 29.05</div></div></div><div class="dashboard-card"><div class="card-title">👥 Загрузка сотрудников</div><div class="employee-row"><div class="employee-avatar">АИ</div><div class="employee-info"><div><strong>Алексей Иванов</strong> — Раскройщик</div><div class="load-bar"><div class="load-fill" style="width:85%"></div></div></div><div class="employee-load">85%</div></div><div class="employee-row"><div class="employee-avatar">ДС</div><div class="employee-info"><div><strong>Дмитрий Смирнов</strong> — Кромочник</div><div class="load-bar"><div class="load-fill" style="width:62%"></div></div></div><div class="employee-load">62%</div></div><div class="employee-row" style="background:#fef3c710; border-left:3px solid #f59e0b;"><div class="employee-avatar">ОП</div><div class="employee-info"><div><strong>Олег Петров</strong> — Сборщик</div><div class="load-bar"><div class="load-fill" style="width:94%; background:#ef4444;"></div></div></div><div class="employee-load" style="color:#dc2626;">94%</div></div><div class="employee-row"><div class="employee-avatar">АК</div><div class="employee-info"><div><strong>Андрей Козлов</strong> — Маляр</div><div class="load-bar"><div class="load-fill" style="width:45%"></div></div></div><div class="employee-load">45%</div></div></div><div class="dashboard-card full-width"><div class="card-title">🎯 Сводка за смену</div><div style="display:flex; gap:16px; margin-bottom:20px;"><div class="kpi-mini-item" style="flex:1; text-align:center; padding:10px; background:#f8fafc; border-radius:16px;"><div style="font-size:22px; font-weight:800;">4</div><div>✅ Завершено</div></div><div class="kpi-mini-item" style="flex:1; text-align:center; padding:10px; background:#f8fafc; border-radius:16px;"><div style="font-size:22px; font-weight:800;">5</div><div>🔄 В работе</div></div><div class="kpi-mini-item" style="flex:1; text-align:center; padding:10px; background:#fef2f2; border-radius:16px;"><div style="font-size:22px; font-weight:800; color:#dc2626;">2</div><div>⚠️ Просрочено</div></div></div><div class="filter-tabs" id="filterTabs"><button class="filter-pill active" data-status="all">📊 Все (11)</button><button class="filter-pill" data-status="progress">⚙️ В работе (5)</button><button class="filter-pill" data-status="pending">⏸ Ожидают (0)</button><button class="filter-pill" data-status="done">✅ Завершены (4)</button><button class="filter-pill" data-status="overdue">⚠️ Просрочено (2)</button></div><div class="operations-list" id="operationsList"></div><div class="pagination" id="paginationControls"></div></div></div><div style="margin-top:20px; background:#eef2ff; border-radius:20px; padding:14px; display:flex; gap:16px; align-items:center; flex-wrap:wrap; justify-content:space-between;"><div><span style="font-size:24px;">🎯</span> <strong>Что видит мастер смены?</strong><br>Прогресс каждого заказа, загрузку сотрудников, отставания</div><div><span style="font-size:24px;">⚡</span> <strong>Принимайте решения быстрее</strong><br>Перебросьте ресурсы на проблемный участок за 1 минуту</div></div></div>
     </div>
 </section>
 
-<!-- ПРИЗЫВ К ДЕЙСТВИЮ -->
-<section id="demo" style="padding: 50px 0 70px;">
-    <div class="container">
-        <div style="background: linear-gradient(135deg, #0a2540, #0a66c2); border-radius: 48px; padding: 48px 40px; text-align: center; color: white;">
-            <h2 style="font-size: 28px; margin-bottom: 16px;">Готовы перевести техпроцессы в цифру?</h2>
-            <p style="margin-bottom: 20px;">Оставьте заявку, и мы отправим Вам приглашение в первую очередь</p>
-            <button class="btn btn-primary" style="background: white; color: #0a66c2;" onclick="openModal()">🎁 Записаться в лист ожидания</button>
-        </div>
-    </div>
-</section>
-<!-- МОДАЛЬНОЕ ОКНО С ФОРМОЙ ОБРАТНОЙ СВЯЗИ -->
-<div id="feedbackModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h3>📋 Лист ожидания</h3>
-            <button class="btn-close" onclick="closeModal()">×</button>
-        </div>
-        <div class="modal-body">
-            <p style="margin-bottom: 20px; font-size: 14px; color: #475569; text-align: center;">
-                Оставьте контакты — мы пригласим вас первыми на тестирование<br>
-            </p>
-            <div id="modalErrorContainer" class="error-message hidden"></div>
-            <form id="feedbackForm">
-                <div class="form-group">
-                    <label class="form-label">Ваше имя <span class="required">*</span></label>
-                    <input type="text" id="modalName" class="form-input" placeholder="Например: Александр Петров">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Номер телефона <span class="required">*</span></label>
-                    <input type="tel" id="modalPhone" class="form-input" placeholder="+7 (900) 123-45-67">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Email <span class="required">*</span></label>
-                    <input type="email" id="modalEmail" class="form-input" placeholder="ivan@example.com">
-                </div>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="modalConsent">
-                    <label class="checkbox-label" for="modalConsent">Я даю согласие на обработку персональных данных в соответствии с <a href="#">политикой конфиденциальности</a></label>
-                </div>
-                <button type="submit" class="submit-btn">📩 Вступить в лист ожидания</button>
-            </form>
-            <div id="modalSuccessContainer" class="success-message hidden">
-                <span>✅</span>
-                <span>Спасибо! Вы в списке ожидания. Как запустимся — напишем первым.</span>
-            </div>
-        </div>
-    </div>
-</div>
+<!-- Призыв -->
+<section style="padding:50px 0 70px;"><div class="container"><div style="background:linear-gradient(135deg,#0a2540,#0a66c2); border-radius:48px; padding:48px 40px; text-align:center; color:white;"><h2 style="font-size:28px; margin-bottom:16px;">Готовы перевести техпроцессы в цифру?</h2><p style="margin-bottom:20px;">Оставьте заявку, и мы отправим Вам приглашение в первую очередь</p><button class="btn btn-primary" style="background:white; color:#0a66c2;" onclick="openModal()">🎁 Записаться в лист ожидания</button></div></div></section>
 
-<footer style="border-top: 1px solid #eef2ff; padding: 32px 0; text-align: center;">
-    <div class="container">
-        <p style="color: #6c7a91; font-size: 13px;">© 2025 VERSTAK — Управление производственными операциями</p>
-    </div>
-</footer>
+<!-- Модалка -->
+<div id="feedbackModal" class="modal"><div class="modal-content"><div class="modal-header"><h3>📋 Лист ожидания</h3><button class="btn-close" onclick="closeModal()">×</button></div><div class="modal-body"><p style="margin-bottom:20px; font-size:14px; text-align:center;">Оставьте контакты — мы пригласим вас первыми на тестирование</p><div id="modalErrorContainer" class="error-message hidden"></div><form id="feedbackForm"><div class="form-group"><label class="form-label">Ваше имя <span class="required">*</span></label><input type="text" id="modalName" class="form-input" placeholder="Например: Александр Петров"></div><div class="form-group"><label class="form-label">Номер телефона <span class="required">*</span></label><input type="tel" id="modalPhone" class="form-input" placeholder="+7 (900) 123-45-67"></div><div class="form-group"><label class="form-label">Email <span class="required">*</span></label><input type="email" id="modalEmail" class="form-input" placeholder="ivan@example.com"></div><div class="checkbox-group"><input type="checkbox" id="modalConsent"><label class="checkbox-label" for="modalConsent">Я даю согласие на обработку персональных данных в соответствии с <a href="#">политикой конфиденциальности</a></label></div><button type="submit" class="submit-btn">📩 Вступить в лист ожидания</button></form><div id="modalSuccessContainer" class="success-message hidden"><span>✅</span><span>Спасибо! Вы в списке ожидания.</span></div></div></div></div>
+
+<footer style="border-top:1px solid #eef2ff; padding:32px 0; text-align:center;"><div class="container"><p style="color:#6c7a91; font-size:13px;">© 2025 VERSTAK — Управление производственными операциями</p></div></footer>
 
 <script>
-    (function() {
-        // Прошло 1.25 часа = 1 час 15 мин = 4500 секунд
-        let elapsedSeconds = 4500;  // 01:15:00
-        const totalSeconds = 7200;   // 02:00:00
-
-        let timerRunning = true;
-
-        const timerElement = document.getElementById('taskTimer');
-        const progressElement = document.getElementById('taskProgress');
-        const completeBtn = document.getElementById('completeTaskBtn');
-        const remainingElement = document.querySelector('#currentTaskBlock div[style*="justify-content: space-between"] span:first-child');
-        const percentElement = document.querySelector('#currentTaskBlock div[style*="justify-content: space-between"] span:last-child');
-
-        function formatTime(seconds) {
-            const hrs = Math.floor(seconds / 3600);
-            const mins = Math.floor((seconds % 3600) / 60);
-            const secs = seconds % 60;
-            return `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    // Таймер, мобильное меню, модалка, фильтры, демо-данные для списка операций и пр.
+    (function(){
+        let elapsedSeconds=4500, totalSeconds=7200, timerRunning=true;
+        const timerEl=document.getElementById('taskTimer'), progressEl=document.getElementById('taskProgress'), completeBtn=document.getElementById('completeTaskBtn');
+        function formatTime(s){ let hrs=Math.floor(s/3600), mins=Math.floor((s%3600)/60), secs=s%60; return `${hrs.toString().padStart(2,'0')}:${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`; }
+        function updateDisplay(){
+            if(timerEl) timerEl.textContent=formatTime(elapsedSeconds);
+            if(progressEl){ let percent=(elapsedSeconds/totalSeconds)*100; progressEl.style.width=`${Math.min(percent,100)}%`; }
+            const remSpan=document.getElementById('remainingTimeSpan'); if(remSpan) remSpan.innerHTML=`⏱ Осталось: ${formatTime(Math.max(0,totalSeconds-elapsedSeconds))}`;
+            const percSpan=document.getElementById('percentSpan'); if(percSpan) percSpan.innerHTML=`📊 Выполнено: ${Math.min(100,Math.floor((elapsedSeconds/totalSeconds)*100))}%`;
         }
-
-        function updateDisplay() {
-            if (!timerElement) return;
-            timerElement.textContent = formatTime(elapsedSeconds);
-
-            if (progressElement) {
-                const percent = (elapsedSeconds / totalSeconds) * 100;
-                progressElement.style.width = `${Math.min(percent, 100)}%`;
-
-                if (elapsedSeconds >= totalSeconds) {
-                    progressElement.style.background = '#10b981';
-                } else if (percent > 80) {
-                    progressElement.style.background = '#f59e0b';
-                }
-            }
-
-            // Обновляем оставшееся время
-            const remaining = totalSeconds - elapsedSeconds;
-            if (remainingElement) {
-                remainingElement.innerHTML = `⏱ Осталось: ${formatTime(Math.max(0, remaining))}`;
-            }
-            if (percentElement) {
-                const percent = Math.min(100, Math.floor((elapsedSeconds / totalSeconds) * 100));
-                percentElement.innerHTML = `📊 Выполнено: ${percent}%`;
-            }
-        }
-
-        function tick() {
-            if (!timerRunning) return;
-            if (elapsedSeconds < totalSeconds) {
-                elapsedSeconds++;
-                updateDisplay();
-            } else {
-                timerRunning = false;
-                if (timerElement) timerElement.style.color = '#10b981';
-            }
-        }
-
-        // Запускаем таймер каждую секунду
-        const interval = setInterval(tick, 1000);
-
-        // Кнопка завершения операции
-        if (completeBtn) {
-            completeBtn.addEventListener('click', function() {
-                timerRunning = false;
-                clearInterval(interval);
-                alert('Операция завершена! Таймер остановлен.');
-            });
-        }
-
+        function tick(){ if(timerRunning && elapsedSeconds<totalSeconds){ elapsedSeconds++; updateDisplay(); } else if(elapsedSeconds>=totalSeconds) timerRunning=false; }
+        setInterval(tick,1000);
+        if(completeBtn) completeBtn.addEventListener('click',()=>{ timerRunning=false; alert('Операция завершена!'); });
         updateDisplay();
     })();
-</script>
 
-<script>
-    // Данные для конструктора (без изменений)
-    let demoOperations = [{
-        id: 1,
-        name: "📦 Раскрой ЛДСП",
-        planned: "00:45",
-        executor: "Алексей Иванов",
-        role: "Раскройщик",
-        x: 50,
-        y: 50
-    },
-        {
-            id: 2,
-            name: "🔪 Кромкование",
-            planned: "00:30",
-            executor: "Дмитрий Смирнов",
-            role: "Кромочник",
-            x: 50,
-            y: 180
-        },
-        {
-            id: 3,
-            name: "🔧 Присадка",
-            planned: "00:25",
-            executor: "Сергей Новиков",
-            role: "Сверловщик",
-            x: 50,
-            y: 310
-        },
-        {
-            id: 4,
-            name: "🔨 Сборка корпуса",
-            planned: "01:30",
-            executor: "Олег Петров",
-            role: "Сборщик",
-            x: 50,
-            y: 440
-        }
-    ];
-    let demoConnections = [{
-        from: 1,
-        to: 2
-    }, {
-        from: 2,
-        to: 3
-    }, {
-        from: 3,
-        to: 4
-    }];
-    let nextOpId = 5;
-    let connectionMode = false;
-    let connectionFrom = null;
-    let tempLine = null;
-
-    function renderConstructor() {
-        const container = document.getElementById('flowNodes');
-        if (!container) return;
-        container.innerHTML = '';
-        container.style.position = 'relative';
-        container.style.minHeight = '500px';
-        demoOperations.forEach(op => {
-            const card = document.createElement('div');
-            card.className = 'flow-op-card';
-            card.style.left = `${op.x}px`;
-            card.style.top = `${op.y}px`;
-            card.style.position = 'absolute';
-            card.setAttribute('data-id', op.id);
-            card.innerHTML = `<div class="card-header" data-id="${op.id}"><div class="card-title"><span>📋</span><span>Операция #${op.id}</span></div><button class="delete-op-btn" onclick="event.stopPropagation(); deleteDemoOp(${op.id})">✕</button></div><div class="card-content"><div class="op-name">${op.name}</div><div class="op-time"><span>⏱ План: ${op.planned}</span></div><div class="op-executor"><span>👤</span><span>${op.executor} (${op.role})</span></div></div><div class="connection-dot-out" onclick="event.stopPropagation(); startDemoConnection(${op.id})"></div><div class="connection-dot-in" onclick="event.stopPropagation(); completeDemoConnection(${op.id})"></div>`;
-            card.addEventListener('mousedown', (e) => {
-                if (e.target.classList.contains('delete-op-btn') || e.target.classList.contains('connection-dot-out') || e.target.classList.contains('connection-dot-in')) return;
-                const startX = e.clientX,
-                    startY = e.clientY,
-                    startLeft = op.x,
-                    startTop = op.y;
-                const onMouseMove = (moveEvent) => {
-                    op.x = startLeft + (moveEvent.clientX - startX);
-                    op.y = startTop + (moveEvent.clientY - startY);
-                    renderConstructor();
-                };
-                const onMouseUp = () => {
-                    document.removeEventListener('mousemove', onMouseMove);
-                    document.removeEventListener('mouseup', onMouseUp);
-                };
-                document.addEventListener('mousemove', onMouseMove);
-                document.addEventListener('mouseup', onMouseUp);
-                e.preventDefault();
-            });
-            container.appendChild(card);
-        });
-        demoConnections.forEach(conn => {
-            const fromOp = demoOperations.find(o => o.id === conn.from),
-                toOp = demoOperations.find(o => o.id === conn.to);
-            if (!fromOp || !toOp) return;
-            const fromX = fromOp.x + 130,
-                fromY = fromOp.y + 70,
-                toX = toOp.x + 130,
-                toY = toOp.y + 40;
-            const deltaX = toX - fromX,
-                deltaY = toY - fromY,
-                length = Math.sqrt(deltaX * deltaX + deltaY * deltaY),
-                angle = Math.atan2(deltaY, deltaX) * 180 / Math.PI;
-            const line = document.createElement('div');
-            line.className = 'connection-line';
-            line.style.left = `${fromX}px`;
-            line.style.top = `${fromY}px`;
-            line.style.width = `${length}px`;
-            line.style.transform = `rotate(${angle}deg)`;
-            container.appendChild(line);
-        });
+    // Мобильное меню
+    const menuToggle=document.getElementById('menuToggle'), navLinks=document.getElementById('navLinks'), overlay=document.getElementById('mobileOverlay');
+    if(menuToggle && navLinks){
+        menuToggle.addEventListener('click',()=>{ navLinks.classList.toggle('active'); if(overlay) overlay.classList.toggle('active'); document.body.style.overflow=navLinks.classList.contains('active')?'hidden':''; });
+        if(overlay) overlay.addEventListener('click',()=>{ navLinks.classList.remove('active'); overlay.classList.remove('active'); document.body.style.overflow=''; });
+        navLinks.querySelectorAll('a, button').forEach(l=>l.addEventListener('click',()=>{ navLinks.classList.remove('active'); if(overlay) overlay.classList.remove('active'); document.body.style.overflow=''; }));
     }
 
-    function addDemoOperation() {
-        const newId = nextOpId++;
-        const maxX = Math.max(...demoOperations.map(o => o.x), 100);
-        demoOperations.push({
-            id: newId,
-            name: `Новая операция ${newId}`,
-            planned: "00:30",
-            executor: "Назначить",
-            role: "Исполнитель",
-            x: maxX + 60,
-            y: 100
-        });
-        renderConstructor();
-    }
-
-    function deleteDemoOp(id) {
-        if (confirm('Удалить операцию и все связанные с ней связи?')) {
-            demoOperations = demoOperations.filter(o => o.id !== id);
-            demoConnections = demoConnections.filter(c => c.from !== id && c.to !== id);
-            renderConstructor();
-        }
-    }
-
-    function startDemoConnection(fromId) {
-        connectionMode = true;
-        connectionFrom = fromId;
-        document.body.style.cursor = 'crosshair';
-        tempLine = document.createElement('div');
-        tempLine.style.position = 'absolute';
-        tempLine.style.background = '#3b82f6';
-        tempLine.style.height = '2px';
-        tempLine.style.transformOrigin = '0 0';
-        tempLine.style.zIndex = '100';
-        tempLine.style.pointerEvents = 'none';
-        document.getElementById('flowNodes').appendChild(tempLine);
-        document.addEventListener('mousemove', updateTempLine);
-    }
-
-    function updateTempLine(e) {
-        if (!connectionMode || !tempLine) return;
-        const fromOp = demoOperations.find(o => o.id === connectionFrom);
-        if (!fromOp) return;
-        const fromX = fromOp.x + 130,
-            fromY = fromOp.y + 70,
-            rect = document.getElementById('flowNodes').getBoundingClientRect(),
-            toX = e.clientX - rect.left,
-            toY = e.clientY - rect.top,
-            deltaX = toX - fromX,
-            deltaY = toY - fromY,
-            length = Math.sqrt(deltaX * deltaX + deltaY * deltaY),
-            angle = Math.atan2(deltaY, deltaX) * 180 / Math.PI;
-        tempLine.style.left = `${fromX}px`;
-        tempLine.style.top = `${fromY}px`;
-        tempLine.style.width = `${length}px`;
-        tempLine.style.transform = `rotate(${angle}deg)`;
-    }
-
-    function completeDemoConnection(toId) {
-        if (!connectionMode) return;
-        if (tempLine) tempLine.remove();
-        document.removeEventListener('mousemove', updateTempLine);
-        if (connectionFrom === toId) {
-            cancelDemoConnection();
-            return;
-        }
-        const exists = demoConnections.some(c => c.from === connectionFrom && c.to === toId);
-        if (!exists) demoConnections.push({
-            from: connectionFrom,
-            to: toId
-        });
-        cancelDemoConnection();
-        renderConstructor();
-    }
-
-    function cancelDemoConnection() {
-        connectionMode = false;
-        connectionFrom = null;
-        document.body.style.cursor = 'default';
-        if (tempLine) {
-            tempLine.remove();
-            tempLine = null;
-        }
-        document.removeEventListener('mousemove', updateTempLine);
-    }
-
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && connectionMode) cancelDemoConnection();
-    });
-    renderConstructor();
-
-    // Данные для сводки (без изменений)
-    const allOperations = [
-        { id: 1, name: "Раскрой ЛДСП", order: "Стол Сканди", status: "progress", executor: "Алексей Иванов", time: "00:27", planned: "00:45" },
-        { id: 2, name: "Кромкование", order: "Стол Сканди", status: "progress", executor: "Дмитрий Смирнов", time: "00:18", planned: "00:30" },
-        { id: 3, name: "Присадка", order: "Стол Сканди", status: "progress", executor: "Сергей Новиков", time: "00:15", planned: "00:25" },
-        { id: 4, name: "Сборка корпуса", order: "Стол Сканди", status: "progress", executor: "Олег Петров", time: "00:45", planned: "01:30" },
-        { id: 5, name: "Установка фасадов", order: "Шкаф-купе", status: "progress", executor: "Олег Соколов", time: "01:15", planned: "01:00" },
-        { id: 6, name: "Покраска", order: "Шкаф-купе", status: "done", executor: "Андрей Козлов", time: "00:52", planned: "00:45" },
-        { id: 7, name: "Сборка ящиков", order: "Шкаф-купе", status: "done", executor: "Игорь Морозов", time: "00:35", planned: "00:35" },
-        { id: 8, name: "Шлифовка", order: "Табурет", status: "done", executor: "Петр Сидоров", time: "00:20", planned: "00:20" },
-        { id: 9, name: "Покраска", order: "Табурет", status: "overdue", executor: "Андрей Козлов", time: "00:45", planned: "00:30" },
-        { id: 10, name: "Сборка", order: "Табурет", status: "overdue", executor: "Олег Петров", time: "00:35", planned: "00:25" },
-        { id: 11, name: "Контроль качества", order: "Стол Сканди", status: "pending", executor: "Сергей Новиков", time: "00:00", planned: "00:15" },
-    ];
-
-    let currentStatusFilter = "all",
-        currentPage = 1,
-        itemsPerPage = 5;
-
-    function getFilteredOperations() {
-        if (currentStatusFilter === "all") return allOperations;
-        if (currentStatusFilter === "overdue") return allOperations.filter(op => op.status === "overdue");
-        return allOperations.filter(op => op.status === currentStatusFilter);
-    }
-
-    function getPaginatedOperations() {
-        const filtered = getFilteredOperations();
-        const start = (currentPage - 1) * itemsPerPage;
-        return filtered.slice(start, start + itemsPerPage);
-    }
-
-    function getTotalPages() {
-        return Math.ceil(getFilteredOperations().length / itemsPerPage);
-    }
-
-    function updateCounters() {
-        const total = allOperations.length,
-            progress = allOperations.filter(o => o.status === "progress").length,
-            pending = allOperations.filter(o => o.status === "pending").length,
-            done = allOperations.filter(o => o.status === "done").length;
-        const allBtn = document.querySelector('[data-status="all"]'),
-            progressBtn = document.querySelector('[data-status="progress"]'),
-            pendingBtn = document.querySelector('[data-status="pending"]'),
-            doneBtn = document.querySelector('[data-status="done"]');
-        if (allBtn) allBtn.innerHTML = `📊 Все (${total})`;
-        if (progressBtn) progressBtn.innerHTML = `⚙️ В работе (${progress})`;
-        if (pendingBtn) pendingBtn.innerHTML = `⏸ Ожидают (${pending})`;
-        if (doneBtn) doneBtn.innerHTML = `✅ Завершены (${done})`;
-    }
-
-    function renderOperations() {
-        const operations = getPaginatedOperations(),
-            container = document.getElementById('operationsList');
-        if (operations.length === 0) {
-            container.innerHTML = '<div style="text-align:center; padding:20px;">Нет операций с выбранным статусом</div>';
-            return;
-        }
-        container.innerHTML = operations.map((op, idx) => `<div class="operation-row row-${op.status}" style="animation-delay: ${idx * 0.05}s;" onclick="filterByStatus('${op.status}')"><div class="op-info"><div class="op-name">${op.name}</div><div class="op-meta"><span>📦 ${op.order}</span><span>👤 ${op.executor}</span></div></div><div style="text-align: right;"><div class="op-status status-${op.status}">${op.status === 'progress' ? '▶ В работе' : (op.status === 'done' ? '✓ Завершена' : '⏸ Ожидает')}</div><div class="op-time">${op.status !== 'pending' ? op.time + ' / ' + op.planned : '— / ' + op.planned}</div></div></div>`).join('');
-    }
-
-    function renderPagination() {
-        const totalPages = getTotalPages(),
-            container = document.getElementById('paginationControls');
-        if (totalPages <= 1) {
-            container.innerHTML = '';
-            return;
-        }
-        let html = '';
-        html += `<button class="page-btn" onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>←</button>`;
-        for (let i = 1; i <= totalPages; i++) html += `<button class="page-btn ${i === currentPage ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
-        html += `<button class="page-btn" onclick="goToPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>→</button>`;
-        container.innerHTML = html;
-    }
-
-    function goToPage(page) {
-        const totalPages = getTotalPages();
-        if (page < 1 || page > totalPages) return;
-        currentPage = page;
-        renderOperations();
-        renderPagination();
-    }
-
-    function filterByStatus(status) {
-        currentStatusFilter = status;
-        currentPage = 1;
-        document.querySelectorAll('.filter-pill').forEach(pill => {
-            pill.classList.remove('active');
-            if (pill.getAttribute('data-status') === status) pill.classList.add('active');
-        });
-        renderOperations();
-        renderPagination();
-    }
-
-    // Функции для модального окна
-    function openModal() {
-        document.getElementById('feedbackModal').classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
-    function closeModal() {
-        document.getElementById('feedbackModal').classList.remove('active');
-        document.body.style.overflow = '';
-        document.getElementById('modalErrorContainer').classList.add('hidden');
-        document.getElementById('modalSuccessContainer').classList.add('hidden');
-        document.getElementById('feedbackForm').reset();
-    }
-    // Обработчик формы
-    document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+    // Модалка
+    function openModal(){ document.getElementById('feedbackModal').classList.add('active'); document.body.style.overflow='hidden'; }
+    function closeModal(){ document.getElementById('feedbackModal').classList.remove('active'); document.body.style.overflow=''; document.getElementById('modalErrorContainer')?.classList.add('hidden'); document.getElementById('modalSuccessContainer')?.classList.add('hidden'); document.getElementById('feedbackForm')?.reset(); }
+    window.openModal=openModal; window.closeModal=closeModal;
+    const form=document.getElementById('feedbackForm');
+    if(form) form.addEventListener('submit',(e)=>{
         e.preventDefault();
-        const name = document.getElementById('modalName').value.trim();
-        const phone = document.getElementById('modalPhone').value.trim();
-        const email = document.getElementById('modalEmail').value.trim();
-        const consent = document.getElementById('modalConsent').checked;
-        const errorContainer = document.getElementById('modalErrorContainer');
-        const successContainer = document.getElementById('modalSuccessContainer');
-        errorContainer.classList.add('hidden');
-        successContainer.classList.add('hidden');
-        const errors = [];
-        if (!name) errors.push('• Введите ваше имя');
-        else if (name.length < 2) errors.push('• Имя должно содержать не менее 2 символов');
-        if (!phone) errors.push('• Введите номер телефона');
-        else { const phoneDigits = phone.replace(/\D/g, ''); if (phoneDigits.length < 10) errors.push('• Введите корректный номер телефона (не менее 10 цифр)'); }
-        if (!email) errors.push('• Введите email');
-        else { const emailRegex = /^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$/; if (!emailRegex.test(email)) errors.push('• Введите корректный email'); }
-        if (!consent) errors.push('• Подтвердите согласие на обработку персональных данных');
-        if (errors.length > 0) { errorContainer.innerHTML = errors.join('<br>'); errorContainer.classList.remove('hidden'); return; }
-        console.log('Форма отправлена:', { name, phone, email, consent });
-        successContainer.classList.remove('hidden');
-        document.getElementById('feedbackForm').reset();
-        setTimeout(() => {
-            successContainer.classList.add('hidden');
-            closeModal();
-        }, 3000);
+        const name=document.getElementById('modalName').value.trim(), phone=document.getElementById('modalPhone').value.trim(), email=document.getElementById('modalEmail').value.trim(), consent=document.getElementById('modalConsent').checked;
+        const errDiv=document.getElementById('modalErrorContainer'), sucDiv=document.getElementById('modalSuccessContainer');
+        errDiv.classList.add('hidden'); sucDiv.classList.add('hidden');
+        let errors=[];
+        if(!name) errors.push('• Введите имя'); else if(name.length<2) errors.push('• Имя минимум 2 символа');
+        if(!phone) errors.push('• Введите телефон'); else{ let digits=phone.replace(/\D/g,''); if(digits.length<10) errors.push('• Некорректный телефон'); }
+        if(!email) errors.push('• Введите email'); else{ let re=/^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$/; if(!re.test(email)) errors.push('• Некорректный email'); }
+        if(!consent) errors.push('• Подтвердите согласие');
+        if(errors.length){ errDiv.innerHTML=errors.join('<br>'); errDiv.classList.remove('hidden'); return; }
+        console.log('Lead:',{name,phone,email});
+        sucDiv.classList.remove('hidden');
+        form.reset();
+        setTimeout(()=>{ sucDiv.classList.add('hidden'); closeModal(); },3000);
     });
-    // Форматирование телефона
-    document.getElementById('modalPhone').addEventListener('input', function(e) {
-        let value = e.target.value.replace(/\D/g, '');
-        if (value.length === 0) { e.target.value = ''; return; }
-        let formatted = '';
-        if (value.length <= 1) formatted = '+7' + value;
-        else if (value.length <= 4) formatted = '+7 (' + value.substring(1, 4);
-        else if (value.length <= 7) formatted = '+7 (' + value.substring(1, 4) + ') ' + value.substring(4, 7);
-        else if (value.length <= 9) formatted = '+7 (' + value.substring(1, 4) + ') ' + value.substring(4, 7) + '-' + value.substring(7, 9);
-        else formatted = '+7 (' + value.substring(1, 4) + ') ' + value.substring(4, 7) + '-' + value.substring(7, 9) + '-' + value.substring(9, 11);
-        e.target.value = formatted;
-    });
-    // Закрытие по клику вне окна
-    window.onclick = function(event) { const modal = document.getElementById('feedbackModal'); if (event.target === modal) closeModal(); }
 
-    document.querySelectorAll('.filter-pill').forEach(pill => pill.addEventListener('click', () => filterByStatus(pill.getAttribute('data-status'))));
-    document.addEventListener('DOMContentLoaded', () => {
-        const progressFills = document.querySelectorAll('.progress-fill, .load-fill');
-        progressFills.forEach(fill => {
-            const width = fill.style.width;
-            fill.style.width = '0%';
-            setTimeout(() => {
-                fill.style.width = width;
-            }, 100);
-        });
-    });
-    updateCounters();
-    renderOperations();
-    renderPagination();
+    // Фильтр и пагинация (демо)
+    const allOps=[{id:1,name:"Раскрой ЛДСП",order:"Стол Сканди",status:"progress",executor:"Алексей Иванов",time:"00:27",planned:"00:45"},{id:2,name:"Кромкование",order:"Стол Сканди",status:"progress",executor:"Дмитрий Смирнов",time:"00:18",planned:"00:30"},{id:3,name:"Присадка",order:"Стол Сканди",status:"progress",executor:"Сергей Новиков",time:"00:15",planned:"00:25"},{id:4,name:"Сборка корпуса",order:"Стол Сканди",status:"progress",executor:"Олег Петров",time:"00:45",planned:"01:30"},{id:5,name:"Установка фасадов",order:"Шкаф-купе",status:"progress",executor:"Олег Соколов",time:"01:15",planned:"01:00"},{id:6,name:"Покраска",order:"Шкаф-купе",status:"done",executor:"Андрей Козлов",time:"00:52",planned:"00:45"},{id:7,name:"Сборка ящиков",order:"Шкаф-купе",status:"done",executor:"Игорь Морозов",time:"00:35",planned:"00:35"},{id:8,name:"Шлифовка",order:"Табурет",status:"done",executor:"Петр Сидоров",time:"00:20",planned:"00:20"},{id:9,name:"Покраска",order:"Табурет",status:"overdue",executor:"Андрей Козлов",time:"00:45",planned:"00:30"},{id:10,name:"Сборка",order:"Табурет",status:"overdue",executor:"Олег Петров",time:"00:35",planned:"00:25"},{id:11,name:"Контроль качества",order:"Стол Сканди",status:"pending",executor:"Сергей Новиков",time:"00:00",planned:"00:15"}];
+    let curFilter="all", curPage=1, perPage=5;
+    function getFiltered(){ if(curFilter==="all") return allOps; if(curFilter==="overdue") return allOps.filter(o=>o.status==="overdue"); return allOps.filter(o=>o.status===curFilter); }
+    function renderOps(){
+        const filtered=getFiltered(), start=(curPage-1)*perPage, pageItems=filtered.slice(start,start+perPage), container=document.getElementById('operationsList');
+        if(!container) return;
+        if(!pageItems.length){ container.innerHTML='<div style="text-align:center;padding:20px;">Нет операций</div>'; return; }
+        container.innerHTML=pageItems.map(op=>`<div class="operation-row row-${op.status}"><div class="op-info"><div class="op-name">${op.name}</div><div class="op-meta"><span>📦 ${op.order}</span><span>👤 ${op.executor}</span></div></div><div style="text-align:right;"><div class="op-status status-${op.status}">${op.status==='progress'?'▶ В работе':(op.status==='done'?'✓ Завершена':'⏸ Ожидает')}</div><div class="op-time">${op.status!=='pending'?op.time+' / '+op.planned:'— / '+op.planned}</div></div></div>`).join('');
+    }
+    function renderPagination(){
+        const total=Math.ceil(getFiltered().length/perPage), container=document.getElementById('paginationControls'); if(!container) return;
+        if(total<=1){ container.innerHTML=''; return; }
+        let html=`<button class="page-btn" onclick="goPage(${curPage-1})" ${curPage===1?'disabled':''}>←</button>`;
+        for(let i=1;i<=total;i++) html+=`<button class="page-btn ${i===curPage?'active':''}" onclick="goPage(${i})">${i}</button>`;
+        html+=`<button class="page-btn" onclick="goPage(${curPage+1})" ${curPage===total?'disabled':''}>→</button>`;
+        container.innerHTML=html;
+    }
+    window.goPage=function(p){ let total=Math.ceil(getFiltered().length/perPage); if(p<1||p>total) return; curPage=p; renderOps(); renderPagination(); };
+    function filterByStatus(s){ curFilter=s; curPage=1; document.querySelectorAll('.filter-pill').forEach(p=>p.classList.remove('active')); document.querySelector(`.filter-pill[data-status="${s}"]`)?.classList.add('active'); renderOps(); renderPagination(); }
+    window.filterByStatus=filterByStatus;
+    document.querySelectorAll('.filter-pill').forEach(p=>p.addEventListener('click',()=>filterByStatus(p.getAttribute('data-status'))));
+    renderOps(); renderPagination();
+
+    // iframe конструктор
+    const frame=document.getElementById('constructorFrame'), loaderDiv=document.getElementById('constructorLoader');
+    if(frame && loaderDiv){
+        frame.src=frame.getAttribute('data-src');
+        frame.addEventListener('load',()=>{ frame.style.opacity='1'; loaderDiv.style.opacity='0'; setTimeout(()=>{ loaderDiv.style.display='none'; },300); });
+        setTimeout(()=>{ if(loaderDiv.style.display!=='none'){ frame.style.opacity='1'; loaderDiv.style.opacity='0'; setTimeout(()=>{ loaderDiv.style.display='none'; },300); } },5000);
+    }
 </script>
 </body>
-
 </html>

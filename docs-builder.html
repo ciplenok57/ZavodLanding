@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VERSTAK — Документация операций</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8fafc;
+            color: #0a2540;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .app {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 16px 20px 20px 20px;
+            gap: 16px;
+        }
+
+        /* Шапка */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+            gap: 12px;
+            background: white;
+            padding: 12px 20px;
+            border-radius: 20px;
+            border: 1px solid #eef2f6;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .logo-icon {
+            font-size: 24px;
+        }
+
+        .header h1 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #0a2540;
+        }
+
+        .header h1 span {
+            color: #6c7a91;
+            font-weight: 400;
+            font-size: 14px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 18px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            text-decoration: none;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: #0a66c2;
+            color: white;
+            box-shadow: 0 2px 8px rgba(10, 102, 194, 0.2);
+        }
+        .btn-primary:hover {
+            background: #084a8f;
+            transform: translateY(-1px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid #e2e8f0;
+            color: #334155;
+        }
+        .btn-outline:hover {
+            background: #f1f5f9;
+            border-color: #94a3b8;
+        }
+
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+        .btn-success:hover {
+            background: #059669;
+            transform: translateY(-1px);
+        }
+
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+        }
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        /* Основная сетка */
+        .main-grid {
+            display: flex;
+            gap: 16px;
+            flex: 1;
+            min-height: 0;
+        }
+
+        /* Левая панель — список операций */
+        .sidebar {
+            width: 340px;
+            min-width: 280px;
+            background: white;
+            border-radius: 20px;
+            border: 1px solid #eef2f6;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+            flex-shrink: 0;
+        }
+
+        .sidebar-header h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #0a2540;
+        }
+
+        .sidebar-header span {
+            background: #eef2ff;
+            color: #0a66c2;
+            padding: 2px 10px;
+            border-radius: 40px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .search-box {
+            position: relative;
+            margin-bottom: 12px;
+            flex-shrink: 0;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 8px 12px 8px 36px;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 13px;
+            font-family: inherit;
+            background: #f8fafc;
+            transition: all 0.2s;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: #0a66c2;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(10, 102, 194, 0.08);
+        }
+
+        .search-box .icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+        .ops-list {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 4px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .ops-list::-webkit-scrollbar {
+            width: 4px;
+        }
+        .ops-list::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .ops-list::-webkit-scrollbar-thumb {
+            background: #d1d5db;
+            border-radius: 10px;
+        }
+
+        .op-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 14px;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1.5px solid transparent;
+            background: #fafbfc;
+        }
+
+        .op-item:hover {
+            background: #f1f5f9;
+            transform: translateX(4px);
+        }
+
+        .op-item.active {
+            background: #eef2ff;
+            border-color: #0a66c2;
+            box-shadow: 0 2px 8px rgba(10, 102, 194, 0.08);
+        }
+
+        .op-item .emoji {
+            font-size: 22px;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border-radius: 10px;
+            flex-shrink: 0;
+        }
+
+        .op-item .info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .op-item .info .name {
+            font-weight: 600;
+            font-size: 13px;
+            color: #0a2540;
+        }
+
+        .op-item .info .meta {
+            font-size: 11px;
+            color: #6c7a91;
+            display: flex;
+            gap: 12px;
+            margin-top: 2px;
+        }
+
+        .op-item .status-badge {
+            font-size: 9px;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 40px;
+            flex-shrink: 0;
+        }
+
+        .status-draft {
+            background: #f1f5f9;
+            color: #64748b;
+        }
+        .status-published {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .status-review {
+            background: #fef3c7;
+            color: #b45309;
+        }
+
+        /* Правая панель — редактор */
+        .editor-panel {
+            flex: 1;
+            background: white;
+            border-radius: 20px;
+            border: 1px solid #eef2f6;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .editor-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 20px;
+            border-bottom: 1px solid #eef2f6;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .editor-toolbar .left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .editor-toolbar .op-title {
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .editor-toolbar .op-code {
+            font-size: 11px;
+            color: #6c7a91;
+            background: #f1f5f9;
+            padding: 2px 10px;
+            border-radius: 40px;
+        }
+
+        .editor-toolbar .actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .editor-toolbar .btn-sm {
+            padding: 5px 14px;
+            font-size: 12px;
+        }
+
+        .editor-body {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* MD-редактор */
+        .md-editor {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #eef2f6;
+        }
+
+        .md-editor .toolbar {
+            display: flex;
+            gap: 4px;
+            padding: 8px 12px;
+            border-bottom: 1px solid #eef2f6;
+            background: #fafbfc;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+        }
+
+        .md-editor .toolbar button {
+            background: transparent;
+            border: none;
+            padding: 4px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            color: #475569;
+            transition: all 0.15s;
+            font-family: inherit;
+        }
+
+        .md-editor .toolbar button:hover {
+            background: #e2e8f0;
+            color: #0a2540;
+        }
+
+        .md-editor .toolbar .sep {
+            width: 1px;
+            background: #e2e8f0;
+            margin: 0 4px;
+        }
+
+        .md-editor textarea {
+            flex: 1;
+            border: none;
+            padding: 16px 20px;
+            font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+            font-size: 13px;
+            line-height: 1.7;
+            resize: none;
+            outline: none;
+            background: #fafbfc;
+            color: #0a2540;
+            tab-size: 2;
+        }
+
+        .md-editor textarea::placeholder {
+            color: #94a3b8;
+        }
+
+        /* Превью */
+        .preview-panel {
+            flex: 1;
+            padding: 20px 24px;
+            overflow-y: auto;
+            background: #ffffff;
+        }
+
+        .preview-panel h2 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #0a2540;
+        }
+
+        .preview-panel .doc-meta {
+            display: flex;
+            gap: 16px;
+            font-size: 12px;
+            color: #6c7a91;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #eef2f6;
+            flex-wrap: wrap;
+        }
+
+        .preview-panel .doc-meta span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .preview-panel .doc-body {
+            font-size: 14px;
+            line-height: 1.7;
+            color: #1e293b;
+        }
+
+        .preview-panel .doc-body h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 20px 0 12px;
+            color: #0a2540;
+        }
+
+        .preview-panel .doc-body h2 {
+            font-size: 20px;
+            font-weight: 700;
+            margin: 18px 0 10px;
+            color: #0a2540;
+        }
+
+        .preview-panel .doc-body h3 {
+            font-size: 17px;
+            font-weight: 600;
+            margin: 14px 0 8px;
+            color: #0a2540;
+        }
+
+        .preview-panel .doc-body p {
+            margin: 0 0 12px;
+        }
+
+        .preview-panel .doc-body ul,
+        .preview-panel .doc-body ol {
+            margin: 0 0 12px 20px;
+        }
+
+        .preview-panel .doc-body li {
+            margin-bottom: 4px;
+        }
+
+        .preview-panel .doc-body code {
+            background: #f1f5f9;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .preview-panel .doc-body pre {
+            background: #f1f5f9;
+            padding: 14px 18px;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin: 12px 0;
+            font-size: 13px;
+            font-family: 'JetBrains Mono', monospace;
+            line-height: 1.6;
+        }
+
+        .preview-panel .doc-body blockquote {
+            border-left: 4px solid #0a66c2;
+            padding: 8px 16px;
+            margin: 12px 0;
+            background: #f8fafc;
+            border-radius: 0 8px 8px 0;
+            color: #475569;
+        }
+
+        .preview-panel .doc-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+            font-size: 13px;
+        }
+
+        .preview-panel .doc-body th,
+        .preview-panel .doc-body td {
+            padding: 8px 12px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+
+        .preview-panel .doc-body th {
+            background: #f8fafc;
+            font-weight: 600;
+        }
+
+        .preview-panel .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: #94a3b8;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .preview-panel .empty-state .big-icon {
+            font-size: 56px;
+            margin-bottom: 16px;
+        }
+
+        .preview-panel .empty-state h3 {
+            font-size: 18px;
+            color: #475569;
+            margin-bottom: 8px;
+        }
+
+        .preview-panel .empty-state p {
+            font-size: 14px;
+            max-width: 400px;
+        }
+
+        /* Адаптив */
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 260px;
+                min-width: 220px;
+            }
+        }
+
+        @media (max-width: 820px) {
+            .app {
+                padding: 12px;
+            }
+
+            .main-grid {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                min-width: 0;
+                max-height: 260px;
+            }
+
+            .editor-body {
+                flex-direction: column;
+            }
+
+            .md-editor {
+                border-right: none;
+                border-bottom: 1px solid #eef2f6;
+                max-height: 300px;
+            }
+
+            .preview-panel {
+                min-height: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 15px;
+            }
+            .header h1 span {
+                display: none;
+            }
+            .editor-toolbar .op-title {
+                font-size: 14px;
+            }
+            .btn {
+                font-size: 11px;
+                padding: 6px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="app">
+    <!-- Шапка -->
+    <div class="header">
+        <div class="header-left">
+            <span class="logo-icon">📄</span>
+            <h1>Документация операций <span>— Markdown-конструктор</span></h1>
+        </div>
+        <div class="header-actions">
+            <button class="btn btn-outline" onclick="exportDoc()">📤 Экспорт MD</button>
+            <button class="btn btn-success" onclick="saveDoc()">💾 Сохранить</button>
+        </div>
+    </div>
+
+    <!-- Основная сетка -->
+    <div class="main-grid">
+        <!-- Левая панель -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h3>📋 Операции</h3>
+                <span id="opCount">0</span>
+            </div>
+            <div class="search-box">
+                <span class="icon">🔍</span>
+                <input type="text" id="searchInput" placeholder="Поиск операции..." oninput="filterOps(this.value)" />
+            </div>
+            <div class="ops-list" id="opsList"></div>
+            <div style="margin-top:12px; flex-shrink:0; display:flex; gap:8px;">
+                <button class="btn btn-primary" style="flex:1; justify-content:center; font-size:12px; padding:8px;" onclick="addOperation()">➕ Новая операция</button>
+            </div>
+        </div>
+
+        <!-- Правая панель — редактор -->
+        <div class="editor-panel">
+            <div class="editor-toolbar">
+                <div class="left">
+                    <span class="op-title" id="docTitle">Выберите операцию</span>
+                    <span class="op-code" id="docCode">—</span>
+                </div>
+                <div class="actions">
+                    <button class="btn btn-outline btn-sm" onclick="togglePreview()">👁️ Превью</button>
+                    <button class="btn btn-outline btn-sm" onclick="insertTemplate()">📋 Вставить шаблон</button>
+                </div>
+            </div>
+
+            <div class="editor-body">
+                <!-- MD-редактор -->
+                <div class="md-editor" id="mdEditor">
+                    <div class="toolbar">
+                        <button onclick="wrapText('**', '**')"><b>B</b></button>
+                        <button onclick="wrapText('*', '*')"><i>I</i></button>
+                        <button onclick="wrapText('~~', '~~')"><s>S</s></button>
+                        <span class="sep"></span>
+                        <button onclick="wrapText('# ', '')">H1</button>
+                        <button onclick="wrapText('## ', '')">H2</button>
+                        <button onclick="wrapText('### ', '')">H3</button>
+                        <span class="sep"></span>
+                        <button onclick="wrapText('- ', '')">•</button>
+                        <button onclick="wrapText('1. ', '')">1.</button>
+                        <span class="sep"></span>
+                        <button onclick="wrapText('`', '`')"><code>`</code></button>
+                        <button onclick="wrapText('```\n', '\n```')">▍▍</button>
+                        <span class="sep"></span>
+                        <button onclick="wrapText('> ', '')">❝</button>
+                        <button onclick="wrapText('[', '](url)')">🔗</button>
+                    </div>
+                    <textarea id="mdTextarea" placeholder="Введите описание операции в формате Markdown..."></textarea>
+                </div>
+
+                <!-- Превью -->
+                <div class="preview-panel" id="previewPanel">
+                    <div class="empty-state">
+                        <div class="big-icon">📖</div>
+                        <h3>Выберите операцию</h3>
+                        <p>Нажмите на операцию слева, чтобы просмотреть или редактировать документацию.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ===== ДАННЫЕ =====
+    const operations = [
+        {
+            id: 'op-1',
+            code: 'OP-001',
+            name: 'Раскрой ЛДСП',
+            emoji: '📦',
+            status: 'published',
+            md: `# Раскрой ЛДСП\n\n## Описание\nРаскрой листового материала (ЛДСП) на детали согласно картам раскроя.\n\n## Оборудование\n- **CNC-3000** — форматно-раскроечный центр\n- **Пила циркулярная** — для подрезки\n\n## Подготовка\n1. Проверить целостность листа\n2. Загрузить файл раскроя (DXF/NC)\n3. Установить лист на стол\n\n## Последовательность\n1. Включить станок\n2. Выполнить калибровку инструмента\n3. Запустить программу\n4. Контролировать процесс\n\n## Контроль качества\n- Проверить размеры каждой детали\n- Проверить качество кромки (сколы не допускаются)\n\n## Ответственный\n**Алексей Иванов** — Раскройщик (стаж 8 лет)\n\n## Норма времени\n**45 мин** на стандартный лист\n\n## Примечания\n> При изменении толщины материала — перекалибровать глубину реза.`
+        },
+        {
+            id: 'op-2',
+            code: 'OP-002',
+            name: 'Кромкование',
+            emoji: '🔪',
+            status: 'published',
+            md: `# Кромкование\n\n## Описание\nНанесение кромочного материала на торцы деталей.\n\n## Оборудование\n- **Кромкооблицовочный станок** — модель KED 320\n\n## Материалы\n- Кромка ПВХ 0.4–2.0 мм\n- Клей-расплав\n\n## Последовательность\n1. Нагреть клей до рабочей температуры (180°C)\n2. Установить рулон кромки\n3. Подать деталь\n4. Контролировать качество приклейки\n\n## Контроль качества\n- Отсутствие зазоров между кромкой и деталью\n- Чистота среза на углах\n\n## Ответственный\n**Дмитрий Смирнов** — Кромочник\n\n## Норма времени\n**30 мин** на 10 погонных метров`
+        },
+        {
+            id: 'op-3',
+            code: 'OP-003',
+            name: 'Сверловка',
+            emoji: '🔧',
+            status: 'draft',
+            md: `# Сверловка\n\n## Описание\nСверление отверстий под конфирматы и фурнитуру.\n\n## Оборудование\n- **Сверлильный станок** — модель VS-32\n- **Кондукторы** — комплект\n\n## Последовательность\n1. Разметить отверстия\n2. Установить сверло нужного диаметра\n3. Зафиксировать деталь\n4. Выполнить сверление\n\n## Контроль качества\n- Глубина отверстий соответствует чертежу\n- Отсутствие сколов на выходе\n\n## Ответственный\n**Сергей Новиков** — Сверловщик`
+        },
+        {
+            id: 'op-4',
+            code: 'OP-004',
+            name: 'Сборка каркаса',
+            emoji: '🔨',
+            status: 'review',
+            md: `# Сборка каркаса\n\n## Описание\nСборка основного каркаса изделия.\n\n## Оборудование\n- **Сборочный стол** — с вакуумным прижимом\n- **Пневмоинструмент**\n\n## Последовательность\n1. Разложить детали согласно чертежу\n2. Собрать каркас на конфирматы\n3. Проверить диагонали\n4. Затянуть крепления\n\n## Контроль качества\n- Диагонали равны (допуск ±1 мм)\n- Углы 90°\n\n## Ответственный\n**Олег Петров** — Сборщик\n\n## Норма времени\n**90 мин** на стандартный шкаф`
+        }
+    ];
+
+    // ===== СОСТОЯНИЕ =====
+    let currentOpId = null;
+    let showPreview = true;
+    let searchQuery = '';
+
+    // ===== DOM =====
+    const opsList = document.getElementById('opsList');
+    const mdTextarea = document.getElementById('mdTextarea');
+    const previewPanel = document.getElementById('previewPanel');
+    const docTitle = document.getElementById('docTitle');
+    const docCode = document.getElementById('docCode');
+    const opCount = document.getElementById('opCount');
+
+    // ===== ФУНКЦИИ =====
+    function renderList(filter = '') {
+        const q = filter.toLowerCase().trim();
+        const filtered = operations.filter(op =>
+            op.name.toLowerCase().includes(q) ||
+            op.code.toLowerCase().includes(q) ||
+            op.emoji.includes(q)
+        );
+
+        opCount.textContent = filtered.length;
+
+        if (filtered.length === 0) {
+            opsList.innerHTML = `<div style="text-align:center;padding:24px;color:#94a3b8;font-size:13px;">🔍 Ничего не найдено</div>`;
+            return;
+        }
+
+        opsList.innerHTML = filtered.map(op => `
+                <div class="op-item ${op.id === currentOpId ? 'active' : ''}"
+                     onclick="selectOperation('${op.id}')"
+                     data-id="${op.id}">
+                    <span class="emoji">${op.emoji}</span>
+                    <div class="info">
+                        <div class="name">${op.name}</div>
+                        <div class="meta">
+                            <span>${op.code}</span>
+                            <span>${op.status === 'published' ? '📗 Опубликовано' :
+            op.status === 'review' ? '📘 На проверке' : '📝 Черновик'}</span>
+                        </div>
+                    </div>
+                    <span class="status-badge status-${op.status}">
+                        ${op.status === 'published' ? 'Готово' :
+            op.status === 'review' ? 'Проверка' : 'Черновик'}
+                    </span>
+                </div>
+            `).join('');
+
+        if (currentOpId) {
+            const activeItem = opsList.querySelector(`[data-id="${currentOpId}"]`);
+            if (activeItem) {
+                activeItem.classList.add('active');
+            }
+        }
+    }
+
+    function selectOperation(id) {
+        const op = operations.find(o => o.id === id);
+        if (!op) return;
+
+        currentOpId = id;
+        docTitle.textContent = op.name;
+        docCode.textContent = op.code;
+
+        mdTextarea.value = op.md || '';
+        renderPreview(op.md || '', op);
+        renderList(searchQuery);
+    }
+
+    function renderPreview(md, op) {
+        if (!op) {
+            previewPanel.innerHTML = `
+                    <div class="empty-state">
+                        <div class="big-icon">📖</div>
+                        <h3>Выберите операцию</h3>
+                        <p>Нажмите на операцию слева, чтобы просмотреть или редактировать документацию.</p>
+                    </div>
+                `;
+            return;
+        }
+
+        let html = md;
+
+        // Заголовки
+        html = html.replace(/^# (.*)$/gm, '<h1>$1</h1>');
+        html = html.replace(/^## (.*)$/gm, '<h2>$1</h2>');
+        html = html.replace(/^### (.*)$/gm, '<h3>$1</h3>');
+
+        // Жирный и курсив
+        html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+
+        // Зачёркнутый
+        html = html.replace(/~~(.*?)~~/g, '<s>$1</s>');
+
+        // Код
+        html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+        html = html.replace(/```([\s\S]*?)```/g, '<pre>$1</pre>');
+
+        // Цитаты
+        html = html.replace(/^> (.*)$/gm, '<blockquote>$1</blockquote>');
+
+        // Списки
+        html = html.replace(/^- (.*)$/gm, '<li>$1</li>');
+        html = html.replace(/^[0-9]+\. (.*)$/gm, '<li>$1</li>');
+        html = html.replace(/(<li>.*<\/li>\n?)+/g, (match) => {
+            if (match.includes('1. ')) {
+                return `<ol>${match}</ol>`;
+            }
+            return `<ul>${match}</ul>`;
+        });
+
+        // Ссылки
+        html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
+
+        // Таблицы
+        html = html.replace(/\|(.+)\|/g, (match) => {
+            const cells = match.split('|').filter(c => c.trim());
+            if (cells.every(c => c.includes('---'))) {
+                return '';
+            }
+            const isHeader = match.includes('---') ? false : true;
+            const row = cells.map(c => isHeader ? `<th>${c.trim()}</th>` : `<td>${c.trim()}</td>`).join('');
+            return isHeader ? `<thead><tr>${row}</tr></thead>` : `<tr>${row}</tr>`;
+        });
+        if (html.includes('<thead>')) {
+            html = html.replace(/(<thead>.*<\/thead>)(<tr>.*<\/tr>)+/g, (match) => {
+                const parts = match.match(/(<thead>.*<\/thead>)|(<tr>.*<\/tr>)/g);
+                if (parts) {
+                    return `<table>${parts.join('')}</table>`;
+                }
+                return match;
+            });
+        }
+
+        // Параграфы
+        html = html.replace(/\n\n/g, '</p><p>');
+        html = html.replace(/\n/g, '<br>');
+
+        // Убираем лишние <p>
+        html = html.replace(/<p><h/g, '<h');
+        html = html.replace(/<\/h[0-9]><\/p>/g, '</h>');
+        html = html.replace(/<p><ul>/g, '<ul>');
+        html = html.replace(/<\/ul><\/p>/g, '</ul>');
+        html = html.replace(/<p><ol>/g, '<ol>');
+        html = html.replace(/<\/ol><\/p>/g, '</ol>');
+        html = html.replace(/<p><blockquote>/g, '<blockquote>');
+        html = html.replace(/<\/blockquote><\/p>/g, '</blockquote>');
+        html = html.replace(/<p><pre>/g, '<pre>');
+        html = html.replace(/<\/pre><\/p>/g, '</pre>');
+        html = html.replace(/<p><table>/g, '<table>');
+        html = html.replace(/<\/table><\/p>/g, '</table>');
+
+        if (!html.startsWith('<h') && !html.startsWith('<ul') && !html.startsWith('<ol') && !html.startsWith('<blockquote') && !html.startsWith('<pre') && !html.startsWith('<table')) {
+            html = `<p>${html}</p>`;
+        }
+
+        previewPanel.innerHTML = `
+                <h2>${op.name}</h2>
+                <div class="doc-meta">
+                    <span>📌 ${op.code}</span>
+                    <span>📁 ${op.status === 'published' ? 'Опубликовано' :
+            op.status === 'review' ? 'На проверке' : 'Черновик'}</span>
+                    <span>🔄 Версия 1.0</span>
+                    <span>📅 Обновлено: ${new Date().toLocaleDateString('ru-RU')}</span>
+                </div>
+                <div class="doc-body">
+                    ${html}
+                </div>
+            `;
+    }
+
+    function filterOps(value) {
+        searchQuery = value;
+        renderList(value);
+    }
+
+    function addOperation() {
+        const newId = `op-${Date.now()}`;
+        const newOp = {
+            id: newId,
+            code: `OP-${String(operations.length + 1).padStart(3, '0')}`,
+            name: 'Новая операция',
+            emoji: '📝',
+            status: 'draft',
+            md: `# Новая операция\n\n## Описание\nВведите описание...\n\n## Последовательность\n1. Шаг 1\n2. Шаг 2\n\n## Ответственный\nИмя сотрудника`
+        };
+        operations.push(newOp);
+        renderList(searchQuery);
+        selectOperation(newId);
+        setTimeout(() => {
+            const el = opsList.querySelector(`[data-id="${newId}"]`);
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 100);
+    }
+
+    function saveDoc() {
+        if (!currentOpId) {
+            alert('Сначала выберите операцию');
+            return;
+        }
+        const op = operations.find(o => o.id === currentOpId);
+        if (!op) return;
+        op.md = mdTextarea.value;
+        if (op.status === 'draft') {
+            op.status = 'review';
+        }
+        renderList(searchQuery);
+        renderPreview(op.md, op);
+        const btn = document.querySelector('.btn-success');
+        const orig = btn.textContent;
+        btn.textContent = '✅ Сохранено!';
+        setTimeout(() => { btn.textContent = orig; }, 1500);
+    }
+
+    function exportDoc() {
+        if (!currentOpId) {
+            alert('Сначала выберите операцию');
+            return;
+        }
+        const op = operations.find(o => o.id === currentOpId);
+        if (!op) return;
+        const content = `# ${op.name} (${op.code})\n\n${op.md}`;
+        const blob = new Blob([content], { type: 'text/markdown' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${op.code}_${op.name.replace(/\s/g, '_')}.md`;
+        a.click();
+        URL.revokeObjectURL(url);
+    }
+
+    function togglePreview() {
+        showPreview = !showPreview;
+        const editor = document.getElementById('mdEditor');
+        const preview = document.getElementById('previewPanel');
+        if (showPreview) {
+            editor.style.display = 'flex';
+            preview.style.display = 'flex';
+        } else {
+            editor.style.display = 'flex';
+            preview.style.display = 'none';
+        }
+    }
+
+    function wrapText(prefix, suffix) {
+        const textarea = mdTextarea;
+        const start = textarea.selectionStart;
+        const end = textarea.selectionEnd;
+        const selected = textarea.value.substring(start, end);
+        const newText = textarea.value.substring(0, start) + prefix + selected + suffix + textarea.value.substring(end);
+        textarea.value = newText;
+        textarea.focus();
+        textarea.selectionStart = start;
+        textarea.selectionEnd = end + prefix.length + suffix.length;
+        if (currentOpId) {
+            const op = operations.find(o => o.id === currentOpId);
+            if (op) renderPreview(textarea.value, op);
+        }
+    }
+
+    function insertTemplate() {
+        const template = `# Новая операция\n\n## Описание\nКраткое описание операции.\n\n## Оборудование\n- **Название оборудования** — модель\n\n## Материалы\n- Материал 1\n- Материал 2\n\n## Подготовка\n1. Шаг подготовки 1\n2. Шаг подготовки 2\n\n## Последовательность\n1. Шаг 1\n2. Шаг 2\n3. Шаг 3\n\n## Контроль качества\n- Параметр 1\n- Параметр 2\n\n## Техника безопасности\n- Требование 1\n- Требование 2\n\n## Ответственный\n**Имя Фамилия** — Должность\n\n## Норма времени\n**XX мин**\n\n## Примечания\nДополнительная информация...`;
+        mdTextarea.value = template;
+        if (currentOpId) {
+            const op = operations.find(o => o.id === currentOpId);
+            if (op) renderPreview(template, op);
+        }
+    }
+
+    // ===== ИНИЦИАЛИЗАЦИЯ =====
+    renderList();
+    if (operations.length > 0) {
+        selectOperation(operations[0].id);
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+            e.preventDefault();
+            saveDoc();
+        }
+    });
+
+    mdTextarea.addEventListener('input', () => {
+        if (currentOpId) {
+            const op = operations.find(o => o.id === currentOpId);
+            if (op) renderPreview(mdTextarea.value, op);
+        }
+    });
+</script>
+</body>
+</html>

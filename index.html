@@ -1662,6 +1662,55 @@
     </div>
 </section>
 
+<!-- ===== БЛОК ДОКУМЕНТАЦИИ ОПЕРАЦИЙ ===== -->
+<section id="docs" class="section" style="padding: 60px 0; background: #ffffff;">
+    <div class="container">
+        <div style="text-align:center; max-width:750px; margin:0 auto 48px;">
+            <div style="display:inline-block; background:#e0e7ff; color:#0a66c2; padding:6px 16px; border-radius:40px; font-size:13px; font-weight:600; margin-bottom:20px;">
+                📄 База знаний производства
+            </div>
+            <h2 style="font-size:36px; font-weight:800; color:#0a2540; margin-bottom:16px;">
+                Документация <span style="background:linear-gradient(135deg,#0a66c2,#3b82f6); -webkit-background-clip:text; background-clip:text; color:transparent;">каждой операции</span>
+            </h2>
+            <p style="font-size:18px; color:#475569; max-width:600px; margin:0 auto;">
+                Храните описание, последовательность, оборудование и ответственных в одном месте.
+                Редактируйте в Markdown и сразу видите результат.
+            </p>
+        </div>
+
+        <div style="background: white; border-radius: 32px; overflow: hidden; box-shadow: 0 20px 40px -12px rgba(0,0,0,0.15); border: 1px solid #eef2f6; position: relative; min-height: 620px;">
+            <!-- Лоадер -->
+            <div id="docsLoader" style="position:absolute; top:0; left:0; width:100%; height:100%; background:#fff; display:flex; align-items:center; justify-content:center; z-index:10; border-radius:32px;">
+                <div style="text-align:center;">
+                    <div style="width:48px; height:48px; margin:0 auto 16px; border:3px solid #eef2f6; border-top-color:#0a66c2; border-radius:50%; animation: spin 0.6s linear infinite;"></div>
+                    <div style="color:#6c7a91;">Загрузка документации...</div>
+                </div>
+            </div>
+
+            <iframe id="docsFrame" src="docs-builder.html"
+            style="width:100%; height:620px; border:none; display:block; opacity:0; transition:opacity 0.4s ease;"
+            loading="lazy">
+            </iframe>
+        </div>
+
+        <!-- Подсказка под iframe -->
+        <div style="margin-top:20px; display:flex; flex-wrap:wrap; gap:16px; justify-content:center; background:#f8fafc; border-radius:20px; padding:16px 24px; border:1px solid #eef2f6;">
+            <div style="display:flex; align-items:center; gap:8px; font-size:13px; color:#475569;">
+                <span style="font-size:18px;">✏️</span> Редактируйте в Markdown
+            </div>
+            <div style="display:flex; align-items:center; gap:8px; font-size:13px; color:#475569;">
+                <span style="font-size:18px;">👁️</span> Превью в реальном времени
+            </div>
+            <div style="display:flex; align-items:center; gap:8px; font-size:13px; color:#475569;">
+                <span style="font-size:18px;">📤</span> Экспорт в .md файл
+            </div>
+            <div style="display:flex; align-items:center; gap:8px; font-size:13px; color:#475569;">
+                <span style="font-size:18px;">💾</span> Ctrl+S для сохранения
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Дашборд мастера -->
 <section id="dashboard" class="section">
     <div class="container">

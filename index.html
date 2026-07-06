@@ -1663,54 +1663,150 @@
 </section>
 
 <!-- ===== БЛОК ДОКУМЕНТАЦИИ ОПЕРАЦИЙ ===== -->
-<section id="docs" class="section" style="padding: 60px 0; background: #ffffff;">
-    <div class="container">
-        <div style="text-align:center; max-width:750px; margin:0 auto 48px;">
-            <div style="display:inline-block; background:#e0e7ff; color:#0a66c2; padding:6px 16px; border-radius:40px; font-size:13px; font-weight:600; margin-bottom:20px;">
-                📄 База знаний производства
-            </div>
-            <h2 style="font-size:36px; font-weight:800; color:#0a2540; margin-bottom:16px;">
-                Документация <span style="background:linear-gradient(135deg,#0a66c2,#3b82f6); -webkit-background-clip:text; background-clip:text; color:transparent;">каждой операции</span>
+<section id="docs" class="section" style="padding: 20px 0; background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%); height: 100vh; max-height: 100vh; overflow: hidden;">
+    <div class="container" style="height: 100%; max-height: 100vh; display: flex; flex-direction: column; overflow: hidden; padding: 0 16px;">
+
+        <!-- Заголовок блока (единый стиль с остальными секциями) -->
+        <div style="text-align:center; max-width:750px; margin:0 auto 16px; flex-shrink: 0;">
+            <h2 class="section-title" style="font-size:32px; font-weight:700; text-align:center; margin-bottom:8px; color:#0a2540; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+                Документация операций
             </h2>
-            <p style="font-size:18px; color:#475569; max-width:600px; margin:0 auto;">
-                Храните описание, последовательность, оборудование и ответственных в одном месте.
-                Редактируйте в Markdown и сразу видите результат.
+            <p class="section-subtitle" style="text-align:center; color:#5b6e8c; max-width:700px; margin:0 auto 0; font-size:16px; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+                Редактируйте в Markdown и сразу видите результат
             </p>
         </div>
 
-        <div style="background: white; border-radius: 32px; overflow: hidden; box-shadow: 0 20px 40px -12px rgba(0,0,0,0.15); border: 1px solid #eef2f6; position: relative; min-height: 620px;">
-            <!-- Лоадер -->
-            <div id="docsLoader" style="position:absolute; top:0; left:0; width:100%; height:100%; background:#fff; display:flex; align-items:center; justify-content:center; z-index:10; border-radius:32px;">
-                <div style="text-align:center;">
-                    <div style="width:48px; height:48px; margin:0 auto 16px; border:3px solid #eef2f6; border-top-color:#0a66c2; border-radius:50%; animation: spin 0.6s linear infinite;"></div>
-                    <div style="color:#6c7a91;">Загрузка документации...</div>
+        <!-- ===== КОНСТРУКТОР ДОКУМЕНТАЦИИ ===== -->
+        <div style="background: white; border-radius: 24px; overflow: hidden; box-shadow: 0 8px 32px -12px rgba(10,102,194,0.12), 0 2px 8px rgba(0,0,0,0.04); border: 1px solid rgba(226,232,240,0.5); flex: 1; min-height: 0; display: flex; flex-direction: column; padding: 12px;">
+
+            <!-- Основная сетка -->
+            <div style="display: flex; gap: 10px; flex: 1; min-height: 0; margin-top: 10px; flex-wrap: wrap;">
+
+                <!-- Левая панель -->
+                <div style="flex: 0 0 250px; min-width: 180px; max-height: 100%; background: linear-gradient(180deg, #fafbfc, #ffffff); border-radius: 16px; border: 1px solid #eef2f6; padding: 10px 10px; display: flex; flex-direction: column; overflow: hidden; box-shadow: inset 0 1px 3px rgba(0,0,0,0.02);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-shrink: 0;">
+                        <h4 style="font-size: 11px; font-weight: 700; color: #0a2540; margin:0; display:flex; align-items:center; gap:4px; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+                            📋 Операции
+                            <span id="opCount2" style="background: linear-gradient(135deg, #e0e7ff, #dbeafe); color: #0a66c2; padding: 1px 8px; border-radius: 40px; font-size: 9px; font-weight: 600;">0</span>
+                        </h4>
+                        <button onclick="addOperation2()" style="background: none; border: none; cursor: pointer; font-size: 15px; color: #0a66c2; transition: transform 0.2s ease; padding: 1px; line-height: 1;" onmouseenter="this.style.transform='scale(1.15)'" onmouseleave="this.style.transform='scale(1)'">➕</button>
+                    </div>
+                    <div style="position: relative; margin-bottom: 8px; flex-shrink: 0;">
+                        <span style="position: absolute; left: 9px; top: 50%; transform: translateY(-50%); color: #94a3b8; font-size: 11px;">🔍</span>
+                        <input type="text" id="searchInput2" placeholder="Поиск..." oninput="filterOps2(this.value)" style="width: 100%; padding: 5px 10px 5px 28px; border: 1.5px solid #e2e8f0; border-radius: 10px; font-size: 11px; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: white; transition: all 0.2s ease; outline: none;" onfocus="this.style.borderColor='#0a66c2'; this.style.boxShadow='0 0 0 3px rgba(10,102,194,0.06)'" onblur="this.style.borderColor='#e2e8f0'; this.style.boxShadow='none'" />
+                    </div>
+                    <div id="opsList2" style="flex: 1; overflow-y: auto; padding-right: 2px; display: flex; flex-direction: column; gap: 3px; min-height: 0;">
+                        <style>
+                            #opsList2::-webkit-scrollbar { width: 3px; }
+                            #opsList2::-webkit-scrollbar-track { background: transparent; }
+                            #opsList2::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 10px; }
+                            #opsList2::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+                        </style>
+                    </div>
+                    <div style="margin-top:8px; flex-shrink:0;">
+                        <button onclick="addOperation2()" style="width:100%; justify-content:center; font-size:10px; padding:6px; border-radius:10px; font-weight:600; cursor:pointer; transition:all 0.2s ease; border:none; background:linear-gradient(135deg,#0a66c2,#3b82f6); color:white; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; box-shadow:0 2px 8px rgba(10,102,194,0.12);">
+                            ➕ Новая
+                        </button>
+                    </div>
                 </div>
-            </div>
 
-            <iframe id="docsFrame" src="docs-builder.html"
-            style="width:100%; height:620px; border:none; display:block; opacity:0; transition:opacity 0.4s ease;"
-            loading="lazy">
-            </iframe>
-        </div>
+                <!-- Правая панель -->
+                <div style="flex: 1; background: white; border-radius: 16px; border: 1px solid #eef2f6; display: flex; flex-direction: column; overflow: hidden; min-width: 180px; max-height: 100%; box-shadow: inset 0 1px 3px rgba(0,0,0,0.02);">
 
-        <!-- Подсказка под iframe -->
-        <div style="margin-top:20px; display:flex; flex-wrap:wrap; gap:16px; justify-content:center; background:#f8fafc; border-radius:20px; padding:16px 24px; border:1px solid #eef2f6;">
-            <div style="display:flex; align-items:center; gap:8px; font-size:13px; color:#475569;">
-                <span style="font-size:18px;">✏️</span> Редактируйте в Markdown
-            </div>
-            <div style="display:flex; align-items:center; gap:8px; font-size:13px; color:#475569;">
-                <span style="font-size:18px;">👁️</span> Превью в реальном времени
-            </div>
-            <div style="display:flex; align-items:center; gap:8px; font-size:13px; color:#475569;">
-                <span style="font-size:18px;">📤</span> Экспорт в .md файл
-            </div>
-            <div style="display:flex; align-items:center; gap:8px; font-size:13px; color:#475569;">
-                <span style="font-size:18px;">💾</span> Ctrl+S для сохранения
+                    <!-- Тулбар -->
+                    <div style="display: flex; align-items: center; justify-content: space-between; padding: 6px 14px; border-bottom: 1px solid #eef2f6; flex-shrink: 0; flex-wrap: wrap; gap: 4px; background: linear-gradient(135deg, #fafbfc, #ffffff);">
+                        <div style="display: flex; align-items: center; gap: 8px; min-width: 0;">
+                            <div style="width: 5px; height: 5px; border-radius: 50%; background: #10b981; box-shadow: 0 0 0 2px rgba(16,185,129,0.1); flex-shrink: 0;"></div>
+                            <span id="docTitle2" style="font-weight: 700; font-size: 12px; color: #0a2540; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 120px; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">Выберите операцию</span>
+                            <span id="docCode2" style="font-size: 9px; color: #6c7a91; background: #f1f5f9; padding: 1px 8px; border-radius: 40px; font-weight: 500; flex-shrink: 0; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">—</span>
+                        </div>
+                    </div>
+
+                    <!-- Тело редактора -->
+                    <div id="editorBody2" style="flex: 1; display: flex; overflow: hidden; min-height: 0;">
+
+                        <!-- MD-редактор -->
+                        <div id="mdEditor2" style="flex: 1; display: flex; flex-direction: column; border-right: 1px solid #eef2f6; min-width: 120px; background: #fafbfc; overflow: hidden;">
+                            <!-- Панель инструментов с disabled-кнопками -->
+                            <div style="display: flex; gap: 1px; padding: 4px 10px; border-bottom: 1px solid #eef2f6; background: white; flex-shrink: 0; flex-wrap: wrap; align-items:center;">
+                                <!-- Все кнопки с tooltip "Будет доступно в полной версии" -->
+                                <div style="position:relative; display:inline-block;">
+                                    <button disabled style="background: transparent; border: none; padding: 1px 6px; border-radius: 4px; font-size: 10px; color: #b0b8c4; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-weight:700; cursor: not-allowed; opacity:0.6;">B</button>
+                                    <span style="position:absolute; bottom:calc(100% + 6px); left:50%; transform:translateX(-50%); background:#0a2540; color:white; padding:4px 10px; border-radius:6px; font-size:9px; white-space:nowrap; opacity:0; pointer-events:none; transition:opacity 0.2s ease; font-weight:400; font-family:'Inter',sans-serif; box-shadow:0 4px 12px rgba(0,0,0,0.15);">Будет доступно в полной версии</span>
+                                </div>
+                                <div style="position:relative; display:inline-block;">
+                                    <button disabled style="background: transparent; border: none; padding: 1px 6px; border-radius: 4px; font-size: 10px; color: #b0b8c4; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-style:italic; cursor: not-allowed; opacity:0.6;">I</button>
+                                    <span style="position:absolute; bottom:calc(100% + 6px); left:50%; transform:translateX(-50%); background:#0a2540; color:white; padding:4px 10px; border-radius:6px; font-size:9px; white-space:nowrap; opacity:0; pointer-events:none; transition:opacity 0.2s ease; font-weight:400; font-family:'Inter',sans-serif; box-shadow:0 4px 12px rgba(0,0,0,0.15);">Будет доступно в полной версии</span>
+                                </div>
+                                <div style="position:relative; display:inline-block;">
+                                    <button disabled style="background: transparent; border: none; padding: 1px 6px; border-radius: 4px; font-size: 10px; color: #b0b8c4; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; cursor: not-allowed; opacity:0.6;"><s>S</s></button>
+                                    <span style="position:absolute; bottom:calc(100% + 6px); left:50%; transform:translateX(-50%); background:#0a2540; color:white; padding:4px 10px; border-radius:6px; font-size:9px; white-space:nowrap; opacity:0; pointer-events:none; transition:opacity 0.2s ease; font-weight:400; font-family:'Inter',sans-serif; box-shadow:0 4px 12px rgba(0,0,0,0.15);">Будет доступно в полной версии</span>
+                                </div>
+                                <span style="width: 1px; height: 14px; background: #e2e8f0; margin: 0 2px;"></span>
+                                <div style="position:relative; display:inline-block;">
+                                    <button disabled style="background: transparent; border: none; padding: 1px 6px; border-radius: 4px; font-size: 9px; color: #b0b8c4; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-weight:600; cursor: not-allowed; opacity:0.6;">H1</button>
+                                    <span style="position:absolute; bottom:calc(100% + 6px); left:50%; transform:translateX(-50%); background:#0a2540; color:white; padding:4px 10px; border-radius:6px; font-size:9px; white-space:nowrap; opacity:0; pointer-events:none; transition:opacity 0.2s ease; font-weight:400; font-family:'Inter',sans-serif; box-shadow:0 4px 12px rgba(0,0,0,0.15);">Будет доступно в полной версии</span>
+                                </div>
+                                <div style="position:relative; display:inline-block;">
+                                    <button disabled style="background: transparent; border: none; padding: 1px 6px; border-radius: 4px; font-size: 9px; color: #b0b8c4; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-weight:600; cursor: not-allowed; opacity:0.6;">H2</button>
+                                    <span style="position:absolute; bottom:calc(100% + 6px); left:50%; transform:translateX(-50%); background:#0a2540; color:white; padding:4px 10px; border-radius:6px; font-size:9px; white-space:nowrap; opacity:0; pointer-events:none; transition:opacity 0.2s ease; font-weight:400; font-family:'Inter',sans-serif; box-shadow:0 4px 12px rgba(0,0,0,0.15);">Будет доступно в полной версии</span>
+                                </div>
+                                <div style="position:relative; display:inline-block;">
+                                    <button disabled style="background: transparent; border: none; padding: 1px 6px; border-radius: 4px; font-size: 9px; color: #b0b8c4; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-weight:600; cursor: not-allowed; opacity:0.6;">H3</button>
+                                    <span style="position:absolute; bottom:calc(100% + 6px); left:50%; transform:translateX(-50%); background:#0a2540; color:white; padding:4px 10px; border-radius:6px; font-size:9px; white-space:nowrap; opacity:0; pointer-events:none; transition:opacity 0.2s ease; font-weight:400; font-family:'Inter',sans-serif; box-shadow:0 4px 12px rgba(0,0,0,0.15);">Будет доступно в полной версии</span>
+                                </div>
+                                <span style="width: 1px; height: 14px; background: #e2e8f0; margin: 0 2px;"></span>
+                                <div style="position:relative; display:inline-block;">
+                                    <button disabled style="background: transparent; border: none; padding: 1px 6px; border-radius: 4px; font-size: 11px; color: #b0b8c4; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; cursor: not-allowed; opacity:0.6;">•</button>
+                                    <span style="position:absolute; bottom:calc(100% + 6px); left:50%; transform:translateX(-50%); background:#0a2540; color:white; padding:4px 10px; border-radius:6px; font-size:9px; white-space:nowrap; opacity:0; pointer-events:none; transition:opacity 0.2s ease; font-weight:400; font-family:'Inter',sans-serif; box-shadow:0 4px 12px rgba(0,0,0,0.15);">Будет доступно в полной версии</span>
+                                </div>
+                                <div style="position:relative; display:inline-block;">
+                                    <button disabled style="background: transparent; border: none; padding: 1px 6px; border-radius: 4px; font-size: 9px; color: #b0b8c4; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-weight:500; cursor: not-allowed; opacity:0.6;">1.</button>
+                                    <span style="position:absolute; bottom:calc(100% + 6px); left:50%; transform:translateX(-50%); background:#0a2540; color:white; padding:4px 10px; border-radius:6px; font-size:9px; white-space:nowrap; opacity:0; pointer-events:none; transition:opacity 0.2s ease; font-weight:400; font-family:'Inter',sans-serif; box-shadow:0 4px 12px rgba(0,0,0,0.15);">Будет доступно в полной версии</span>
+                                </div>
+                                <span style="width: 1px; height: 14px; background: #e2e8f0; margin: 0 2px;"></span>
+                                <div style="position:relative; display:inline-block;">
+                                    <button disabled style="background: transparent; border: none; padding: 1px 6px; border-radius: 4px; font-size: 10px; color: #b0b8c4; font-family: monospace; cursor: not-allowed; opacity:0.6;"><code>`</code></button>
+                                    <span style="position:absolute; bottom:calc(100% + 6px); left:50%; transform:translateX(-50%); background:#0a2540; color:white; padding:4px 10px; border-radius:6px; font-size:9px; white-space:nowrap; opacity:0; pointer-events:none; transition:opacity 0.2s ease; font-weight:400; font-family:'Inter',sans-serif; box-shadow:0 4px 12px rgba(0,0,0,0.15);">Будет доступно в полной версии</span>
+                                </div>
+                                <div style="position:relative; display:inline-block;">
+                                    <button disabled style="background: transparent; border: none; padding: 1px 6px; border-radius: 4px; font-size: 10px; color: #b0b8c4; font-family: monospace; cursor: not-allowed; opacity:0.6;">▍▍</button>
+                                    <span style="position:absolute; bottom:calc(100% + 6px); left:50%; transform:translateX(-50%); background:#0a2540; color:white; padding:4px 10px; border-radius:6px; font-size:9px; white-space:nowrap; opacity:0; pointer-events:none; transition:opacity 0.2s ease; font-weight:400; font-family:'Inter',sans-serif; box-shadow:0 4px 12px rgba(0,0,0,0.15);">Будет доступно в полной версии</span>
+                                </div>
+                                <span style="width: 1px; height: 14px; background: #e2e8f0; margin: 0 2px;"></span>
+                                <div style="position:relative; display:inline-block;">
+                                    <button disabled style="background: transparent; border: none; padding: 1px 6px; border-radius: 4px; font-size: 10px; color: #b0b8c4; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; cursor: not-allowed; opacity:0.6;">❝</button>
+                                    <span style="position:absolute; bottom:calc(100% + 6px); left:50%; transform:translateX(-50%); background:#0a2540; color:white; padding:4px 10px; border-radius:6px; font-size:9px; white-space:nowrap; opacity:0; pointer-events:none; transition:opacity 0.2s ease; font-weight:400; font-family:'Inter',sans-serif; box-shadow:0 4px 12px rgba(0,0,0,0.15);">Будет доступно в полной версии</span>
+                                </div>
+                                <div style="position:relative; display:inline-block;">
+                                    <button disabled style="background: transparent; border: none; padding: 1px 6px; border-radius: 4px; font-size: 10px; color: #b0b8c4; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; cursor: not-allowed; opacity:0.6;">🔗</button>
+                                    <span style="position:absolute; bottom:calc(100% + 6px); left:50%; transform:translateX(-50%); background:#0a2540; color:white; padding:4px 10px; border-radius:6px; font-size:9px; white-space:nowrap; opacity:0; pointer-events:none; transition:opacity 0.2s ease; font-weight:400; font-family:'Inter',sans-serif; box-shadow:0 4px 12px rgba(0,0,0,0.15);">Будет доступно в полной версии</span>
+                                </div>
+                            </div>
+                            <!-- textarea с overflow-y: auto и flex: 1 -->
+                            <textarea id="mdTextarea2" placeholder="Введите описание операции в формате Markdown..." style="flex: 1; width: 100%; border: none; padding: 10px 14px; font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace; font-size: 11px; line-height: 1.6; resize: none; outline: none; background: #fafbfc; color: #0a2540; tab-size: 2; overflow-y: auto; min-height: 0; display: block;" onfocus="this.style.background='white'" onblur="this.style.background='#fafbfc'"></textarea>
+                        </div>
+
+                        <!-- Превью -->
+                        <div id="previewPanel2" style="flex: 1; padding: 12px 16px; overflow-y: auto; background: #ffffff; min-width: 120px;">
+                            <style>
+                                #previewPanel2::-webkit-scrollbar { width: 3px; }
+                                #previewPanel2::-webkit-scrollbar-track { background: transparent; }
+                                #previewPanel2::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 10px; }
+                                #previewPanel2 * { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+                            </style>
+                            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: #94a3b8; text-align: center; padding: 16px;">
+                                <div style="font-size: 32px; margin-bottom: 8px; opacity:0.4;">📖</div>
+                                <h4 style="font-size: 12px; color: #475569; margin-bottom: 4px; font-weight:600; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">Выберите операцию</h4>
+                                <p style="font-size: 10px; max-width: 240px; color: #94a3b8; line-height:1.4; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">Нажмите на операцию слева, чтобы просмотреть или редактировать документацию.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </section>
-
 <!-- Дашборд мастера -->
 <section id="dashboard" class="section">
     <div class="container">
@@ -1807,6 +1903,315 @@
         frame.addEventListener('load',()=>{ frame.style.opacity='1'; loaderDiv.style.opacity='0'; setTimeout(()=>{ loaderDiv.style.display='none'; },300); });
         setTimeout(()=>{ if(loaderDiv.style.display!=='none'){ frame.style.opacity='1'; loaderDiv.style.opacity='0'; setTimeout(()=>{ loaderDiv.style.display='none'; },300); } },5000);
     }
+</script>
+<script>
+    // ===== ВСТРОЕННЫЙ КОНСТРУКТОР ДОКУМЕНТАЦИИ (с фиксом скролла) =====
+    (function() {
+        // ===== ДАННЫЕ =====
+        const operations2 = [
+            {
+                id: 'op-1',
+                code: 'OP-001',
+                name: 'Раскрой ЛДСП',
+                emoji: '📦',
+                status: 'published',
+                md: `# Раскрой ЛДСП\n\n## Описание\nРаскрой листового материала (ЛДСП) на детали согласно картам раскроя.\n\n## Оборудование\n- **CNC-3000** — форматно-раскроечный центр\n- **Пила циркулярная** — для подрезки\n\n## Подготовка\n1. Проверить целостность листа\n2. Загрузить файл раскроя (DXF/NC)\n3. Установить лист на стол\n\n## Последовательность\n1. Включить станок\n2. Выполнить калибровку инструмента\n3. Запустить программу\n4. Контролировать процесс\n\n## Контроль качества\n- Проверить размеры каждой детали\n- Проверить качество кромки (сколы не допускаются)\n\n## Ответственный\n**Алексей Иванов** — Раскройщик (стаж 8 лет)\n\n## Норма времени\n**45 мин** на стандартный лист\n\n## Примечания\n> При изменении толщины материала — перекалибровать глубину реза.`
+            },
+            {
+                id: 'op-2',
+                code: 'OP-002',
+                name: 'Кромкование',
+                emoji: '🔪',
+                status: 'published',
+                md: `# Кромкование\n\n## Описание\nНанесение кромочного материала на торцы деталей.\n\n## Оборудование\n- **Кромкооблицовочный станок** — модель KED 320\n\n## Материалы\n- Кромка ПВХ 0.4–2.0 мм\n- Клей-расплав\n\n## Последовательность\n1. Нагреть клей до рабочей температуры (180°C)\n2. Установить рулон кромки\n3. Подать деталь\n4. Контролировать качество приклейки\n\n## Контроль качества\n- Отсутствие зазоров между кромкой и деталью\n- Чистота среза на углах\n\n## Ответственный\n**Дмитрий Смирнов** — Кромочник\n\n## Норма времени\n**30 мин** на 10 погонных метров`
+            },
+            {
+                id: 'op-3',
+                code: 'OP-003',
+                name: 'Сверловка',
+                emoji: '🔧',
+                status: 'draft',
+                md: `# Сверловка\n\n## Описание\nСверление отверстий под конфирматы и фурнитуру.\n\n## Оборудование\n- **Сверлильный станок** — модель VS-32\n- **Кондукторы** — комплект\n\n## Последовательность\n1. Разметить отверстия\n2. Установить сверло нужного диаметра\n3. Зафиксировать деталь\n4. Выполнить сверление\n\n## Контроль качества\n- Глубина отверстий соответствует чертежу\n- Отсутствие сколов на выходе\n\n## Ответственный\n**Сергей Новиков** — Сверловщик`
+            },
+            {
+                id: 'op-4',
+                code: 'OP-004',
+                name: 'Сборка каркаса',
+                emoji: '🔨',
+                status: 'review',
+                md: `# Сборка каркаса\n\n## Описание\nСборка основного каркаса изделия.\n\n## Оборудование\n- **Сборочный стол** — с вакуумным прижимом\n- **Пневмоинструмент**\n\n## Последовательность\n1. Разложить детали согласно чертежу\n2. Собрать каркас на конфирматы\n3. Проверить диагонали\n4. Затянуть крепления\n\n## Контроль качества\n- Диагонали равны (допуск ±1 мм)\n- Углы 90°\n\n## Ответственный\n**Олег Петров** — Сборщик\n\n## Норма времени\n**90 мин** на стандартный шкаф`
+            }
+        ];
+
+        // ===== СОСТОЯНИЕ =====
+        let currentOpId2 = null;
+        let showPreview2 = true;
+        let searchQuery2 = '';
+
+        // ===== DOM =====
+        const opsList2 = document.getElementById('opsList2');
+        const mdTextarea2 = document.getElementById('mdTextarea2');
+        const previewPanel2 = document.getElementById('previewPanel2');
+        const docTitle2 = document.getElementById('docTitle2');
+        const docCode2 = document.getElementById('docCode2');
+        const opCount2 = document.getElementById('opCount2');
+
+        // ===== ФУНКЦИИ =====
+        function renderList2(filter = '') {
+            const q = filter.toLowerCase().trim();
+            const filtered = operations2.filter(op =>
+                op.name.toLowerCase().includes(q) ||
+                op.code.toLowerCase().includes(q) ||
+                op.emoji.includes(q)
+            );
+
+            opCount2.textContent = filtered.length;
+
+            if (filtered.length === 0) {
+                opsList2.innerHTML = `<div style="text-align:center;padding:16px 8px;color:#94a3b8;font-size:11px;background:#f8fafc;border-radius:10px;">🔍 Ничего не найдено</div>`;
+                return;
+            }
+
+            opsList2.innerHTML = filtered.map(op => `
+            <div class="op-item" style="display:flex; align-items:center; gap:8px; padding:6px 10px; border-radius:10px; cursor:pointer; transition:all 0.2s ease; border:1.5px solid ${op.id === currentOpId2 ? '#0a66c2' : 'transparent'}; background:${op.id === currentOpId2 ? 'linear-gradient(135deg, #eef2ff, #e0e7ff)' : '#fafbfc'}; box-shadow:${op.id === currentOpId2 ? '0 1px 4px rgba(10,102,194,0.06)' : 'none'};"
+                 onclick="selectOperation2('${op.id}')"
+                 data-id="${op.id}"
+                 onmouseenter="if(this.dataset.id !== '${currentOpId2}') { this.style.background='#f1f5f9'; this.style.transform='translateX(2px)'; }"
+                 onmouseleave="if(this.dataset.id !== '${currentOpId2}') { this.style.background='#fafbfc'; this.style.transform='none'; }">
+                <span style="font-size:15px; width:26px; height:26px; display:flex; align-items:center; justify-content:center; background:white; border-radius:8px; flex-shrink:0; box-shadow:0 1px 2px rgba(0,0,0,0.03);">${op.emoji}</span>
+                <div style="flex:1; min-width:0;">
+                    <div style="font-weight:600; font-size:11px; color:#0a2540; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${op.name}</div>
+                    <div style="font-size:9px; color:#6c7a91; display:flex; gap:4px; margin-top:1px; flex-wrap:wrap;">
+                        <span style="display:flex;align-items:center;gap:2px;">📌 ${op.code}</span>
+                        <span style="display:flex;align-items:center;gap:2px;">${op.status === 'published' ? '✅' : op.status === 'review' ? '🔄' : '📝'}</span>
+                    </div>
+                </div>
+                <span style="font-size:7px; font-weight:600; padding:1px 8px; border-radius:30px; flex-shrink:0; background:${op.status === 'published' ? '#d1fae5' : op.status === 'review' ? '#fef3c7' : '#f1f5f9'}; color:${op.status === 'published' ? '#065f46' : op.status === 'review' ? '#b45309' : '#64748b'};">
+                    ${op.status === 'published' ? 'Готово' : op.status === 'review' ? 'Проверка' : 'Черновик'}
+                </span>
+            </div>
+        `).join('');
+        }
+
+        function selectOperation2(id) {
+            const op = operations2.find(o => o.id === id);
+            if (!op) return;
+
+            currentOpId2 = id;
+            docTitle2.textContent = op.name;
+            docCode2.textContent = op.code;
+
+            mdTextarea2.value = op.md || '';
+            renderPreview2(op.md || '', op);
+            renderList2(searchQuery2);
+        }
+
+        function renderPreview2(md, op) {
+            if (!op) {
+                previewPanel2.innerHTML = `
+                <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; color:#94a3b8; text-align:center; padding:16px;">
+                    <div style="font-size:32px; margin-bottom:8px; opacity:0.4;">📖</div>
+                    <h4 style="font-size:12px; color:#475569; margin-bottom:4px; font-weight:600;">Выберите операцию</h4>
+                    <p style="font-size:10px; max-width:240px; color:#94a3b8; line-height:1.4;">Нажмите на операцию слева, чтобы просмотреть или редактировать документацию.</p>
+                </div>
+            `;
+                return;
+            }
+
+            let html = md;
+
+            html = html.replace(/^# (.*)$/gm, '<h1 style="font-size:17px; font-weight:800; margin:12px 0 8px; color:#0a2540; letter-spacing:-0.2px;">$1</h1>');
+            html = html.replace(/^## (.*)$/gm, '<h2 style="font-size:14px; font-weight:700; margin:10px 0 6px; color:#0a2540; letter-spacing:-0.1px; padding-bottom:2px; border-bottom:2px solid #eef2f6;">$1</h2>');
+            html = html.replace(/^### (.*)$/gm, '<h3 style="font-size:12px; font-weight:600; margin:8px 0 4px; color:#0a2540;">$1</h3>');
+
+            html = html.replace(/\*\*(.*?)\*\*/g, '<strong style="color:#0a2540;">$1</strong>');
+            html = html.replace(/\*(.*?)\*/g, '<em style="color:#475569;">$1</em>');
+            html = html.replace(/~~(.*?)~~/g, '<s style="color:#94a3b8;">$1</s>');
+
+            html = html.replace(/`([^`]+)`/g, '<code style="background:#f1f5f9; padding:1px 6px; border-radius:4px; font-size:11px; font-family:monospace; color:#0a66c2; border:1px solid #e2e8f0;">$1</code>');
+            html = html.replace(/```([\s\S]*?)```/g, '<pre style="background:#f1f5f9; padding:8px 12px; border-radius:8px; overflow-x:auto; margin:8px 0; font-size:11px; font-family:monospace; line-height:1.5; border:1px solid #e2e8f0;">$1</pre>');
+
+            html = html.replace(/^> (.*)$/gm, '<blockquote style="border-left:3px solid #0a66c2; padding:6px 12px; margin:8px 0; background:linear-gradient(135deg, #f8fafc, #f1f5f9); border-radius:0 6px 6px 0; color:#475569; font-style:italic; font-size:12px;">$1</blockquote>');
+
+            html = html.replace(/^- (.*)$/gm, '<li style="margin-bottom:3px; padding-left:2px; font-size:12px;">$1</li>');
+            html = html.replace(/^[0-9]+\. (.*)$/gm, '<li style="margin-bottom:3px; padding-left:2px; font-size:12px;">$1</li>');
+            html = html.replace(/(<li>.*<\/li>\n?)+/g, (match) => {
+                if (match.includes('1. ')) {
+                    return `<ol style="margin:0 0 8px 12px; padding-left:4px; list-style-type:decimal; color:#475569; font-size:12px;">${match}</ol>`;
+                }
+                return `<ul style="margin:0 0 8px 12px; padding-left:4px; list-style-type:disc; color:#475569; font-size:12px;">${match}</ul>`;
+            });
+
+            html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" style="color:#0a66c2; text-decoration:none; font-weight:500; border-bottom:1px solid rgba(10,102,194,0.12);">$1</a>');
+
+            html = html.replace(/\n\n/g, '</p><p style="margin:0 0 8px; line-height:1.6; color:#1e293b; font-size:12px;">');
+            html = html.replace(/\n/g, '<br>');
+
+            html = html.replace(/<p><h/g, '<h');
+            html = html.replace(/<\/h[0-9]><\/p>/g, '</h>');
+            html = html.replace(/<p><ul>/g, '<ul style="margin:0 0 8px 12px; padding-left:4px; list-style-type:disc; color:#475569; font-size:12px;">');
+            html = html.replace(/<\/ul><\/p>/g, '</ul>');
+            html = html.replace(/<p><ol>/g, '<ol style="margin:0 0 8px 12px; padding-left:4px; list-style-type:decimal; color:#475569; font-size:12px;">');
+            html = html.replace(/<\/ol><\/p>/g, '</ol>');
+            html = html.replace(/<p><blockquote>/g, '<blockquote style="border-left:3px solid #0a66c2; padding:6px 12px; margin:8px 0; background:linear-gradient(135deg, #f8fafc, #f1f5f9); border-radius:0 6px 6px 0; color:#475569; font-style:italic; font-size:12px;">');
+            html = html.replace(/<\/blockquote><\/p>/g, '</blockquote>');
+            html = html.replace(/<p><pre>/g, '<pre style="background:#f1f5f9; padding:8px 12px; border-radius:8px; overflow-x:auto; margin:8px 0; font-size:11px; font-family:monospace; line-height:1.5; border:1px solid #e2e8f0;">');
+            html = html.replace(/<\/pre><\/p>/g, '</pre>');
+
+            if (!html.startsWith('<h') && !html.startsWith('<ul') && !html.startsWith('<ol') && !html.startsWith('<blockquote') && !html.startsWith('<pre')) {
+                html = `<p style="margin:0 0 8px; line-height:1.6; color:#1e293b; font-size:12px;">${html}</p>`;
+            }
+
+            previewPanel2.innerHTML = `
+            <div style="margin-bottom:8px;">
+                <h2 style="font-size:15px; font-weight:800; margin:0 0 2px 0; color:#0a2540; letter-spacing:-0.2px;">${op.name}</h2>
+                <div style="display:flex; gap:4px; font-size:9px; color:#6c7a91; flex-wrap:wrap; margin-top:2px;">
+                    <span style="display:inline-flex; align-items:center; gap:2px; background:#f8fafc; padding:1px 8px; border-radius:30px;">📌 ${op.code}</span>
+                    <span style="display:inline-flex; align-items:center; gap:2px; background:#f8fafc; padding:1px 8px; border-radius:30px;">📁 ${op.status === 'published' ? 'Опубликовано' : op.status === 'review' ? 'На проверке' : 'Черновик'}</span>
+                    <span style="display:inline-flex; align-items:center; gap:2px; background:#f8fafc; padding:1px 8px; border-radius:30px;">📅 ${new Date().toLocaleDateString('ru-RU')}</span>
+                </div>
+            </div>
+            <div style="padding-top:8px; border-top:1px solid #eef2f6; font-size:12px; line-height:1.6; color:#1e293b;">
+                ${html}
+            </div>
+        `;
+        }
+
+        function filterOps2(value) {
+            searchQuery2 = value;
+            renderList2(value);
+        }
+
+        function addOperation2() {
+            const newId = `op-${Date.now()}`;
+            const newOp = {
+                id: newId,
+                code: `OP-${String(operations2.length + 1).padStart(3, '0')}`,
+                name: 'Новая операция',
+                emoji: '📝',
+                status: 'draft',
+                md: `# Новая операция\n\n## Описание\nВведите описание...\n\n## Последовательность\n1. Шаг 1\n2. Шаг 2\n\n## Ответственный\nИмя сотрудника`
+            };
+            operations2.push(newOp);
+            renderList2(searchQuery2);
+            selectOperation2(newId);
+            setTimeout(() => {
+                const el = opsList2.querySelector(`[data-id="${newId}"]`);
+                if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 100);
+        }
+
+        function saveDoc2() {
+            if (!currentOpId2) {
+                alert('Сначала выберите операцию');
+                return;
+            }
+            const op = operations2.find(o => o.id === currentOpId2);
+            if (!op) return;
+            op.md = mdTextarea2.value;
+            if (op.status === 'draft') {
+                op.status = 'review';
+            }
+            renderList2(searchQuery2);
+            renderPreview2(op.md, op);
+            const btn = document.querySelector('.btn-success');
+            if (btn) {
+                const orig = btn.textContent;
+                btn.textContent = '✅ Сохранено!';
+                setTimeout(() => { btn.textContent = orig; }, 1500);
+            }
+        }
+
+        function exportDoc2() {
+            if (!currentOpId2) {
+                alert('Сначала выберите операцию');
+                return;
+            }
+            const op = operations2.find(o => o.id === currentOpId2);
+            if (!op) return;
+            const content = `# ${op.name} (${op.code})\n\n${op.md}`;
+            const blob = new Blob([content], { type: 'text/markdown' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${op.code}_${op.name.replace(/\s/g, '_')}.md`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function togglePreview2() {
+            showPreview2 = !showPreview2;
+            const editor = document.getElementById('mdEditor2');
+            const preview = document.getElementById('previewPanel2');
+            if (showPreview2) {
+                editor.style.display = 'flex';
+                preview.style.display = 'flex';
+            } else {
+                editor.style.display = 'flex';
+                preview.style.display = 'none';
+            }
+        }
+
+        function wrapText2(prefix, suffix) {
+            const textarea = mdTextarea2;
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            const selected = textarea.value.substring(start, end);
+            const newText = textarea.value.substring(0, start) + prefix + selected + suffix + textarea.value.substring(end);
+            textarea.value = newText;
+            textarea.focus();
+            textarea.selectionStart = start;
+            textarea.selectionEnd = end + prefix.length + suffix.length;
+            if (currentOpId2) {
+                const op = operations2.find(o => o.id === currentOpId2);
+                if (op) renderPreview2(textarea.value, op);
+            }
+        }
+
+        function insertTemplate2() {
+            const template = `# Новая операция\n\n## Описание\nКраткое описание операции.\n\n## Оборудование\n- **Название оборудования** — модель\n\n## Материалы\n- Материал 1\n- Материал 2\n\n## Подготовка\n1. Шаг подготовки 1\n2. Шаг подготовки 2\n\n## Последовательность\n1. Шаг 1\n2. Шаг 2\n3. Шаг 3\n\n## Контроль качества\n- Параметр 1\n- Параметр 2\n\n## Техника безопасности\n- Требование 1\n- Требование 2\n\n## Ответственный\n**Имя Фамилия** — Должность\n\n## Норма времени\n**XX мин**\n\n## Примечания\nДополнительная информация...`;
+            mdTextarea2.value = template;
+            if (currentOpId2) {
+                const op = operations2.find(o => o.id === currentOpId2);
+                if (op) renderPreview2(template, op);
+            }
+        }
+
+        // ===== ИНИЦИАЛИЗАЦИЯ =====
+        renderList2();
+        if (operations2.length > 0) {
+            selectOperation2(operations2[0].id);
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+                e.preventDefault();
+                saveDoc2();
+            }
+        });
+
+        mdTextarea2.addEventListener('input', () => {
+            if (currentOpId2) {
+                const op = operations2.find(o => o.id === currentOpId2);
+                if (op) renderPreview2(mdTextarea2.value, op);
+            }
+        });
+
+        // Глобальные функции для onclick
+        window.selectOperation2 = selectOperation2;
+        window.filterOps2 = filterOps2;
+        window.addOperation2 = addOperation2;
+        window.saveDoc2 = saveDoc2;
+        window.exportDoc2 = exportDoc2;
+        window.togglePreview2 = togglePreview2;
+        window.wrapText2 = wrapText2;
+        window.insertTemplate2 = insertTemplate2;
+        window.saveDoc = saveDoc2;
+        window.exportDoc = exportDoc2;
+        window.togglePreview = togglePreview2;
+        window.wrapText = wrapText2;
+        window.insertTemplate = insertTemplate2;
+    })();
 </script>
 </body>
 </html>
